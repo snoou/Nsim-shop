@@ -1,102 +1,106 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiTwitter, FiFacebook, FiMapPin, FiPhone, FiMail } from 'react-icons/fi'; // آیکون‌های خطی و ظریف
-import { FaTelegramPlane } from 'react-icons/fa'; // برای تلگرام
+import { FiInstagram, FiTwitter, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
+import { FaTelegramPlane } from 'react-icons/fa';
+import '../assets/styles/Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="fashion-footer">
-      {/* بخش اصلی فوتر */}
-      <div className="footer-main py-5">
-        <Container>
-          <Row className="gy-4">
-            {/* ستون اول: درباره برند و سوشال */}
-            <Col md={4} lg={3}>
-              <h5 className="footer-brand mb-4">PROSHOP</h5>
-              <p className="text-muted small lh-lg">
-                نسیم مقصدی برای خانم‌های شیک‌پوش ایرانی. ما با ارائه جدیدترین کالکشن‌های مانتو، شال و اکسسوری، زیبایی و اصالت را به استایل شما هدیه می‌دهیم.
-              </p>
-              <div className="social-links d-flex gap-3 mt-4">
-                <a href="#" className="social-icon"><FiInstagram size={20} /></a>
-                <a href="#" className="social-icon"><FaTelegramPlane size={20} /></a>
-                <a href="#" className="social-icon"><FiTwitter size={20} /></a>
+    <footer className="site-footer">
+      
+      <div className="newsletter-section">
+        <div className="newsletter-container">
+          <div className="newsletter-text">
+            <h3>از جدیدترین تخفیف‌ها باخبر شوید!</h3>
+            <p>ایمیل خود را وارد کنید تا از حراج‌های پوشاک و تخفیف‌های سوپرمارکت جا نمانید.</p>
+          </div>
+          <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="آدرس ایمیل شما..." required />
+            <button type="submit">ثبت نام</button>
+          </form>
+        </div>
+      </div>
+
+      <div className="footer-main">
+        <div className="footer-container">
+          
+          <div className="footer-col brand-col">
+            <h2 className="footer-brand">نسیم</h2>
+            <p className="footer-desc">
+              فروشگاه همه‌کاره نسیم؛ ترکیبی از زیبایی استایل و تازگی مصرف روزانه. ما بهترین‌های پوشاک و خواروبار را با تضمین کیفیت به دست شما می‌رسانیم.
+            </p>
+            <div className="social-links">
+              <a href="#" className="social-icon" aria-label="Instagram"><FiInstagram /></a>
+              <a href="#" className="social-icon" aria-label="Telegram"><FaTelegramPlane /></a>
+              <a href="#" className="social-icon" aria-label="Twitter"><FiTwitter /></a>
+            </div>
+          </div>
+
+          {/* ستون دوم: خدمات مشتریان */}
+          <div className="footer-col">
+            <h4 className="footer-title">راهنمای مشتریان</h4>
+            <ul className="footer-links">
+              <li><Link to="/profile">پیگیری سفارشات</Link></li>
+              <li><Link to="/shipping-policy">رویه ارسال سریع</Link></li>
+              <li><Link to="/returns">شرایط مرجوعی کالا</Link></li>
+              <li><Link to="/size-guide">راهنمای انتخاب سایز</Link></li>
+              <li><Link to="/faq">پرسش‌های متداول</Link></li>
+            </ul>
+          </div>
+
+          {/* ستون سوم: تماس با ما */}
+          <div className="footer-col">
+            <h4 className="footer-title">ارتباط با ما</h4>
+            <ul className="contact-info">
+              <li>
+                <FiMapPin className="contact-icon" />
+                <span>تهران، پاکدشت، خیابان بیست متری</span>
+              </li>
+              <li>
+                <FiPhone className="contact-icon" />
+                <span dir="ltr">۰۲۱ - ۸۸۸۸۴۴۴۴</span>
+              </li>
+              <li>
+                <FiMail className="contact-icon" />
+                <span>support@nasim.ir</span>
+              </li>
+              <li className="work-hours">
+                 پاسخگویی: شنبه تا چهارشنبه ۹ الی ۱۷
+              </li>
+            </ul>
+          </div>
+
+          {/* ستون چهارم: نمادهای اعتماد */}
+          <div className="footer-col trust-col">
+            <h4 className="footer-title">خرید امن</h4>
+            <div className="trust-badges">
+              <div className="trust-box">
+                <img src="https://via.placeholder.com/80x80?text=E-Namad" alt="اینماد" />
               </div>
-            </Col>
-
-            {/* ستون دوم: خدمات مشتریان */}
-            <Col md={4} lg={3}>
-              <h6 className="footer-title mb-4">خدمات مشتریان</h6>
-              <ul className="footer-links list-unstyled">
-                <li><Link to="/profile">پیگیری سفارش</Link></li>
-                <li><Link to="/shipping-policy">رویه ارسال سفارش</Link></li>
-                <li><Link to="/returns">شرایط مرجوعی کالا</Link></li>
-                <li><Link to="/size-guide">راهنمای انتخاب سایز</Link></li>
-                <li><Link to="/faq">پرسش‌های متداول</Link></li>
-              </ul>
-            </Col>
-
-            {/* ستون سوم: تماس با ما */}
-            <Col md={4} lg={3}>
-              <h6 className="footer-title mb-4">تماس با ما</h6>
-              <ul className="contact-info list-unstyled small text-muted">
-                <li className="mb-3 d-flex align-items-start">
-                  <FiMapPin className="me-2 mt-1 text-accent" size={18} />
-                  <span>تهران،پاکدشت خیابان بیست متری،</span>
-                </li>
-                <li className="mb-3 d-flex align-items-center">
-                  <FiPhone className="me-2 text-accent" size={18} />
-                  <span>۰۲۱-۸۸۸۸۴۴۴۴</span>
-                </li>
-                <li className="mb-3 d-flex align-items-center">
-                  <FiMail className="me-2 text-accent" size={18} />
-                  <span>support@proshop.ir</span>
-                </li>
-                <li className="mb-3 d-flex align-items-center">
-                   <span>پاسخگویی: شنبه تا چهارشنبه ۹ تا ۱۷</span>
-                </li>
-              </ul>
-            </Col>
-
-            {/* ستون چهارم: نمادهای اعتماد (اینماد و ...) */}
-            <Col md={12} lg={3} className="text-lg-end text-center mt-4 mt-lg-0">
-              <h6 className="footer-title mb-4">نمادهای اعتماد</h6>
-              <div className="trust-badges d-flex justify-content-lg-end justify-content-center gap-2">
-                {/* جایگاه عکس اینماد */}
-                <div className="trust-box">
-                  <img src="https://via.placeholder.com/80x80?text=E-Namad" alt="اینماد" />
-                </div>
-                {/* جایگاه عکس ساماندهی */}
-                <div className="trust-box">
-                  <img src="https://via.placeholder.com/80x80?text=Samandehi" alt="ساماندهی" />
-                </div>
+              <div className="trust-box">
+                <img src="https://via.placeholder.com/80x80?text=Samandehi" alt="ساماندهی" />
               </div>
-              <p className="small text-muted mt-3">
-                پرداخت امن با کلیه کارت‌های عضو شتاب
-              </p>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+            <p className="trust-desc">
+              پرداخت امن با کلیه کارت‌های عضو شتاب
+            </p>
+          </div>
+
+        </div>
       </div>
 
       {/* بخش کپی‌رایت پایین */}
-      <div className="footer-bottom py-3">
-        <Container>
-          <Row className="align-items-center">
-            <Col md={6} className="text-center text-md-start">
-              <p className="mb-0 small text-muted">
-                تمامی حقوق برای فروشگاه <span className="text-light">نسیم</span> محفوظ است &copy; {currentYear}
-              </p>
-            </Col>
-            <Col md={6} className="text-center text-md-end mt-2 mt-md-0">
-              <p className="mb-0 small text-muted" style={{fontSize: '10px'}}>
-                Design by <span style={{color: '#c5a065'}}>YourName</span>
-              </p>
-            </Col>
-          </Row>
-        </Container>
+      <div className="footer-bottom">
+        <div className="footer-bottom-container">
+          <p className="copyright">
+            تمامی حقوق برای فروشگاه <span>نسیم</span> محفوظ است &copy; {currentYear}
+          </p>
+          <p className="developer">
+            طراحی و توسعه با ❤️
+          </p>
+        </div>
       </div>
     </footer>
   );

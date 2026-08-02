@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi'; // همون پکیج آیکونی که در هدر استفاده کردیم
+import { FiSearch } from 'react-icons/fi';
+import '../assets/styles/SearchBox.css'; // اتصال به فایل استایل
 
 const SearchBox = () => {
   const navigate = useNavigate();
@@ -13,33 +13,28 @@ const SearchBox = () => {
     e.preventDefault();
     if (keyword.trim()) {
       navigate(`/search/${keyword.trim()}`);
-      setKeyword('');
     } else {
       navigate('/');
     }
   };
 
   return (
-    <Form onSubmit={submitHandler} className='d-flex position-relative align-items-center' style={{ minWidth: '300px' }}>
-      <Form.Control
-        type='text'
-        name='q'
+    <form onSubmit={submitHandler} className="luxury-search-form">
+      <input
+        type="text"
+        name="q"
         onChange={(e) => setKeyword(e.target.value)}
         value={keyword}
-        placeholder='جستجو در محصولات...'
-        className='search-input shadow-none'
+        placeholder="جستجوی لباس، اکسسوری، خواروبار..."
+        className="luxury-search-input"
+        autoComplete="off"
       />
       
-      {/* دکمه تبدیل به یک آیکون شیشه‌ای روی اینپوت شده */}
-      <Button 
-        type='submit' 
-        variant='link' 
-        className='search-btn p-0 text-muted'
-        title="جستجو"
-      >
-        <FiSearch size={18} />
-      </Button>
-    </Form>
+      {/* دکمه جستجو که به صورت یک آیکون داخل کادر قرار گرفته است */}
+      <button type="submit" className="luxury-search-btn" aria-label="جستجو">
+        <FiSearch size={20} />
+      </button>
+    </form>
   );
 };
 

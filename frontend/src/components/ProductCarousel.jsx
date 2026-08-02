@@ -1,66 +1,82 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Image, Button } from 'react-bootstrap';
-import { FiArrowRight, FiArrowLeft, FiShoppingBag } from 'react-icons/fi'; // آیکون‌های ناوبری
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import Message from './Message';
+import Loader from './Loader';
 import { useGetTopProductsQuery } from '../slices/productsApiSlice';
+import '../assets/styles/ProductCarousel.css';
+import Mana from '../assets/mana.png'
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (isLoading) return <div className="hero-loader"></div>; // یک لودر خالی یا Skeleton
+  useEffect(() => {
+    if (!products || products.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev === products.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [products]);
+
+  if (isLoading) return <Loader />;
   if (error) return <Message variant='danger'>{error?.data?.message || error.error}</Message>;
+  if (!products || products.length === 0) return null;
+
+  const nextSlide = () => setCurrentIndex(currentIndex === products.length - 1 ? 0 : currentIndex + 1);
+  const prevSlide = () => setCurrentIndex(currentIndex === 0 ? products.length - 1 : currentIndex - 1);
 
   return (
-    <div className="hero-section-wrapper">
-      <Carousel 
-        pause='hover' 
-        className='fashion-carousel'
-        indicators={true} // دایره‌های پایین اسلایدر
-        prevIcon={<span className="custom-control-icon"><FiArrowRight size={24}/></span>}
-        nextIcon={<span className="custom-control-icon"><FiArrowLeft size={24}/></span>}
-      >
-        {products.map((product) => (
-          <Carousel.Item key={product._id} interval={5000}>
-            <div className="hero-slide-content">
+    <div className="luxury-slider-wrapper">
+      
+      {/* 🔴 پترن هندسی محو در مرکز پس‌زمینه */}
+      <div className="geometric-pattern-bg"></div>
+
+      {/* 🔴 آواتار ثابت در سمت راست (مثل عکس خودت) */}
+      <div className="avatar-right-container">
+        {/* یک عکس PNG از کاراکتر که به سمت چپ (مرکز) اشاره می‌کند اینجا بگذار */}
+        <img 
+          src={Mana}
+          alt="نسیم" 
+          className="avatar-image" 
+        />
+      </div>
+
+      {/* 🟢 بخش متحرک (متن در چپ، محصول در مرکز) */}
+      <div className="slides-container">
+        {products.map((product, index) => (
+          <div key={product._id} className={`luxury-slide ${index === currentIndex ? 'active' : ''}`}>
+            
+            {/* سمت چپ: متن و دکمه */}
+            <div className="slide-text-left">
+              <h2 className="slide-title">{product.name}</h2>
+              <p className="slide-subtitle">
+                {product.description ? product.description.substring(0, 80) + '...' : 'بهترین کیفیت برای شما'}
+              </p>
               
-              {/* تصویر پس‌زمینه با افکت تاریک شدن ملایم */}
-              <div className="hero-image-container">
-                <Image src={product.image} alt={product.name} className="hero-img" />
-                <div className="hero-overlay-gradient"></div>
-              </div>
-
-              {/* باکس اطلاعات شیشه‌ای (شناور) */}
-              <Carousel.Caption className="hero-caption">
-                <div className="glass-info-card">
-                  <span className="hero-badge">محبوب‌ترین‌ها</span>
-                  
-                  <h2 className="hero-title">
-                    {product.name}
-                  </h2>
-                  
-                  <div className="hero-price-row">
-                    <span className="price-label">فقط:</span>
-                    <span className="price-value">{product.price.toLocaleString()}</span>
-                    <span className="price-unit">تومان</span>
-                  </div>
-
-                  <p className="hero-desc d-none d-md-block">
-                    {product.description && product.description.substring(0, 80)}...
-                  </p>
-
-                  <Link to={`/product/${product._id}`}>
-                    <Button className="hero-btn">
-                      <FiShoppingBag className="ms-2" />
-                      مشاهده و خرید
-                    </Button>
-                  </Link>
-                </div>
-              </Carousel.Caption>
-              
+              <Link to={`/product/${product._id}`} className="slide-btn-teal">
+                مشاهده محصول
+              </Link>
             </div>
-          </Carousel.Item>
+
+            {/* مرکز: عکس محصول */}
+            <div className="slide-product-center">
+              {/* با قابلیت mix-blend-mode پس‌زمینه سفید عکس‌ها محو می‌شود */}
+              <img src={product.image} alt={product.name} className="product-image-blend" />
+            </div>
+
+          </div>
         ))}
-      </Carousel>
+      </div>
+
+      {/* فلش‌های ناوبری مینیمال در دو طرف */}
+      <button className="nav-arrow arrow-left" onClick={nextSlide}>
+        <FiChevronLeft size={44} />
+      </button>
+      <button className="nav-arrow arrow-right" onClick={prevSlide}>
+        <FiChevronRight size={44} />
+      </button>
+
     </div>
   );
 };

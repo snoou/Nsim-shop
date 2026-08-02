@@ -1,27 +1,26 @@
 import { Helmet } from 'react-helmet-async';
 
 const Meta = ({ title, description, keywords, image, url }) => {
-  const siteName = "PROSHOP";
-  const fullTitle = title === 'Welcome To ProShop' ? title : `${title} | ${siteName}`;
+  const siteName = "نسیم";
+  const fullTitle = title === 'فروشگاه اینترنتی نسیم | خرید لباس و خواروبار' ? title : `${title} | ${siteName}`;
 
   return (
     <Helmet>
-      {/* 1. تنظیمات اصلی و عنوان */}
+      {/* 1. تنظیمات اصلی و عنوان برای موتورهای جستجو */}
       <title>{fullTitle}</title>
       <meta name='description' content={description} />
       <meta name='keyword' content={keywords} />
       <meta name='robots' content='index, follow' />
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="Persian" />
       <link rel="canonical" href={url ? url : window.location.href} />
 
-      {/* 2. تنظیم رنگ نوار مرورگر موبایل (Mobile Browser Color) */}
-      {/* این باعث میشه نوار بالای کروم در موبایل به رنگ طلایی برند دربیاد */}
-      <meta name="theme-color" content="#c5a065" />
-      <meta name="msapplication-navbutton-color" content="#c5a065" />
-      <meta name="apple-mobile-web-app-status-bar-style" content="#c5a065" />
+      {/* 2. تنظیم رنگ نوار مرورگر موبایل (رنگ سبز کله‌غازی برند نسیم) */}
+      <meta name="theme-color" content="#0D9488" />
+      <meta name="msapplication-navbutton-color" content="#0D9488" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="#0D9488" />
 
-      {/* 3. اپن گراف (Open Graph) برای تلگرام، واتس‌اپ و اینستاگرام */}
+      {/* 3. اپن گراف (Open Graph) برای پیش‌نمایش لینک در تلگرام، واتس‌اپ و ... */}
       <meta property='og:type' content='website' />
       <meta property='og:title' content={fullTitle} />
       <meta property='og:description' content={description} />
@@ -36,16 +35,17 @@ const Meta = ({ title, description, keywords, image, url }) => {
       <meta name='twitter:title' content={fullTitle} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
-      <meta name='twitter:creator' content='@proshop_ir' />
+      <meta name='twitter:creator' content='@nasim_store' />
     </Helmet>
   );
 };
 
+// مقادیر پیش‌فرض برای زمانی که به کامپوننت دیتایی پاس داده نشود
 Meta.defaultProps = {
-  title: 'فروشگاه اینترنتی نسیم | خرید آنلاین لباس زنانه',
-  description: 'جدیدترین کالکشن‌های مانتو، شال، شلوار و اکسسوری زنانه با کیفیت تضمینی. ارسال سریع به سراسر ایران و ضمانت بازگشت وجه.',
-  keywords: 'خرید لباس زنانه, مانتو جدید, شال و روسری, خرید اینترنتی لباس, فروشگاه مد و فشن, لباس مجلسی, نسیم',
-  image: '/images/share-image.jpg', // یک عکس پیش‌فرض با کیفیت (مثلاً لوگوی بزرگ یا بنر سایت) بزار اینجا
+  title: 'فروشگاه اینترنتی نسیم | خرید لباس و خواروبار',
+  description: 'فروشگاه همه‌کاره نسیم؛ خرید آنلاین جدیدترین کالکشن‌های پوشاک و تازه‌ترین محصولات سوپرمارکتی با ارسال سریع و ضمانت کیفیت.',
+  keywords: 'فروشگاه اینترنتی نسیم, خرید آنلاین لباس, سوپرمارکت آنلاین, خرید مانتو, خرید برنج و روغن, لباس زنانه, مواد غذایی تازه',
+  image: '/images/nasim-share-image.jpg', // حتماً یک عکس با کیفیت از لوگو یا بنر سایت در پوشه public/images قرار بده
 };
 
 export default Meta;

@@ -1,0 +1,51 @@
+.custom-alert {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  line-height: 1.6;
+}
+
+.alert-icon {
+  margin-left: 12px; /* فاصله از سمت چپ چون سایت راست‌چین است */
+  display: flex;
+  align-items: center;
+}
+
+.alert-text {
+  flex: 1;
+}
+
+/* --- رنگ‌بندی انواع پیام‌ها --- */
+
+/* ۱. پیام موفقیت (سبز ملایم هماهنگ با برند نسیم) */
+.alert-success {
+  background-color: #f0fdfa;
+  color: var(--primary-hover);
+  border-color: #ccfbf1;
+}
+
+/* ۲. پیام خطا (قرمز ملایم) */
+.alert-danger {
+  background-color: #fef2f2;
+  color: var(--danger);
+  border-color: #fee2e2;
+}
+
+/* ۳. پیام هشدار (نارنجی ملایم هماهنگ با رنگ Accent) */
+.alert-warning {
+  background-color: #fff7ed;
+  color: var(--accent);
+  border-color: #ffedd5;
+}
+
+/* ۴. پیام اطلاع‌رسانی (خاکستری ملایم) */
+.alert-info {
+  background-color: #f9fafb;
+  color: var(--text-dark);
+  border-color: var(--border-light);
+}

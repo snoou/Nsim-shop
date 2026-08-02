@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePaymentMethod } from '../slices/cartSlice';
-// فرض بر این است که CheckoutSteps را دارید، اما ما استایل دور آن را تغییر می‌دهیم
 import CheckoutSteps from '../components/CheckoutSteps'; 
 
 const PaymentScreen = () => {
@@ -11,8 +10,8 @@ const PaymentScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
-  const [hovered, setHovered] = useState(null);
+  // تغییر پیش‌فرض به ZarinPal
+  const [paymentMethod, setPaymentMethod] = useState('ZarinPal');
 
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -34,8 +33,8 @@ const PaymentScreen = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      background: '#F9F9F7', // رنگ استخوانی مدرن
-      fontFamily: "'Playfair Display', serif", // پیشنهاد فونت لوکس
+      background: '#F9F9F7',
+      fontFamily: "'Vazirmatn', sans-serif", // اولویت با فونت فارسی
       padding: '2rem',
     },
     glassCard: {
@@ -50,17 +49,16 @@ const PaymentScreen = () => {
       animation: 'fadeInUp 0.6s ease-out',
     },
     header: {
-      fontSize: '2.5rem',
-      fontWeight: '600',
+      fontSize: '2rem',
+      fontWeight: '700',
       color: '#1a1a1a',
       textAlign: 'center',
       marginBottom: '2.5rem',
-      letterSpacing: '-1px',
+      letterSpacing: '-0.5px',
     },
     labelLegend: {
       fontSize: '0.9rem',
-      textTransform: 'uppercase',
-      letterSpacing: '2px',
+      fontWeight: '600',
       color: '#888',
       marginBottom: '1.5rem',
       display: 'block',
@@ -72,7 +70,7 @@ const PaymentScreen = () => {
       gap: '1.5rem',
       marginBottom: '3rem',
     },
-    // کارت انتخاب روش پرداخت (جایگزین رادیو باتن)
+    // کارت انتخاب روش پرداخت
     paymentCard: (isActive) => ({
       position: 'relative',
       display: 'flex',
@@ -81,11 +79,11 @@ const PaymentScreen = () => {
       padding: '1.5rem',
       borderRadius: '16px',
       cursor: 'pointer',
-      border: isActive ? '1.5px solid #1a1a1a' : '1.5px solid #e5e5e5',
-      background: isActive ? '#fff' : 'transparent',
+      border: isActive ? '2px solid #fdd835' : '1.5px solid #e5e5e5', // رنگ زرد برای زرین‌پال
+      background: isActive ? '#fffcf0' : 'transparent', // پس‌زمینه خیلی روشن زرد
       transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
       transform: isActive ? 'scale(1.02)' : 'scale(1)',
-      boxShadow: isActive ? '0 10px 25px rgba(0,0,0,0.05)' : 'none',
+      boxShadow: isActive ? '0 10px 25px rgba(253, 216, 53, 0.15)' : 'none',
     }),
     cardContent: {
       display: 'flex',
@@ -93,28 +91,37 @@ const PaymentScreen = () => {
       gap: '15px',
     },
     iconWrapper: {
-      width: '40px',
-      height: '40px',
-      borderRadius: '50%',
-      background: '#f0f0f0',
+      width: '45px',
+      height: '45px',
+      borderRadius: '12px',
+      background: '#fff',
+      border: '1px solid #eee',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '1.2rem',
+      fontSize: '1.5rem',
+      color: '#fdd835',
     },
     paymentText: {
       fontSize: '1.1rem',
-      fontWeight: '500',
+      fontWeight: '700',
       color: '#1a1a1a',
-      fontFamily: "'Vazirmatn', sans-serif", // فونت متن اصلی
+      fontFamily: "'Vazirmatn', sans-serif",
     },
-    // دکمه سفارشی رادیو
+    subText: {
+        fontSize: '0.85rem',
+        color: '#666',
+        marginTop: '4px',
+        fontWeight: '400'
+    },
+    // دکمه انتخاب
     customRadio: (isActive) => ({
-      width: '20px',
-      height: '20px',
+      width: '22px',
+      height: '22px',
       borderRadius: '50%',
-      border: isActive ? '6px solid #1a1a1a' : '2px solid #ccc',
+      border: isActive ? '6px solid #fdd835' : '2px solid #ccc',
       transition: 'all 0.3s ease',
+      backgroundColor: '#fff'
     }),
     submitBtn: {
       width: '100%',
@@ -122,18 +129,17 @@ const PaymentScreen = () => {
       background: '#1a1a1a',
       color: '#fff',
       border: 'none',
-      borderRadius: '50px',
-      fontSize: '1rem',
-      fontWeight: '600',
+      borderRadius: '16px',
+      fontSize: '1.1rem',
+      fontWeight: '700',
       cursor: 'pointer',
       transition: 'transform 0.2s ease, opacity 0.2s ease',
-      letterSpacing: '1px',
+      fontFamily: "'Vazirmatn', sans-serif",
     },
   };
 
   return (
     <div style={styles.pageContainer}>
-      {/* استایل گلوبال برای انیمیشن */}
       <style>
         {`
           @keyframes fadeInUp {
@@ -144,8 +150,7 @@ const PaymentScreen = () => {
         `}
       </style>
 
-      {/* فرض بر این است که این کامپوننت فقط دایره‌های مراحل را نشان می‌دهد */}
-      <div style={{ marginBottom: '2rem', opacity: 0.7 }}>
+      <div style={{ marginBottom: '2rem', opacity: 0.9 }}>
         <CheckoutSteps step1 step2 step3 />
       </div>
 
@@ -153,42 +158,40 @@ const PaymentScreen = () => {
         <h1 style={styles.header}>روش پرداخت</h1>
         
         <form onSubmit={submitHandler}>
-          <span style={styles.labelLegend}>انتخاب درگاه امن</span>
+          <span style={styles.labelLegend}>درگاه بانکی مورد نظر را انتخاب کنید</span>
           
           <div style={styles.selectionGrid}>
-            {/* گزینه پی‌پال / کیف پول دیجیتال */}
+            
+            {/* گزینه زرین‌پال */}
             <div 
-              style={styles.paymentCard(paymentMethod === 'PayPal')}
-              onClick={() => setPaymentMethod('PayPal')}
-              onMouseEnter={() => setHovered('PayPal')}
-              onMouseLeave={() => setHovered(null)}
+              style={styles.paymentCard(paymentMethod === 'ZarinPal')}
+              onClick={() => setPaymentMethod('ZarinPal')}
             >
               <div style={styles.cardContent}>
+                {/* آیکون کارت بانکی یا لوگوی زرین‌پال */}
                 <div style={styles.iconWrapper}>💳</div>
                 <div>
-                  <div style={styles.paymentText}>PayPal / Credit Card</div>
-                  <div style={{fontSize: '0.8rem', color: '#888', marginTop: '4px'}}>
-                    پرداخت امن بین‌المللی
+                  <div style={styles.paymentText}>پرداخت اینترنتی زرین‌پال</div>
+                  <div style={styles.subText}>
+                    پذیرش کلیه کارت‌های عضو شتاب
                   </div>
                 </div>
               </div>
               
-              {/* اینپوت مخفی برای کارکرد فرم */}
               <input
                 type='radio'
-                id='PayPal'
+                id='ZarinPal'
                 name='paymentMethod'
-                value='PayPal'
-                checked={paymentMethod === 'PayPal'}
+                value='ZarinPal'
+                checked={paymentMethod === 'ZarinPal'}
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 style={{ display: 'none' }}
               />
               
-              <div style={styles.customRadio(paymentMethod === 'PayPal')}></div>
+              <div style={styles.customRadio(paymentMethod === 'ZarinPal')}></div>
             </div>
 
-            {/* می‌توانید گزینه‌های بیشتری در آینده اضافه کنید، مثلا پرداخت در محل */}
-             {/* <div style={styles.paymentCard(false)} ... > ... </div> */}
+            {/* اگر بخواهید در آینده گزینه دیگری اضافه کنید، اینجا کپی کنید */}
           
           </div>
 
@@ -199,7 +202,7 @@ const PaymentScreen = () => {
             onMouseOver={(e) => e.target.style.opacity = '0.9'}
             onMouseOut={(e) => e.target.style.opacity = '1'}
           >
-            ادامه و بررسی نهایی
+            ادامه و ثبت نهایی
           </button>
         </form>
       </div>

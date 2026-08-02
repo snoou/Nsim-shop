@@ -1,0 +1,60 @@
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  gap: 12px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 30px; /* طراحی گرد و مدرن */
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* استایل مشترک دکمه‌ها و فلش‌ها */
+.pagination-item,
+.pagination-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%; /* دکمه‌های کاملاً گرد */
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0 8px; /* برای اعداد دو رقمی */
+}
+
+/* هاور (رفتن موس روی دکمه‌ها) */
+.pagination-item:hover,
+.pagination-arrow:hover {
+  background-color: var(--bg-main);
+  color: var(--primary);
+}
+
+/* صفحه فعال (شماره صفحه‌ای که کاربر در آن قرار دارد) */
+.pagination-item.active {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(13, 148, 136, 0.3); /* سایه همرنگ با برند */
+}
+
+/* متن راهنما زیر صفحه‌بندی */
+.pagination-info {
+  font-size: 13px;
+  color: var(--text-muted);
+}

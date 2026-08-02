@@ -1,0 +1,28 @@
+.premium-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* فاصله بین ستاره‌ها و متن */
+}
+
+.stars-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* فاصله بسیار کم و ظریف بین خود ستاره‌ها */
+}
+
+.star-icon {
+  display: flex;
+  align-items: center;
+  font-size: 14px; /* سایز ظریف و لوکس */
+  /* یک سایه بسیار محو برای درخشش بیشتر ستاره‌ها روی بک‌گراند کرم */
+  filter: drop-shadow(0 1px 2px rgba(245, 158, 11, 0.2));
+}
+
+.rating-text {
+  font-size: 12px;
+  /* رنگ خاکستری-قهوه‌ای که با تم کرم و خاکی سایت کاملاً هم‌خوانی دارد */
+  color: #78716c; 
+  font-weight: 500;
+  margin-right: 4px; /* فاصله ملایم در سایت راست‌چین */
+  padding-top: 2px; /* هم‌تراز کردن دقیق متن با آیکون‌ها */
+}

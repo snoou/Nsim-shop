@@ -9,7 +9,6 @@ const AdminRoute = () => {
     // حالت ۱: ادمین است -> بفرما
     return <Outlet />;
   } else if (userInfo && !userInfo.isAdmin) {
-    // حالت ۲: لاگین کرده ولی مشتری عادی است -> صفحه عدم دسترسی شیک
     return <AccessDenied />;
   } else {
     // حالت ۳: اصلا لاگین نکرده -> برو لاگین کن

@@ -1,9 +1,10 @@
 import React from 'react';
+import '../assets/styles/Loader.css'; // اتصال به فایل استایل
 
 const Loader = () => {
   return (
     <div className="loader-wrapper">
-      <div className="fashion-loader"></div>
+      <div className="modern-spinner"></div>
       <span className="loading-text">در حال بارگذاری...</span>
     </div>
   );

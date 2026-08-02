@@ -2,7 +2,7 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
 import Product from '../models/productModel.js';
 import { calcPrices } from '../utils/calcPrices.js';
-import { verifyPayPalPayment, checkIfNewTransaction } from '../utils/paypal.js';
+import { requestPayment, verifyPayment } from '../utils/zarinpal.js';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -14,17 +14,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('No order items');
   } else {
-    // NOTE: here we must assume that the prices from our client are incorrect.
-    // We must only trust the price of the item as it exists in
-    // our DB. This prevents a user paying whatever they want by hacking our client
-    // side code - https://gist.github.com/bushblade/725780e6043eaf59415fbaf6ca7376ff
-
-    // get the ordered items from our database
     const itemsFromDB = await Product.find({
       _id: { $in: orderItems.map((x) => x._id) },
     });
 
-    // map over the order items and use the price from our items from database
     const dbOrderItems = orderItems.map((itemFromClient) => {
       const matchingItemFromDB = itemsFromDB.find(
         (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
@@ -37,7 +30,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
       };
     });
 
-    // calculate prices
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
       calcPrices(dbOrderItems);
 
@@ -83,46 +75,86 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update order to paid
-// @route   PUT /api/orders/:id/pay
+// @desc    Start Zarinpal Payment (Get Gateway URL)
+// @route   POST /api/orders/:id/pay
 // @access  Private
-const updateOrderToPaid = asyncHandler(async (req, res) => {
-  // NOTE: here we need to verify the payment was made to PayPal before marking
-  // the order as paid
-  const { verified, value } = await verifyPayPalPayment(req.body.id);
-  if (!verified) throw new Error('Payment not verified');
-
-  // check if this transaction has been used before
-  const isNewTransaction = await checkIfNewTransaction(Order, req.body.id);
-  if (!isNewTransaction) throw new Error('Transaction has been used before');
-
-  const order = await Order.findById(req.params.id);
+const startPayment = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate('user', 'email mobile');
 
   if (order) {
-    // check the correct amount was paid
-    const paidCorrectAmount = order.totalPrice.toString() === value;
-    if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
+    // تبدیل به عدد صحیح برای جلوگیری از خطای 422 زرین‌پال
+    const amount = Math.round(order.totalPrice);
 
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
-    };
+    if (amount < 100) {
+      res.status(400);
+      throw new Error('مبلغ تراکنش باید حداقل ۱۰۰ تومان باشد.');
+    }
 
-    const updatedOrder = await order.save();
+    const callbackUrl = `http://localhost:5000/api/orders/payment/verify?amount=${amount}&orderId=${order._id}`;
+    const description = `Payment for Order ID: ${order._id}`;
+    const email = order.user ? order.user.email : '';
+    const mobile = order.user ? order.user.mobile : '';
 
-    res.json(updatedOrder);
+    try {
+      const zarinpalResponse = await requestPayment(
+        amount,
+        callbackUrl,
+        description,
+        email,
+        mobile
+      );
+      
+      res.json({ paymentUrl: zarinpalResponse.paymentUrl });
+    } catch (error) {
+      console.error('Zarinpal Error:', error?.response?.data || error.message);
+      res.status(400);
+      throw new Error('خطا در ایجاد تراکنش: ' + (error?.response?.data?.errors?.message || error.message));
+    }
+
   } else {
     res.status(404);
     throw new Error('Order not found');
   }
 });
 
+// @desc    Verify Zarinpal Payment (Callback from Bank)
+// @route   GET /api/orders/payment/verify
+// @access  Public
+const verifyPaymentCallback = asyncHandler(async (req, res) => {
+  const { Authority, Status, amount, orderId } = req.query;
+
+  if (Status === 'NOK') {
+    return res.redirect(`http://localhost:3000/order/${orderId}?status=failed`);
+  }
+
+  try {
+    const verification = await verifyPayment(amount, Authority);
+
+    if (verification.code === 100 || verification.code === 101) {
+      const order = await Order.findById(orderId);
+      if (order) {
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        order.paymentResult = {
+          id: verification.ref_id,
+          status: 'success',
+          update_time: Date.now(),
+          email_address: '',
+        };
+        await order.save();
+        res.redirect(`http://localhost:3000/order/${orderId}?status=success`);
+      }
+    } else {
+      res.redirect(`http://localhost:3000/order/${orderId}?status=failed`);
+    }
+  } catch (error) {
+    console.error('Verify Error:', error);
+    res.redirect(`http://localhost:3000/order/${orderId}?status=error`);
+  }
+});
+
 // @desc    Update order to delivered
-// @route   GET /api/orders/:id/deliver
+// @route   PUT /api/orders/:id/deliver
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
@@ -148,11 +180,13 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+// مهم: تمام توابع باید اینجا اکسپورت شوند
 export {
   addOrderItems,
   getMyOrders,
   getOrderById,
-  updateOrderToPaid,
+  startPayment,
+  verifyPaymentCallback,
   updateOrderToDelivered,
   getOrders,
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // آیکون‌های ظریف
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import '../assets/styles/Paginate.css'; 
 
 const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
-  // اگر فقط یک صفحه داریم، اصلاً چیزی نشون نده
+  // اگر فقط یک صفحه داریم، صفحه‌بندی نیازی نیست
   if (pages <= 1) return null;
 
-  // تابع کمکی برای ساخت لینک
+  // ساخت داینامیک آدرس‌ها
   const getUrl = (p) => {
     if (isAdmin) {
       return `/admin/productlist/${p}`;
@@ -16,17 +17,17 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
   };
 
   return (
-    <div className="fashion-pagination-container">
-      <div className="fashion-pagination-glass">
+    <div className="pagination-container">
+      <div className="pagination-wrapper">
         
-        {/* دکمه قبلی (اگر صفحه اول نیستیم) */}
+        {/* دکمه قبلی (فلش راست چون سایت فارسی است) */}
         {page > 1 && (
           <Link to={getUrl(page - 1)} className="pagination-arrow" title="صفحه قبل">
-            <FiChevronRight size={20} /> {/* چون RTL هستیم، رایت میشه قبل */}
+            <FiChevronRight size={20} /> 
           </Link>
         )}
 
-        {/* لیست شماره‌ها */}
+        {/* لیست شماره صفحات */}
         <div className="pagination-numbers">
           {[...Array(pages).keys()].map((x) => {
             const pageNumber = x + 1;
@@ -42,16 +43,16 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
           })}
         </div>
 
-        {/* دکمه بعدی (اگر صفحه آخر نیستیم) */}
+        {/* دکمه بعدی (فلش چپ) */}
         {page < pages && (
           <Link to={getUrl(page + 1)} className="pagination-arrow" title="صفحه بعد">
-            <FiChevronLeft size={20} /> {/* چون RTL هستیم، لفت میشه بعد */}
+            <FiChevronLeft size={20} /> 
           </Link>
         )}
 
       </div>
       
-      {/* متن راهنما زیر پیجینیشن */}
+      {/* راهنمای متنی پایین */}
       <div className="pagination-info">
         صفحه {page} از {pages}
       </div>

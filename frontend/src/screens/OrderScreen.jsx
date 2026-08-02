@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import axios from 'axios'; // اضافه کردن اکسیروس برای درخواست لینک
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import {
   useDeliverOrderMutation,
   useGetOrderDetailsQuery,
-  useGetPaypalClientIdQuery,
-  usePayOrderMutation,
 } from '../slices/ordersApiSlice';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
+  const { search } = useLocation(); // برای بررسی بازگشت از بانک
+
+  const [loadingPay, setLoadingPay] = useState(false); // استیت لودینگ دستی برای زرین‌پال
 
   const {
     data: order,
@@ -22,68 +23,52 @@ const OrderScreen = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
   const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
-  const {
-    data: paypal,
-    isLoading: loadingPayPal,
-    error: errorPayPal,
-  } = useGetPaypalClientIdQuery();
-
+  // --- بررسی وضعیت بازگشت از درگاه بانک ---
   useEffect(() => {
-    if (!errorPayPal && !loadingPayPal && paypal.clientId) {
-      const loadPaypalScript = async () => {
-        paypalDispatch({
-          type: 'resetOptions',
-          value: {
-            'client-id': paypal.clientId,
-            currency: 'USD',
-          },
-        });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
-      };
-      if (order && !order.isPaid) {
-        if (!window.paypal) {
-          loadPaypalScript();
-        }
-      }
+    const sp = new URLSearchParams(search);
+    const status = sp.get('status');
+    
+    if (status === 'success') {
+      toast.success('پرداخت با موفقیت انجام شد');
+      refetch(); // رفرش کردن اطلاعات سفارش برای سبز شدن وضعیت
+    } else if (status === 'failed') {
+      toast.error('پرداخت ناموفق بود');
     }
-  }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
+  }, [search, refetch]);
 
-  function onApprove(data, actions) {
-    return actions.order.capture().then(async function (details) {
-      try {
-        await payOrder({ orderId, details });
-        refetch();
-        toast.success('پرداخت با موفقیت انجام شد');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
+  // --- تابع اتصال به درگاه زرین‌پال ---
+  const paymentHandler = async () => {
+    try {
+      setLoadingPay(true);
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      // درخواست به بک‌اند برای گرفتن لینک
+      const { data } = await axios.post(
+        `/api/orders/${orderId}/pay`,
+        {},
+        config
+      );
+
+      setLoadingPay(false);
+
+      if (data.paymentUrl) {
+        // هدایت کاربر به درگاه بانک
+        window.location.href = data.paymentUrl;
       }
-    });
-  }
-
-  function onError(err) {
-    toast.error(err.message);
-  }
-
-  function createOrder(data, actions) {
-    return actions.order
-      .create({
-        purchase_units: [
-          {
-            amount: { value: order.totalPrice },
-          },
-        ],
-      })
-      .then((orderID) => {
-        return orderID;
-      });
-  }
+    } catch (err) {
+      setLoadingPay(false);
+      toast.error(err?.response?.data?.message || err.message);
+    }
+  };
 
   const deliverHandler = async () => {
     try {
@@ -95,7 +80,7 @@ const OrderScreen = () => {
     }
   };
 
-  // --- استایل‌های اختصاصی و فیکس شده ---
+  // --- استایل‌های اختصاصی ---
   const styles = {
     pageContainer: {
       backgroundColor: '#F9F9F7',
@@ -104,12 +89,12 @@ const OrderScreen = () => {
       padding: '2rem 1rem',
       fontFamily: "'Vazirmatn', sans-serif",
       display: 'flex',
-      justifyContent: 'center', // وسط چین کردن کل کانتینر
+      justifyContent: 'center',
       direction: 'rtl',
     },
     contentWrapper: {
       width: '100%',
-      maxWidth: '1200px', // جلوگیری از باز شدن بیش از حد
+      maxWidth: '1200px',
       margin: '0 auto',
     },
     headerTitle: {
@@ -128,15 +113,13 @@ const OrderScreen = () => {
       width: '100%',
       alignItems: 'start',
     },
-    // ستون اصلی (اطلاعات)
     mainColumn: {
       gridColumn: 'span 8',
       display: 'flex',
       flexDirection: 'column',
       gap: '1.5rem',
-      minWidth: 0, // حیاتی برای جلوگیری از سرریز فلکس
+      minWidth: 0,
     },
-    // ستون کناری (خلاصه وضعیت)
     sideColumn: {
       gridColumn: 'span 4',
       position: 'sticky',
@@ -162,7 +145,6 @@ const OrderScreen = () => {
       alignItems: 'center',
       gap: '0.5rem',
     },
-    // گرید داخلی برای اطلاعات کاربری
     infoGrid: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -170,7 +152,7 @@ const OrderScreen = () => {
     },
     infoItem: {
       flex: '1 1 250px',
-      minWidth: 0, // جلوگیری از سرریز متن
+      minWidth: 0,
       marginBottom: '1rem',
     },
     label: {
@@ -184,12 +166,10 @@ const OrderScreen = () => {
       lineHeight: '1.7',
       color: '#1a1a1a',
       fontWeight: '500',
-      // استایل‌های حیاتی برای شکستن متن
       overflowWrap: 'break-word',
       wordWrap: 'break-word',
       wordBreak: 'break-word',
     },
-    // آیتم‌های سفارش
     productItem: {
       display: 'flex',
       alignItems: 'center',
@@ -240,6 +220,21 @@ const OrderScreen = () => {
       cursor: 'pointer',
       marginTop: '1rem',
     },
+    // استایل دکمه پرداخت
+    payBtn: {
+      width: '100%',
+      padding: '1rem',
+      backgroundColor: '#fdd835', // رنگ زرد زرین‌پال
+      color: '#000',
+      border: 'none',
+      borderRadius: '12px',
+      fontSize: '1.1rem',
+      fontWeight: '700',
+      cursor: 'pointer',
+      marginTop: '1rem',
+      boxShadow: '0 4px 12px rgba(253, 216, 53, 0.3)',
+      transition: 'all 0.3s ease',
+    },
   };
 
   return isLoading ? (
@@ -282,7 +277,6 @@ const OrderScreen = () => {
                 <div style={styles.infoItem}>
                   <span style={styles.label}>نشانی پستی</span>
                   <div style={styles.valueText}>
-                    {/* این بخش قبلاً باعث خرابی می‌شد، الان فیکس شده */}
                     {order.shippingAddress.address}، {order.shippingAddress.city}
                     <br />
                     کد پستی: {order.shippingAddress.postalCode}
@@ -368,21 +362,19 @@ const OrderScreen = () => {
                 <span className="ltr-num">${order.totalPrice}</span>
               </div>
 
-              {/* دکمه‌های پرداخت PayPal */}
+              {/* دکمه‌های پرداخت جدید زرین‌پال */}
               {!order.isPaid && (
                 <div style={{marginTop: '1.5rem'}}>
                   {loadingPay && <Loader />}
-                  {isPending ? (
-                    <Loader />
-                  ) : (
-                    <div style={{zIndex: 1}}>
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={onApprove}
-                        onError={onError}
-                      />
-                    </div>
-                  )}
+                  
+                  <button 
+                    type="button" 
+                    style={styles.payBtn}
+                    onClick={paymentHandler}
+                    disabled={loadingPay}
+                  >
+                    پرداخت آنلاین با زرین‌پال
+                  </button>
                 </div>
               )}
 

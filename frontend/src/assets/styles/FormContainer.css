@@ -1,0 +1,112 @@
+.luxury-auth-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 85vh;
+  background-color: #efeae4; /* پس‌زمینه کرم گرم هماهنگ با تم سایت */
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e0d8;
+  margin: 30px 0;
+}
+
+/* --- بخش تصویر (سمت چپ) --- */
+.auth-image-section {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-side-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.auth-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 48px;
+}
+
+.auth-brand-content {
+  color: white;
+  text-align: right;
+}
+
+.auth-brand-title {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+}
+
+.auth-brand-subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* --- بخش فرم (سمت راست) --- */
+.auth-form-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background-color: #ffffff; /* کادر سفید فرم برای خوانایی عالی */
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #78716c; /* خاکستری ملایم و گرم */
+}
+
+.auth-form-body {
+  width: 100%;
+}
+
+/* --- ریسپانسیو برای موبایل --- */
+@media (max-width: 992px) {
+  .luxury-auth-wrapper {
+    min-height: auto;
+    border-radius: 16px;
+    margin: 15px 0;
+  }
+
+  .auth-image-section {
+    display: none; /* مخفی کردن عکس در موبایل تا فرم فضای کافی داشته باشد */
+  }
+
+  .auth-form-section {
+    padding: 32px 20px;
+    background-color: transparent;
+  }
+}

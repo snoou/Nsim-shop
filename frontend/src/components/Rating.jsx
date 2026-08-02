@@ -1,10 +1,12 @@
 import React from 'react';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import '../assets/styles/Rating.css'; // اتصال به استایل‌های اختصاصی
 
-const Rating = ({ value, text, color }) => {
+const Rating = ({ value = 0, text, color = '#F59E0B' }) => {
   return (
-    <div className='fashion-rating'>
-      {/* تولید هوشمند ستاره‌ها */}
+    <div className="premium-rating">
+      
+      {/* بخش نمایش ستاره‌ها */}
       <div className="stars-wrapper">
         {[1, 2, 3, 4, 5].map((index) => (
           <span key={index} style={{ color }} className="star-icon">
@@ -19,16 +21,11 @@ const Rating = ({ value, text, color }) => {
         ))}
       </div>
       
-      {/* متن تعداد نظرات (اختیاری) */}
-      {text && <span className='rating-text'>{text}</span>}
+      {/* متن راهنما (مثلاً تعداد نظرات) */}
+      {text && <span className="rating-text">{text}</span>}
+      
     </div>
   );
-};
-
-// رنگ پیش‌فرض: طلایی برند (#c5a065) به جای زرد جیغ
-Rating.defaultProps = {
-  color: '#c5a065', 
-  value: 0,
 };
 
 export default Rating;

@@ -40,7 +40,7 @@ const PlaceOrderScreen = () => {
     }
   };
 
-  // --- استایل‌های اصلاح شده نهایی ---
+  // --- استایل‌های اصلاح شده و هماهنگ ---
   const styles = {
     pageContainer: {
       backgroundColor: '#F9F9F7',
@@ -49,21 +49,21 @@ const PlaceOrderScreen = () => {
       padding: '2rem 1rem',
       fontFamily: "'Vazirmatn', sans-serif",
       display: 'flex',
-      justifyContent: 'center', // کل محتوا را در وسط صفحه نگه می‌دارد
-      direction: 'rtl', // جهت راست به چپ
+      justifyContent: 'center',
+      direction: 'rtl',
     },
     contentWrapper: {
       width: '100%',
-      maxWidth: '1200px', // حداکثر عرض استاندارد
-      margin: '0 auto',   // اطمینان از وسط بودن
+      maxWidth: '1200px',
+      margin: '0 auto',
     },
-    // گرید سیستم برای چیدمان دو ستونه
+    // گرید سیستم
     layoutGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(12, 1fr)',
       gap: '1.5rem',
       width: '100%',
-      alignItems: 'start', // جلوگیری از کشیدگی ارتفاع کارت‌ها
+      alignItems: 'start',
     },
     // ستون سمت راست (آدرس و محصولات)
     mainColumn: {
@@ -71,7 +71,7 @@ const PlaceOrderScreen = () => {
       display: 'flex',
       flexDirection: 'column',
       gap: '1.5rem',
-      minWidth: 0, // حیاتی برای جلوگیری از سرریز فلکس
+      minWidth: 0,
     },
     // ستون سمت چپ (فاکتور)
     sideColumn: {
@@ -81,34 +81,33 @@ const PlaceOrderScreen = () => {
     },
     card: {
       backgroundColor: '#fff',
-      borderRadius: '20px',
+      borderRadius: '24px', // کمی گردتر برای زیبایی بیشتر
       padding: '2rem',
-      boxShadow: '0 8px 24px rgba(0,0,0,0.04)',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
       border: '1px solid #f0f0f0',
       textAlign: 'right',
-      overflow: 'hidden', // جلوگیری از بیرون زدن محتوا از گردی کارت
+      overflow: 'hidden',
     },
     sectionTitle: {
-      fontSize: '1.6rem',
+      fontSize: '1.4rem',
       fontWeight: '700',
       marginBottom: '1.5rem',
-      borderBottom: '2px solid #f5f5f5',
+      borderBottom: '1px solid #eee',
       paddingBottom: '1rem',
       color: '#333',
     },
-    // کانتینر اطلاعات (آدرس و پرداخت)
     infoContainer: {
       display: 'flex',
-      flexWrap: 'wrap', // اجازه شکستن خط
+      flexWrap: 'wrap',
       gap: '2rem',
     },
     infoBlock: {
-      flex: '1 1 280px', // عرض پایه، اما قابل کوچک شدن
-      minWidth: 0,       // *** نکته کلیدی برای جلوگیری از بیرون زدگی متن ***
+      flex: '1 1 280px',
+      minWidth: 0,
       marginBottom: '1rem',
     },
     label: {
-      fontSize: '0.9rem',
+      fontSize: '0.85rem',
       color: '#999',
       marginBottom: '0.5rem',
       display: 'block',
@@ -116,16 +115,11 @@ const PlaceOrderScreen = () => {
     },
     valueText: {
       fontSize: '1.1rem',
-      lineHeight: '1.8',
+      lineHeight: '1.7',
       color: '#1a1a1a',
       fontWeight: '500',
-      // استایل‌های شکستن متن طولانی
       overflowWrap: 'break-word',
-      wordWrap: 'break-word',
-      wordBreak: 'break-word',
-      hyphens: 'auto',
     },
-    // لیست محصولات
     productItem: {
       display: 'flex',
       alignItems: 'center',
@@ -137,8 +131,8 @@ const PlaceOrderScreen = () => {
       width: '70px',
       height: '90px',
       objectFit: 'cover',
-      borderRadius: '8px',
-      backgroundColor: '#eee',
+      borderRadius: '12px',
+      backgroundColor: '#f8f8f8',
     },
     productName: {
       flex: 1,
@@ -146,10 +140,6 @@ const PlaceOrderScreen = () => {
       color: '#333',
       textDecoration: 'none',
       fontWeight: '600',
-      // اگر نام محصول خیلی طولانی بود
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
     },
     summaryRow: {
       display: 'flex',
@@ -164,22 +154,23 @@ const PlaceOrderScreen = () => {
       marginTop: '1.5rem',
       paddingTop: '1rem',
       borderTop: '2px dashed #eee',
-      fontSize: '1.3rem',
+      fontSize: '1.4rem',
       fontWeight: '800',
       color: '#000',
     },
     button: {
       width: '100%',
-      padding: '1rem',
-      backgroundColor: '#000',
+      padding: '1.2rem',
+      backgroundColor: '#1a1a1a',
       color: '#fff',
       border: 'none',
-      borderRadius: '12px',
+      borderRadius: '16px',
       fontSize: '1.1rem',
-      fontWeight: '600',
+      fontWeight: '700',
       cursor: 'pointer',
       marginTop: '1.5rem',
-      transition: 'background 0.3s',
+      transition: 'all 0.3s ease',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     },
   };
 
@@ -187,26 +178,13 @@ const PlaceOrderScreen = () => {
     <div style={styles.pageContainer}>
       <style>
         {`
-          /* مدیا کوئری برای موبایل و تبلت */
           @media (max-width: 992px) {
-            .grid-container {
-              grid-template-columns: 1fr !important; /* تبدیل به تک ستون */
-            }
-            .main-col, .side-col {
-              grid-column: span 1 !important; /* تمام عرض را بگیرد */
-              width: 100% !important;
-            }
-            .side-col {
-              position: static !important; /* حذف حالت چسبنده در موبایل */
-              order: -1; /* آوردن فاکتور به بالای صفحه در موبایل */
-              margin-bottom: 1.5rem;
-            }
+            .grid-container { grid-template-columns: 1fr !important; }
+            .main-col, .side-col { grid-column: span 1 !important; width: 100% !important; }
+            .side-col { position: static !important; order: -1; margin-bottom: 1.5rem; }
           }
-          /* فیکس برای متون انگلیسی در محیط فارسی */
-          .ltr-text {
-            direction: ltr;
-            display: inline-block;
-          }
+          .ltr-text { direction: ltr; display: inline-block; }
+          .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
         `}
       </style>
 
@@ -215,36 +193,34 @@ const PlaceOrderScreen = () => {
 
         <div className="grid-container" style={styles.layoutGrid}>
           
-          {/* --- ستون اصلی (جزئیات سفارش) --- */}
+          {/* --- ستون اصلی --- */}
           <div className="main-col" style={styles.mainColumn}>
             
-            {/* کارت آدرس و روش پرداخت */}
             <div style={styles.card}>
               <h2 style={styles.sectionTitle}>اطلاعات ارسال و پرداخت</h2>
               
               <div style={styles.infoContainer}>
-                {/* بلوک آدرس */}
                 <div style={styles.infoBlock}>
                   <span style={styles.label}>آدرس تحویل گیرنده</span>
                   <div style={styles.valueText}>
-                    {/* استفاده از div به جای p برای کنترل بهتر بلاک */}
                     {cart.shippingAddress.address}، {cart.shippingAddress.city}
                     <br />
                     کد پستی: {cart.shippingAddress.postalCode}
                   </div>
                 </div>
 
-                {/* بلوک پرداخت */}
                 <div style={styles.infoBlock}>
-                  <span style={styles.label}>روش پرداخت انتخاب شده</span>
+                  <span style={styles.label}>روش پرداخت</span>
                   <div style={styles.valueText}>
-                    {cart.paymentMethod}
+                    {/* نمایش زیباتر نام درگاه */}
+                    {cart.paymentMethod === 'ZarinPal' 
+                      ? 'درگاه پرداخت زرین‌پال' 
+                      : cart.paymentMethod}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* کارت لیست محصولات */}
             <div style={styles.card}>
               <h2 style={styles.sectionTitle}>اقلام سفارش ({cart.cartItems.length})</h2>
               {cart.cartItems.length === 0 ? (
@@ -267,7 +243,7 @@ const PlaceOrderScreen = () => {
                           {item.qty} عدد
                         </div>
                         <div className="ltr-text" style={{fontWeight: '700'}}>
-                          ${(item.qty * item.price).toFixed(2)}
+                          ${item.price}
                         </div>
                       </div>
                     </div>
@@ -277,10 +253,10 @@ const PlaceOrderScreen = () => {
             </div>
           </div>
 
-          {/* --- ستون کناری (فاکتور نهایی) --- */}
+          {/* --- ستون کناری --- */}
           <div className="side-col" style={styles.sideColumn}>
             <div style={styles.card}>
-              <h2 style={{...styles.sectionTitle, textAlign: 'center', borderBottom: 'none'}}>فاکتور نهایی</h2>
+              <h2 style={{...styles.sectionTitle, textAlign: 'center', borderBottom: 'none'}}>خلاصه سفارش</h2>
               
               <div style={styles.summaryRow}>
                 <span>قیمت کالاها</span>
@@ -311,12 +287,11 @@ const PlaceOrderScreen = () => {
               <button
                 type='button'
                 style={styles.button}
+                className="btn-hover"
                 disabled={cart.cartItems.length === 0}
                 onClick={placeOrderHandler}
-                onMouseOver={(e) => e.target.style.backgroundColor = '#333'}
-                onMouseOut={(e) => e.target.style.backgroundColor = '#000'}
               >
-                {isLoading ? 'در حال پردازش...' : 'تایید و پرداخت'}
+                {isLoading ? 'در حال ثبت...' : 'ثبت سفارش و پرداخت'}
               </button>
               
               {isLoading && <div style={{marginTop: '10px', textAlign: 'center'}}><Loader /></div>}

@@ -1,52 +1,41 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import logoFor from './../assets/logoFor.png';
-
+import '../assets/styles/FormContainer.css'; // اتصال به استایل اختصاصی
 
 const FormContainer = ({ children, title = "خوش آمدید", subtitle = "به دنیای مد و زیبایی بپیوندید" }) => {
   return (
-    <div className="auth-page-wrapper">
-      {/* دایره‌های متحرک پس‌زمینه برای زیبایی بیشتر */}
-      <div className="floating-shape shape-1"></div>
-      <div className="floating-shape shape-2"></div>
+    <div className="luxury-auth-wrapper">
+      
+      {/* بخش چپ: تصویر فشن و برندینگ (در موبایل مخفی می‌شود) */}
+      <div className="auth-image-section">
+        <img 
+          src={logoFor}
+          alt="نسیم - مد و زیبایی" 
+          className="auth-side-image"
+        />
+        <div className="auth-image-overlay">
+          <div className="auth-brand-content">
+            <h1 className="auth-brand-title">NSIM</h1>
+            <p className="auth-brand-subtitle">استایل شما، امضای شماست.</p>
+          </div>
+        </div>
+      </div>
 
-      <Container fluid className="p-0 h-100">
-        <Row className="g-0 h-100">
+      {/* بخش راست: کادر فرم (لاگین / ثبت‌نام) */}
+      <div className="auth-form-section">
+        <div className="auth-card">
+          <div className="auth-header">
+            <h2 className="auth-title">{title}</h2>
+            <span className="auth-subtitle">{subtitle}</span>
+          </div>
           
-          {/* ستون تصویر (در موبایل مخفی میشه) */}
-          <Col lg={6} className="d-none d-lg-block p-0 position-relative overflow-hidden">
-            <div className="auth-image-overlay">
-              <div className="auth-image-text">
-                <h1 className="display-4 fw-bold text-white mb-3" style={{fontFamily: 'Playfair Display'}}>NSIM</h1>
-                <p className="lead text-white-50">استایل شما، امضای شماست.</p>
-              </div>
-            </div>
-            {/* تصویر مدل فشن - می‌تونی لینک رو با عکس لوکال عوض کنی */}
-            <img 
-              src={logoFor}
-              alt="Fashion Model" 
-              className="auth-bg-image"
-            />
-          </Col>
+          {/* فرم‌های لاگین یا ثبت‌نام که به صورت فرزند (Children) پاس داده می‌شوند */}
+          <div className="auth-form-body">
+            {children}
+          </div>
+        </div>
+      </div>
 
-          {/* ستون فرم */}
-          <Col lg={6} className="d-flex align-items-center justify-content-center position-relative">
-            <div className="auth-form-container">
-              <div className="glass-card">
-                <div className="text-center mb-5">
-                  <h2 className="auth-title">{title}</h2>
-                  <span className="auth-subtitle text-muted">{subtitle}</span>
-                </div>
-                
-                {/* این children همون فرم‌های لاگین یا ثبت نام هستن */}
-                <div className="auth-form-wrapper">
-                  {children}
-                </div>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
     </div>
   );
 };

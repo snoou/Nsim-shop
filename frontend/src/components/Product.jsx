@@ -1,42 +1,40 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { FiHeart, FiShoppingBag, FiPlus } from 'react-icons/fi'; // آیکون‌های جدید
-import { FaHeart } from 'react-icons/fa'; // قلب توپر برای حالت لایک شده
+import { FiHeart, FiPlus } from 'react-icons/fi';
+import { FaHeart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Rating from './Rating';
-import { addToCart } from '../slices/cartSlice'; // فرض می‌کنیم این اکشن رو داری
+import { addToCart } from '../slices/cartSlice';
+import '../assets/styles/ProductCard.css';
 
-const Product = ({ product }) => {
+const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
-  // استیت محلی برای لایک (بعداً باید به ریداکس وصل بشه)
   const [isLiked, setIsLiked] = useState(false);
 
-  // هندلر افزودن به سبد خرید
+  // افزودن به سبد خرید
   const addToCartHandler = (e) => {
-    e.preventDefault(); // جلوگیری از باز شدن لینک محصول
-    e.stopPropagation(); // جلوگیری از انتشار کلیک به والدین
+    e.preventDefault(); 
+    e.stopPropagation(); 
 
     if (product.countInStock > 0) {
       dispatch(addToCart({ ...product, qty: 1 }));
+      
       toast.success(`${product.name} به سبد خرید اضافه شد`, {
-        position: "bottom-center", // تو موبایل پایین بهتره
+        position: "bottom-center",
         autoClose: 2000,
         hideProgressBar: true,
-        theme: "dark",
+        theme: "colored", // استفاده از تم رنگی به جای دارک
       });
-      // navigate('/cart'); // اگر میخوای مستقیم بره سبد خرید اینو آنکامنت کن، ولی معمولا تو صفحه اصلی نمیرن
     }
   };
 
-  // هندلر لایک کردن
+  // لایک کردن محصول
   const likeHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsLiked(!isLiked);
-    // اینجا بعدا باید درخواست به بک‌اند ارسال بشه
+    
     toast.info(isLiked ? 'از علاقه‌مندی‌ها حذف شد' : 'به علاقه‌مندی‌ها اضافه شد', {
       position: "bottom-center",
       autoClose: 1000,
@@ -46,60 +44,56 @@ const Product = ({ product }) => {
   };
 
   return (
-    <div className="chic-product-card">
-      {/* بخش تصویر و دکمه لایک */}
-      <div className="chic-image-wrapper">
+    <div className="product-card">
+      {/* بخش بالایی: عکس و نشان‌ها */}
+      <div className="card-image-wrapper">
         <Link to={`/product/${product._id}`}>
           <img 
             src={product.image} 
             alt={product.name} 
-            className="chic-product-img" 
-            loading="lazy" // برای سرعت بهتر در موبایل
+            className="card-img" 
+            loading="lazy" 
           />
         </Link>
         
-        {/* دکمه لایک (همیشه گوشه بالا سمت راست هست) */}
-        <button className="chic-like-btn" onClick={likeHandler} title="علاقه‌مندی">
-          {isLiked ? <FaHeart color="#c53030" /> : <FiHeart />}
+        {/* دکمه علاقه‌مندی */}
+        <button className="like-btn" onClick={likeHandler} aria-label="افزودن به علاقه‌مندی">
+          {isLiked ? <FaHeart color="#EF4444" size={18} /> : <FiHeart size={18} />}
         </button>
 
-        {/* بج ناموجود */}
+        {/* نشانگر اتمام موجودی */}
         {product.countInStock === 0 && (
-            <span className="chic-badge sold-out">تمام شد</span>
+          <span className="stock-badge out-of-stock">ناموجود</span>
         )}
       </div>
 
-      {/* بخش اطلاعات و دکمه خرید */}
-      <div className="chic-product-info">
-        <Link to={`/product/${product._id}`} className="text-decoration-none text-dark">
-          {/* برند (کوچک بالای اسم) */}
-          <div className="chic-brand">{product.brand || 'برند'}</div>
-          {/* اسم محصول */}
-          <h3 className="chic-title">{product.name}</h3>
-        </Link>
-
-        {/* ریتینگ (اختیاری، میشه حذفش کرد برای خلوتی بیشتر) */}
-        <div className="mb-2" style={{fontSize: '0.8rem'}}>
-           <Rating value={product.rating} text={null} /> 
+      {/* بخش پایینی: اطلاعات و قیمت */}
+      <div className="card-info">
+        <div className="card-meta">
+          <span className="card-brand">{product.brand || 'نسیم'}</span>
+          {/* اگر نیاز بود امتیازها را نمایش دهی، کامنت خط زیر را بردار */}
+          {/* <Rating value={product.rating} text={null} /> */}
         </div>
 
-        {/* ردیف قیمت و دکمه خرید */}
-        <div className="chic-footer-row">
-          <div className="chic-price">
+        <Link to={`/product/${product._id}`} className="card-title-link">
+          <h3 className="card-title">{product.name}</h3>
+        </Link>
+
+        <div className="card-footer">
+          <div className="card-price">
              {product.price.toLocaleString()} <span className="currency">تومان</span>
           </div>
 
-          {/* دکمه افزودن به سبد (کوچک و مینیمال کنار قیمت) */}
           <button 
-             className="chic-add-btn" 
+             className={`add-btn ${product.countInStock === 0 ? 'disabled' : ''}`} 
              onClick={addToCartHandler} 
              disabled={product.countInStock === 0}
-             title="افزودن به سبد"
+             title={product.countInStock === 0 ? 'ناموجود' : 'افزودن به سبد'}
           >
             {product.countInStock === 0 ? (
-              <span style={{fontSize: '0.7rem', padding:'0 5px'}}>ناموجود</span>
+              <span className="disabled-text">تمام شد</span>
             ) : (
-              <FiPlus size={18} /> // آیکون بعلاوه شیک‌تره برای این حالت
+              <FiPlus size={20} />
             )}
           </button>
         </div>
@@ -108,4 +102,4 @@ const Product = ({ product }) => {
   );
 };
 
-export default Product;
+export default ProductCard;

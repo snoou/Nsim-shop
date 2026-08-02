@@ -1,0 +1,116 @@
+.luxury-checkout-steps {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  padding: 0 16px;
+}
+
+.steps-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 700px;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e0d8; /* حاشیه ملایم با تم گرم */
+  border-radius: 50px;
+  padding: 16px 32px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+}
+
+/* هر آیتم مرحله */
+.step-item {
+  display: flex;
+  align-items: center;
+}
+
+.step-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #a39c93; /* رنگ خاکستری برای مراحل قفل یا انجام نشده */
+  transition: all 0.3s ease;
+}
+
+.step-content.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* باکس آیکون */
+.step-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f5f2ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #78716c;
+  transition: all 0.3s ease;
+}
+
+/* متن مرحله */
+.step-text {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* --- حالت مرحله فعال (Active) --- */
+.step-item.active .step-icon-box {
+  background-color: var(--primary, #0d9488); /* سبز کله‌غازی برند */
+  color: white;
+  box-shadow: 0 0 0 5px rgba(13, 148, 136, 0.15);
+}
+
+.step-item.active .step-text {
+  color: #2b2824; /* متن تیره و کاملاً خوانا */
+  font-weight: 700;
+}
+
+/* --- حالت مرحله تکمیل شده (Completed) --- */
+.step-item.completed .step-icon-box {
+  background-color: #10b981; /* سبز موفقیت */
+  color: white;
+}
+
+.step-item.completed .step-text {
+  color: #4b5563;
+}
+
+/* --- خط اتصال بین مراحل --- */
+.step-line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #e5e0d8;
+  margin: 0 16px;
+  transition: background-color 0.3s ease;
+}
+
+.step-line.completed-line {
+  background-color: #10b981; /* سبز شدن خطوط طی شده */
+}
+
+/* --- ریسپانسیو برای موبایل --- */
+@media (max-width: 768px) {
+  .steps-wrapper {
+    padding: 12px 16px;
+    border-radius: 20px;
+  }
+  
+  .step-text {
+    display: none; /* در موبایل متن‌ها مخفی می‌شوند و فقط آیکون‌ها برای صرفه‌جویی در فضا نشان داده می‌شوند */
+  }
+
+  .step-icon-box {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .step-line {
+    margin: 0 8px;
+  }
+}

@@ -1,71 +1,77 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiUser, FiMapPin, FiCreditCard, FiCheckCircle, FiCheck } from 'react-icons/fi';
+import '../assets/styles/CheckoutSteps.css'; // اتصال به فایل استایل اختصاصی
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   
-  // تعریف مراحل به صورت آرایه برای مدیریت تمیزتر
+  // تعریف مراحل به صورت آرایه برای ساختار تمیزتر
   const steps = [
     { 
       label: 'ورود به حساب', 
       link: '/login', 
       active: step1, 
-      icon: <FiUser />,
-      isCompleted: step1 && step2 // اگر مرحله 2 فعاله، یعنی مرحله 1 تموم شده
+      icon: <FiUser size={18} />,
+      isCompleted: Boolean(step2) // اگر مرحله بعدی فعال است، یعنی این مرحله با موفقیت رد شده
     },
     { 
       label: 'اطلاعات ارسال', 
       link: '/shipping', 
       active: step2, 
-      icon: <FiMapPin />,
-      isCompleted: step2 && step3 
+      icon: <FiMapPin size={18} />,
+      isCompleted: Boolean(step3) 
     },
     { 
       label: 'پرداخت', 
       link: '/payment', 
       active: step3, 
-      icon: <FiCreditCard />,
-      isCompleted: step3 && step4 
+      icon: <FiCreditCard size={18} />,
+      isCompleted: Boolean(step4) 
     },
     { 
       label: 'تایید نهایی', 
       link: '/placeorder', 
       active: step4, 
-      icon: <FiCheckCircle />,
-      isCompleted: false // مرحله آخر تکمیل شدنش بعد از ثبت سفارشه
+      icon: <FiCheckCircle size={18} />,
+      isCompleted: false 
     },
   ];
 
   return (
-    <div className="checkout-progress-container mb-5">
-      <ul className="progressbar">
-        {steps.map((step, index) => (
-          <li 
-            key={index} 
-            className={`
-              ${step.active ? 'active' : ''} 
-              ${step.isCompleted ? 'completed' : ''}
-            `}
-          >
-            {step.active ? (
-              <Link to={step.link} className="step-link">
-                <div className="icon-box">
-                  {/* اگر مرحله تموم شده تیک نشون بده، وگرنه آیکون خود مرحله */}
-                  {step.isCompleted ? <FiCheck size={20} /> : step.icon}
-                </div>
-                <span className="step-label">{step.label}</span>
-              </Link>
-            ) : (
-              <div className="step-link disabled">
-                <div className="icon-box">
-                  {step.icon}
-                </div>
-                <span className="step-label">{step.label}</span>
+    <div className="luxury-checkout-steps">
+      <div className="steps-wrapper">
+        {steps.map((step, index) => {
+          const isClickable = step.active || step.isCompleted;
+
+          return (
+            <React.Fragment key={index}>
+              {/* خط اتصال بین مراحل */}
+              {index > 0 && (
+                <div className={`step-line ${step.active || step.isCompleted ? 'completed-line' : ''}`} />
+              )}
+
+              {/* بدنه هر مرحله */}
+              <div className={`step-item ${step.active ? 'active' : ''} ${step.isCompleted ? 'completed' : ''}`}>
+                {isClickable ? (
+                  <Link to={step.link} className="step-content">
+                    <div className="step-icon-box">
+                      {step.isCompleted ? <FiCheck size={18} /> : step.icon}
+                    </div>
+                    <span className="step-text">{step.label}</span>
+                  </Link>
+                ) : (
+                  <div className="step-content disabled">
+                    <div className="step-icon-box">
+                      {step.icon}
+                    </div>
+                    <span className="step-text">{step.label}</span>
+                  </div>
+                )}
               </div>
-            )}
-          </li>
-        ))}
-      </ul>
+            </React.Fragment>
+          );
+        })}
+      </div>
     </div>
   );
 };

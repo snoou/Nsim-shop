@@ -1,32 +1,33 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FiLock, FiArrowRight } from 'react-icons/fi'; // آیکون قفل و فلش
+import { FiLock, FiArrowRight } from 'react-icons/fi';
+import '../assets/styles/AccessDenied.css'; // اتصال به استایل اختصاصی
 
 const AccessDenied = () => {
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center text-center" style={{ minHeight: '60vh' }}>
-      
-      {/* آیکون قفل بزرگ و متحرک */}
-      <div className="denied-icon-wrapper mb-4">
-        <FiLock size={50} />
+    <div className="access-denied-container">
+      <div className="access-denied-card">
+        
+        {/* آیکون قفل در یک دایره لوکس */}
+        <div className="denied-icon-wrapper">
+          <FiLock size={36} />
+        </div>
+
+        <h2 className="denied-title">دسترسی محدود</h2>
+        
+        <p className="denied-desc">
+          شما اجازه دسترسی به این بخش را ندارید. این صفحه مخصوص مدیران فروشگاه نسیم است.
+          <br />
+          اگر فکر می‌کنید اشتباهی رخ داده، با پشتیبانی تماس بگیرید.
+        </p>
+
+        <Link to="/" className="denied-home-btn">
+          <span>بازگشت به فروشگاه</span>
+          <FiArrowRight size={18} />
+        </Link>
+
       </div>
-
-      <h2 className="mb-3 fw-bold text-dark">دسترسی محدود</h2>
-      
-      <p className="text-muted mb-5" style={{ maxWidth: '400px', lineHeight: '1.8' }}>
-        شما اجازه دسترسی به این بخش را ندارید. این صفحه مخصوص مدیران فروشگاه است.
-        <br />
-        اگر فکر می‌کنید اشتباهی رخ داده، با پشتیبانی تماس بگیرید.
-      </p>
-
-      <Link to="/">
-        <Button variant="dark" className="px-5 py-2 rounded-pill d-flex align-items-center gap-2">
-          بازگشت به فروشگاه <FiArrowRight />
-        </Button>
-      </Link>
-
-    </Container>
+    </div>
   );
 };
 
