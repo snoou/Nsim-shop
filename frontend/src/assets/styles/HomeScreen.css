@@ -1,0 +1,141 @@
+/* ==================== کانتینر اصلی ==================== */
+.luxury-home-wrapper {
+  background-color: transparent;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.main-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==================== حالت جستجو (دکمه بازگشت) ==================== */
+.search-header-container {
+  max-width: 1200px;
+  margin: 40px auto 20px;
+  padding: 0 20px;
+}
+
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  color: #2b2824;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.btn-back-home:hover {
+  background-color: var(--primary, #0d9488); /* تغییر به سبز کله‌غازی در هاور */
+  color: #ffffff;
+  border-color: var(--primary, #0d9488);
+  transform: translateX(-5px); /* حرکت نرم به سمت راست (چون سایت راست‌چین است) */
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+}
+
+/* ==================== هدر بخش محصولات ==================== */
+.section-header-modern {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 60px 0 32px;
+  border-bottom: 2px solid #efeae4; /* خط جداکننده کرم رنگ */
+  padding-bottom: 16px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.title-icon {
+  color: var(--accent, #f97316); /* آیکون ستاره/جرقه به رنگ نارنجی برند */
+}
+
+.highlight-text {
+  color: var(--primary, #0d9488);
+}
+
+.product-count-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f5f3ef;
+  color: #78716c;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==================== گرید محصولات (CSS Grid) ==================== */
+.luxury-product-grid {
+  display: grid;
+  /* در حالت دسکتاپ 4 ستون ایجاد می‌کند */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* ==================== ریسپانسیو (واکنش‌گرایی) ==================== */
+
+/* برای تبلت‌ها و لپ‌تاپ‌های کوچک (زیر 992 پیکسل) */
+@media (max-width: 992px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 ستونه */
+  }
+}
+
+/* برای تبلت‌ها (زیر 768 پیکسل) */
+@media (max-width: 768px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 ستونه */
+    gap: 16px;
+  }
+  
+  .section-title {
+    font-size: 22px;
+  }
+}
+
+/* برای موبایل‌ها (زیر 576 پیکسل) */
+@media (max-width: 576px) {
+  .section-header-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .product-count-badge {
+    display: none; /* مخفی کردن تعداد کالا در موبایل برای خلوت شدن هدر */
+  }
+
+  .luxury-product-grid {
+    grid-template-columns: 1fr; /* 1 ستونه در موبایل */
+  }
+}

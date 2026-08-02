@@ -1,0 +1,308 @@
+/* ==================== کانتینر اصلی ==================== */
+.luxury-placeorder-wrapper {
+  background-color: transparent;
+  min-height: 80vh;
+  padding: 20px 20px 60px;
+}
+
+.placeorder-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==================== هدر صفحه ==================== */
+.placeorder-header {
+  text-align: right;
+  margin: 32px 0;
+}
+
+.placeorder-main-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 8px;
+}
+
+.placeorder-subtitle {
+  color: #78716c;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ==================== گرید بندی (CSS Grid) ==================== */
+.placeorder-grid-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* دسکتاپ: نسبت 2 به 1 */
+  gap: 32px;
+  align-items: start;
+}
+
+.placeorder-main-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.placeorder-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+/* ==================== کارت‌های اطلاعات ==================== */
+.luxury-order-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.card-section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid #efeae4;
+  padding-bottom: 16px;
+}
+
+.section-icon {
+  color: var(--primary, #0d9488);
+}
+
+.inline-icon {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* بلوک‌های متنی */
+.info-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #fcfbf9;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #efeae4;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #a39c93;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 16px;
+  color: #2b2824;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.info-sub-value {
+  font-size: 13px;
+  color: #78716c;
+}
+
+/* ==================== لیست اقلام ==================== */
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-product-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px dashed #e5e0d8;
+}
+
+.order-product-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.product-image-box {
+  width: 75px;
+  height: 90px;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #efeae4;
+}
+
+.product-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-item-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-item-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2b2824;
+  text-decoration: none;
+  transition: color 0.3s;
+  line-height: 1.5;
+}
+
+.product-item-name:hover {
+  color: var(--primary, #0d9488);
+}
+
+.product-item-meta {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.item-qty {
+  font-size: 13px;
+  color: #78716c;
+  background: #efeae4;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.item-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #2b2824;
+}
+
+.item-price small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #a39c93;
+}
+
+/* ==================== فاکتور و پرداخت ==================== */
+.invoice-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+}
+
+.invoice-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 24px;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.invoice-label { color: #78716c; font-weight: 500; }
+.invoice-value { color: #2b2824; font-weight: 700; }
+.text-teal { color: var(--primary, #0d9488) !important; font-weight: 800; }
+
+.invoice-divider {
+  border: none;
+  border-top: 2px dashed #efeae4;
+  margin: 24px 0;
+}
+
+.invoice-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 32px;
+}
+
+.total-amount {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--primary, #0d9488);
+}
+
+.btn-luxury-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary, #0d9488), #0b7a70);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-luxury-submit:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(13, 148, 136, 0.3);
+}
+
+.btn-luxury-submit:disabled {
+  background: #d6ccc0;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.payment-note {
+  font-size: 12px;
+  color: #a39c93;
+}
+
+/* ==================== ریسپانسیو موبایل ==================== */
+@media (max-width: 992px) {
+  .placeorder-grid-layout {
+    grid-template-columns: 1fr; /* تک‌ستونه شدن در تبلت و موبایل */
+  }
+
+  .placeorder-sidebar {
+    position: relative;
+    top: 0;
+    order: -1; /* در موبایل فاکتور بالای صفحه نمایش داده می‌شود */
+  }
+
+  .product-item-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .product-item-meta {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

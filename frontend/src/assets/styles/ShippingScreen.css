@@ -1,0 +1,134 @@
+.editorial-shipping-wrapper {
+  background-color: #f9f9f7;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.editorial-shipping-container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clean-shipping-box {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e0d8;
+  margin-top: 32px;
+}
+
+.shipping-text-center {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.shipping-heading {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 8px;
+}
+
+.shipping-subheading {
+  font-size: 14px;
+  color: #78716c;
+}
+
+.clean-shipping-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group-minimal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group-minimal label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5c554e;
+}
+
+.input-minimal {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  font-family: inherit;
+  font-size: 15px;
+  color: #2b2824;
+  transition: all 0.3s ease;
+  resize: none;
+}
+
+.input-minimal:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+.input-minimal::placeholder {
+  color: #c8c0b5;
+  font-size: 14px;
+}
+
+.ltr-align {
+  direction: ltr;
+  text-align: left;
+}
+
+.form-row-minimal {
+  display: flex;
+  gap: 16px;
+}
+
+.w-50 {
+  flex: 1;
+}
+
+.btn-black-solid {
+  width: 100%;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-black-solid:hover {
+  background-color: var(--primary, #0d9488);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+}
+
+@media (max-width: 480px) {
+  .clean-shipping-box {
+    padding: 32px 24px;
+  }
+  .form-row-minimal {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

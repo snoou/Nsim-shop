@@ -1,0 +1,360 @@
+/* ==================== کانتینر اصلی ==================== */
+.luxury-order-wrapper {
+  background-color: #f9f9f7; /* پس‌زمینه بسیار روشن و گرم */
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.order-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==================== هدر ==================== */
+.order-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.order-main-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  margin: 0;
+}
+
+.order-id-badge {
+  background-color: #efeae4;
+  color: #78716c;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==================== گرید بندی (CSS Grid) ==================== */
+.order-grid-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* دسکتاپ: ستون راست بزرگتر، چپ کوچکتر */
+  gap: 32px;
+  align-items: start;
+}
+
+.order-main-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.order-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+/* ==================== کارت‌های اطلاعات ==================== */
+.luxury-order-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.card-section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid #efeae4;
+  padding-bottom: 16px;
+}
+
+.section-icon {
+  color: var(--primary, #0d9488);
+}
+
+/* بلوک‌های متنی */
+.info-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #a39c93;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 16px;
+  color: #2b2824;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.info-sub-value {
+  font-size: 14px;
+  color: #78716c;
+}
+
+/* هشدار وضعیت (Alerts) */
+.status-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.alert-warning {
+  background-color: rgba(249, 115, 22, 0.1);
+  color: var(--accent, #f97316);
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+/* ==================== لیست اقلام ==================== */
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-product-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px dashed #e5e0d8;
+}
+
+.order-product-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.product-image-box {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-item-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-item-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2b2824;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.product-item-name:hover {
+  color: var(--primary, #0d9488);
+}
+
+.product-item-meta {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.item-qty {
+  font-size: 13px;
+  color: #78716c;
+  background: #efeae4;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #2b2824;
+}
+
+.item-price small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #a39c93;
+}
+
+/* ==================== فاکتور و پرداخت ==================== */
+.invoice-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+}
+
+.invoice-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 24px;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.invoice-label { color: #78716c; }
+.invoice-value { color: #2b2824; font-weight: 700; }
+.text-teal { color: var(--primary, #0d9488) !important; font-weight: 900; }
+
+.invoice-divider {
+  border: none;
+  border-top: 2px dashed #efeae4;
+  margin: 24px 0;
+}
+
+.invoice-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 32px;
+}
+
+.total-amount {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--primary, #0d9488);
+}
+
+/* دکمه زرین‌پال */
+.payment-action-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-zarinpal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: #fdd835; /* رنگ زرد اختصاصی زرین‌پال */
+  color: #1a1a1a;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(253, 216, 53, 0.3);
+}
+
+.btn-zarinpal:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(253, 216, 53, 0.4);
+}
+
+.btn-zarinpal:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.payment-note {
+  text-align: center;
+  font-size: 13px;
+  color: #a39c93;
+}
+
+/* دکمه ادمین */
+.btn-admin-deliver {
+  width: 100%;
+  background: #2b2824;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.3s;
+}
+
+.btn-admin-deliver:hover {
+  background: #111827;
+}
+
+/* ==================== ریسپانسیو موبایل ==================== */
+@media (max-width: 992px) {
+  .order-grid-layout {
+    grid-template-columns: 1fr; /* تک‌ستونه شدن در تبلت و موبایل */
+  }
+
+  .order-sidebar {
+    position: relative;
+    top: 0;
+    order: -1; /* در موبایل فاکتور و دکمه پرداخت را می‌آورد بالای صفحه! */
+  }
+
+  .info-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .product-item-meta {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

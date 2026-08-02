@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { FiMinus, FiPlus, FiShoppingBag, FiArrowRight, FiStar, FiUser, FiCalendar } from 'react-icons/fi';
+import { FiMinus, FiPlus, FiShoppingBag, FiArrowRight, FiUser, FiCalendar, FiCheck, FiX } from 'react-icons/fi';
 
 import { useGetProductDetailsQuery, useCreateReviewMutation } from '../slices/productsApiSlice';
 import Rating from '../components/Rating';
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
+import '../assets/styles/ProductScreen.css'; 
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -19,10 +20,20 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  
+  // استیت برای مدیریت عکسی که در حال نمایش است
+  const [activeImage, setActiveImage] = useState('');
 
   const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId);
   const { userInfo } = useSelector((state) => state.auth);
   const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
+
+  // تنظیم اولین عکس به عنوان عکس پیش‌فرض هنگام لود شدن محصول
+  useEffect(() => {
+    if (product) {
+      setActiveImage(product.image);
+    }
+  }, [product]);
 
   const increaseQty = () => {
     if (product && qty < product.countInStock) setQty(qty + 1);
@@ -40,11 +51,7 @@ const ProductScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await createReview({
-        productId,
-        rating,
-        comment,
-      }).unwrap();
+      await createReview({ productId, rating, comment }).unwrap();
       refetch();
       toast.success('نظر شما با موفقیت ثبت شد');
       setRating(0);
@@ -54,313 +61,153 @@ const ProductScreen = () => {
     }
   };
 
+  if (isLoading) return <Loader />;
+  if (error) return <Message variant='danger'>{error?.data?.message || error.error}</Message>;
+
+  // استخراج لیست تصاویر (اگر آرایه تصاویر وجود داشت از آن استفاده میکنیم، وگرنه فقط عکس اصلی)
+  const productImages = product.images && product.images.length > 0 ? product.images : [product.image];
+
   return (
-    <div className="fashion-showcase">
-      {/* استایل‌های اختصاصی این صفحه */}
-      <style>{`
-        .fashion-showcase {
-          background-color: #fff;
-          padding-bottom: 100px; /* فضا برای نوار ابزار پایین */
-          font-family: 'Vazirmatn', sans-serif;
-          position: relative;
-        }
-        .gallery-container {
-          width: 100%;
-          height: 50vh;
-          background: #f9f9f9;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          position: relative;
-        }
-        .gallery-img {
-          max-height: 100%;
-          max-width: 100%;
-          object-fit: contain;
-          transition: transform 0.3s ease;
-        }
-        .gallery-img:hover {
-          transform: scale(1.05);
-        }
-        .product-overlay-info {
-          padding: 2rem 1.5rem;
-          max-width: 800px;
-          margin: 0 auto;
-        }
-        .showcase-brand {
-          font-size: 0.9rem;
-          color: #888;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          font-weight: 700;
-        }
-        .showcase-title {
-          font-size: 1.8rem;
-          font-weight: 800;
-          color: #1a1a1a;
-          margin: 0.5rem 0 1rem;
-        }
-        .showcase-desc {
-          color: #555;
-          line-height: 1.8;
-          font-size: 1rem;
-        }
+    <div className="editorial-product-wrapper">
+      <Meta title={product.name} image={product.image} />
+
+      <div className="editorial-container">
         
-        /* Action Bar Styles */
-        .action-bar-container {
-          position: fixed;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 90%;
-          max-width: 600px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(0,0,0,0.05);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-          border-radius: 20px;
-          padding: 15px 20px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          z-index: 1000;
-          animation: slideUp 0.5s ease-out;
-        }
-        @keyframes slideUp {
-          from { transform: translate(-50%, 100%); opacity: 0; }
-          to { transform: translate(-50%, 0); opacity: 1; }
-        }
-        .bar-price {
-          font-size: 1.2rem;
-          font-weight: 800;
-          color: #1a1a1a;
-          display: flex;
-          flex-direction: column;
-          line-height: 1;
-        }
-        .bar-price .currency {
-          font-size: 0.7rem;
-          color: #888;
-          font-weight: 400;
-          margin-top: 2px;
-        }
-        .bar-qty {
-          display: flex;
-          align-items: center;
-          background: #f0f0f0;
-          border-radius: 30px;
-          padding: 5px;
-        }
-        .qty-btn-round {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          border: none;
-          background: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-          transition: all 0.2s;
-        }
-        .qty-btn-round:active { transform: scale(0.9); }
-        .qty-display {
-          width: 30px;
-          text-align: center;
-          font-weight: bold;
-        }
-        .bar-add-btn {
-          background: #1a1a1a;
-          color: #fff;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 15px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background 0.3s;
-        }
-        .bar-add-btn:hover {
-          background: #333;
-        }
-        .bar-add-btn:disabled {
-          background: #ccc;
-          cursor: not-allowed;
-        }
-
-        /* Review Section */
-        .reviews-section {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        .review-card {
-            background: #f9f9f9;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .form-control-custom {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            background: #f9f9f9;
-        }
-      `}</style>
-
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error?.data?.message || error.error}</Message>
-      ) : (
-        <>
-          <Meta title={product.name} image={product.image} />
-
-          {/* دکمه بازگشت شناور */}
-          <Link to="/" className="position-absolute top-0 start-0 m-4 text-dark bg-white p-2 rounded-circle shadow-sm" style={{zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-             <FiArrowRight size={24} />
+        {/* دکمه بازگشت مینیمال */}
+        <div className="back-nav">
+          <Link to="/" className="btn-minimal-back">
+            <FiArrowRight size={20} /> بازگشت به ویترین
           </Link>
+        </div>
 
-          {/* بخش ۱: گالری عکس */}
-          <div className="gallery-container">
-            <div className="gallery-item">
-               <img src={product.image} alt={product.name} className="gallery-img" />
+        <div className="product-split-layout">
+          
+          {/* --- ستون راست: گالری تصاویر ادیتوریال --- */}
+          <div className="gallery-section">
+            <div className="main-image-display">
+              <img src={activeImage} alt={product.name} />
             </div>
-          </div>
-
-          {/* بخش ۲: اطلاعات محصول */}
-          <div className="product-overlay-info">
-             <div className="mb-2">
-                <span className="showcase-brand">{product.brand || 'Luxury Brand'}</span>
-             </div>
-             <h1 className="showcase-title">{product.name}</h1>
-             
-             <div className="showcase-desc">
-                <div className="d-flex align-items-center justify-content-between mb-3">
-                    <Rating value={product.rating} text={`(${product.numReviews} نظر)`} />
-                    <span className={product.countInStock > 0 ? 'text-success small fw-bold' : 'text-danger small fw-bold'}>
-                       {product.countInStock > 0 ? '● موجود در انبار' : '● ناموجود'}
-                    </span>
-                </div>
-                <p className="mb-0 text-justify" style={{textAlign: 'justify'}}>
-                   {product.description}
-                </p>
-             </div>
-          </div>
-
-          {/* بخش ۳: نظرات کاربران */}
-          <div className="reviews-section">
-            <h3 className="mb-4 fw-bold">نظرات کاربران</h3>
-            {product.reviews.length === 0 && <Message>هیچ نظری ثبت نشده است.</Message>}
             
-            <div className="list-group list-group-flush">
-              {product.reviews.map((review) => (
-                <div key={review._id} className="review-card">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                      <div className="d-flex align-items-center gap-2">
-                          <div className="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center" style={{width: 30, height: 30}}>
-                              <FiUser size={14} />
-                          </div>
-                          <strong>{review.name}</strong>
-                      </div>
-                      <Rating value={review.rating} />
+            {/* نمایش لیست تصاویر کوچک در صورتی که بیشتر از یک عکس باشد */}
+            {productImages.length > 1 && (
+              <div className="thumbnail-track">
+                {productImages.map((img, index) => (
+                  <div 
+                    key={index} 
+                    className={`thumb-item ${activeImage === img ? 'active-thumb' : ''}`}
+                    onClick={() => setActiveImage(img)}
+                  >
+                    <img src={img} alt={`${product.name} - ${index + 1}`} />
                   </div>
-                  <div className="d-flex align-items-center gap-1 text-muted small mb-2">
-                     <FiCalendar />
-                     <span>{review.createdAt.substring(0, 10)}</span>
-                  </div>
-                  <p className="mb-0">{review.comment}</p>
-                </div>
-              ))}
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* --- ستون چپ: اطلاعات و خرید --- */}
+          <div className="details-section">
+            
+            <div className="product-header-block">
+              <span className="brand-label">{product.brand || 'نسیم کالکشن'}</span>
+              <h1 className="main-title">{product.name}</h1>
               
-              {/* فرم ارسال نظر */}
-              <div className="mt-5">
-                <h4 className="fw-bold mb-3">نظر خود را بنویسید</h4>
+              <div className="meta-info">
+                <div className="rating-wrap">
+                  <Rating value={product.rating} />
+                  <span className="review-count text-muted">({product.numReviews} دیدگاه)</span>
+                </div>
+                <div className={`stock-status ${product.countInStock > 0 ? 'text-teal' : 'text-danger'}`}>
+                  {product.countInStock > 0 ? <><FiCheck /> آماده ارسال</> : <><FiX /> ناموجود</>}
+                </div>
+              </div>
+            </div>
+
+            <div className="price-block">
+              <span className="price-number">{Number(product.price).toLocaleString()}</span>
+              <span className="currency-text">تومان</span>
+            </div>
+
+            <p className="description-text">{product.description}</p>
+
+            {/* کنترلرهای خرید */}
+            <div className="purchase-action-container">
+              {product.countInStock > 0 ? (
+                <div className="action-row">
+                  <div className="qty-pill">
+                     <button onClick={decreaseQty} disabled={qty <= 1}><FiMinus /></button>
+                     <span className="qty-val">{qty}</span>
+                     <button onClick={increaseQty} disabled={qty >= product.countInStock}><FiPlus /></button>
+                  </div>
+                  <button className="btn-add-to-bag" onClick={addToCartHandler}>
+                     <FiShoppingBag size={20} />
+                     <span>افزودن به سبد خرید</span>
+                  </button>
+                </div>
+              ) : (
+                <button className="btn-add-to-bag out-of-stock-btn" disabled>
+                   در حال حاضر ناموجود است
+                </button>
+              )}
+            </div>
+
+            {/* خط جداکننده محو */}
+            <div className="soft-divider"></div>
+
+            {/* بخش نظرات */}
+            <div className="product-reviews-block">
+              <h3 className="block-title">نظرات خریداران</h3>
+              
+              <div className="reviews-list">
+                {product.reviews.length === 0 && <p className="text-muted">هنوز نظری ثبت نشده است.</p>}
+                {product.reviews.map((review) => (
+                  <div key={review._id} className="review-item">
+                    <div className="review-head">
+                        <div className="reviewer">
+                            <div className="avatar"><FiUser size={14} /></div>
+                            <span className="name">{review.name}</span>
+                        </div>
+                        <Rating value={review.rating} />
+                    </div>
+                    <p className="review-comment">{review.comment}</p>
+                    <span className="review-date">{review.createdAt.substring(0, 10)}</span>
+                  </div>
+                ))}
+              </div>
+              
+              {/* فرم ثبت نظر */}
+              <div className="review-form-box">
+                <h4 className="form-title">ثبت دیدگاه جدید</h4>
                 {loadingProductReview && <Loader />}
                 {userInfo ? (
                   <form onSubmit={submitHandler}>
-                    <div className="mb-3">
-                      <label className="form-label text-muted">امتیاز شما</label>
-                      <select
-                        className='form-control-custom'
-                        value={rating}
-                        onChange={(e) => setRating(Number(e.target.value))}
-                      >
-                        <option value=''>انتخاب کنید...</option>
-                        <option value='1'>1 - ضعیف</option>
-                        <option value='2'>2 - متوسط</option>
-                        <option value='3'>3 - خوب</option>
-                        <option value='4'>4 - خیلی خوب</option>
-                        <option value='5'>5 - عالی</option>
+                    <div className="form-group">
+                      <select className="minimal-input" value={rating} onChange={(e) => setRating(Number(e.target.value))} required>
+                        <option value="">امتیاز شما...</option>
+                        <option value="5">عالی (۵ ستاره)</option>
+                        <option value="4">خوب (۴ ستاره)</option>
+                        <option value="3">متوسط (۳ ستاره)</option>
+                        <option value="2">ضعیف (۲ ستاره)</option>
+                        <option value="1">خیلی بد (۱ ستاره)</option>
                       </select>
                     </div>
-                    <div className="mb-3">
-                      <label className="form-label text-muted">دیدگاه شما</label>
-                      <textarea
-                        className='form-control-custom'
-                        rows='3'
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="نظرتان را اینجا بنویسید..."
-                      ></textarea>
+                    <div className="form-group">
+                      <textarea className="minimal-input" rows="3" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="نظرتان را بنویسید..." required></textarea>
                     </div>
-                    <button
-                      disabled={loadingProductReview}
-                      type='submit'
-                      className='btn btn-dark w-100 rounded-pill py-2'
-                    >
-                      ارسال نظر
+                    <button disabled={loadingProductReview} type="submit" className="btn-submit-minimal">
+                      ارسال دیدگاه
                     </button>
                   </form>
                 ) : (
-                  <Message>
-                    لطفاً برای ثبت نظر <Link to='/login' className="text-decoration-underline">وارد شوید</Link>
-                  </Message>
+                  <div className="login-alert">
+                    برای ثبت نظر <Link to="/login">وارد شوید</Link>
+                  </div>
                 )}
               </div>
             </div>
+
           </div>
-
-          {/* بخش ۴: نوار ابزار پایین (Sticky Action Bar) */}
-          <div className="action-bar-container">
-             <div className="bar-price">
-                <span className="currency">قیمت نهایی</span>
-                <span>{product.price.toLocaleString()} تومان</span>
-             </div>
-
-             {product.countInStock > 0 ? (
-                <div className="d-flex align-items-center gap-3">
-                  {/* کنترل تعداد */}
-                  <div className="bar-qty">
-                     <button className="qty-btn-round" onClick={decreaseQty} disabled={qty <= 1}>
-                        <FiMinus size={14} />
-                     </button>
-                     <div className="qty-display">{qty}</div>
-                     <button className="qty-btn-round" onClick={increaseQty} disabled={qty >= product.countInStock}>
-                        <FiPlus size={14} />
-                     </button>
-                  </div>
-
-                  {/* دکمه افزودن */}
-                  <button className="bar-add-btn" onClick={addToCartHandler}>
-                     <FiShoppingBag size={18} />
-                     <span className="d-none d-sm-block">افزودن</span>
-                  </button>
-                </div>
-             ) : (
-                <button className="bar-add-btn bg-secondary" disabled>
-                   ناموجود
-                </button>
-             )}
-          </div>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 };

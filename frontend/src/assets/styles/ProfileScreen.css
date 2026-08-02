@@ -1,0 +1,312 @@
+/* ==================== کانتینر اصلی ==================== */
+.luxury-profile-wrapper {
+  background-color: #f9f9f7;
+  min-height: 100vh;
+  padding: 40px 20px 80px;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==================== هدر ==================== */
+.profile-welcome-header {
+  margin-bottom: 32px;
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  font-size: 15px;
+  color: #78716c;
+}
+
+/* ==================== لیوت گرید ==================== */
+.profile-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 2.2fr; /* دسکتاپ: ستون تنظیمات کوچکتر، ستون سفارشات بزرگتر */
+  gap: 32px;
+  align-items: start;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.card-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #efeae4;
+}
+
+.card-header-title.space-between {
+  justify-content: space-between;
+}
+
+.card-header-title h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2b2824;
+  margin: 0;
+}
+
+.header-icon {
+  color: var(--primary, #0d9488);
+  font-size: 22px;
+}
+
+.orders-count-badge {
+  background-color: #f5f3ef;
+  color: #78716c;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ==================== فرم تنظیمات ==================== */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 13px;
+  color: #78716c;
+  font-weight: 600;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  right: 16px;
+  color: #a39c93;
+}
+
+.luxury-input {
+  width: 100%;
+  padding: 14px 44px 14px 14px;
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  font-family: inherit;
+  font-size: 14px;
+  color: #2b2824;
+  transition: all 0.3s;
+}
+
+.luxury-input:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: var(--primary, #0d9488);
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+}
+
+.form-divider {
+  height: 1px;
+  background-color: #e5e0d8;
+  margin: 10px 0;
+}
+
+.btn-save-profile {
+  background-color: #2b2824;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-save-profile:hover {
+  background-color: var(--primary, #0d9488);
+}
+
+.btn-save-profile:disabled {
+  background-color: #d6ccc0;
+  cursor: not-allowed;
+}
+
+/* ==================== جدول سفارشات (دسکتاپ) ==================== */
+.desktop-table-container {
+  overflow-x: auto;
+}
+
+.luxury-order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.luxury-order-table th {
+  text-align: right;
+  font-size: 13px;
+  color: #a39c93;
+  font-weight: 600;
+  padding: 0 12px 16px;
+  border-bottom: 2px solid #efeae4;
+}
+
+.luxury-order-table td {
+  padding: 20px 12px;
+  border-bottom: 1px solid #f5f3ef;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #5c554e;
+}
+
+.order-id-cell {
+  font-family: monospace;
+  color: #a39c93 !important;
+  letter-spacing: 1px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-badge.success { background-color: rgba(16, 185, 129, 0.1); color: #059669; }
+.status-badge.danger { background-color: rgba(239, 68, 68, 0.1); color: #dc2626; }
+.status-badge.warning { background-color: rgba(249, 115, 22, 0.1); color: #ea580c; }
+
+.btn-view-details {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid #d6ccc0;
+  border-radius: 20px;
+  color: #2b2824;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-view-details:hover {
+  background-color: #2b2824;
+  color: #ffffff;
+  border-color: #2b2824;
+}
+
+.fw-bold { font-weight: 700; color: #2b2824; }
+
+/* ==================== کارت‌های سفارش (موبایل) ==================== */
+.mobile-orders-list {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-order-card {
+  border: 1px solid #e5e0d8;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #fcfbf9;
+}
+
+.mobile-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #e5e0d8;
+}
+
+.order-id {
+  font-family: monospace;
+  color: #78716c;
+  font-weight: 600;
+}
+
+.order-date {
+  font-size: 13px;
+  color: #a39c93;
+}
+
+.mobile-order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.row-label {
+  color: #78716c;
+}
+
+.row-value {
+  color: #2b2824;
+}
+
+.text-success { color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.text-danger { color: #dc2626; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.text-warning { color: #ea580c; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+
+.btn-view-details-mobile {
+  display: block;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #2b2824;
+  color: #2b2824;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-top: 16px;
+  transition: all 0.3s;
+}
+
+.btn-view-details-mobile:hover {
+  background-color: #2b2824;
+  color: #ffffff;
+}
+
+/* ==================== ریسپانسیو ==================== */
+@media (max-width: 992px) {
+  .profile-layout-grid {
+    grid-template-columns: 1fr; /* تک ستونه شدن */
+  }
+
+  .desktop-table-container {
+    display: none; /* مخفی کردن جدول در موبایل */
+  }
+
+  .mobile-orders-list {
+    display: flex; /* نمایش کارت‌ها در موبایل */
+  }
+}

@@ -1,0 +1,182 @@
+/* ==================== ساختار کلی کارت محصول ==================== */
+.product-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid #e5e0d8; /* حاشیه گرم و هماهنگ با تم سایت */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(13, 148, 136, 0.08); /* هاله ملایم سبز کله‌غازی برند */
+  border-color: var(--primary, #0d9488);
+}
+
+/* ==================== بخش تصویر ==================== */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5; /* نسبت تصویر استانداردی که قبلاً هم استفاده کردیم */
+  background-color: #fcfbf9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .card-img {
+  transform: scale(1.06); /* زوم نرم عکس هنگام هاور روی کارت */
+}
+
+/* ==================== دکمه علاقه‌مندی (لایک) ==================== */
+.like-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px; /* در حالت راست‌چین، قلب در گوشه بالا-چپ قرار می‌گیرد */
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(229, 224, 216, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #78716c;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
+  background: #ffffff;
+  color: #ef4444;
+}
+
+/* ==================== نشانگر ناموجود ==================== */
+.stock-badge.out-of-stock {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(220, 38, 38, 0.9);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+}
+
+/* ==================== بخش اطلاعات پایین کارت ==================== */
+.card-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-brand {
+  font-size: 12px;
+  color: #a39c93;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card-title-link {
+  text-decoration: none;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #2b2824;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* محدود کردن عنوان به یک خط برای حفظ ظاهر کارت */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s;
+}
+
+.card-title-link:hover .card-title {
+  color: var(--primary, #0d9488);
+}
+
+/* ==================== فوتر کارت (قیمت و دکمه افزودن) ==================== */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #efeae4;
+}
+
+.card-price {
+  font-size: 16px;
+  font-weight: 900;
+  color: #2b2824;
+}
+
+.currency {
+  font-size: 11px;
+  color: #78716c;
+  font-weight: 500;
+  margin-right: 2px;
+}
+
+/* دکمه افزودن سریع به سبد خرید */
+.add-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: #f5f3ef;
+  color: #2b2824;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover:not(.disabled) {
+  background-color: var(--primary, #0d9488);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.add-btn.disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  width: auto;
+  padding: 0 10px;
+}
+
+.disabled-text {
+  font-size: 11px;
+  color: #a39c93;
+  font-weight: 600;
+}

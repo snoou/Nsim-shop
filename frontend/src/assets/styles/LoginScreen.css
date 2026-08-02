@@ -1,0 +1,178 @@
+/* ==================== کانتینر اصلی ==================== */
+.luxury-auth-page-wrapper {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; /* هماهنگ با پس‌زمینه کلی سایت */
+  padding: 40px 20px;
+}
+
+/* ==================== کارت فرم ==================== */
+.luxury-auth-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e0d8; /* حاشیه ملایم با تم گرم */
+  transition: box-shadow 0.3s ease;
+}
+
+.luxury-auth-card:hover {
+  box-shadow: 0 25px 50px rgba(13, 148, 136, 0.05); /* هاله ملایم سبز کله‌غازی */
+}
+
+/* ==================== هدر فرم ==================== */
+.auth-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.auth-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #2b2824; /* رنگ تیره گرم */
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  color: #78716c; /* خاکستری گرم */
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ==================== اینپوت‌ها ==================== */
+.luxury-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.luxury-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  right: 16px;
+  color: #a39c93;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.luxury-input {
+  width: 100%;
+  padding: 16px 48px 16px 16px; /* فضای سمت راست برای آیکون */
+  border: 1px solid #e5e0d8;
+  border-radius: 16px;
+  background: #fcfbf9;
+  font-size: 15px;
+  color: #2b2824;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.luxury-input::placeholder {
+  color: #a39c93;
+}
+
+.luxury-input:focus {
+  background: #ffffff;
+  border-color: var(--primary, #0d9488);
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+  outline: none;
+}
+
+/* وقتی اینپوت فوکوس می‌شود، رنگ آیکون هم سبز می‌شود */
+.luxury-input:focus + .input-icon,
+.luxury-input:focus ~ .input-icon {
+  color: var(--primary, #0d9488);
+}
+
+/* ==================== لینک فراموشی رمز ==================== */
+.forgot-password-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -8px;
+}
+
+.forgot-link {
+  font-size: 13px;
+  color: #78716c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: var(--accent, #f97316); /* تغییر رنگ به نارنجی در هاور */
+}
+
+/* ==================== دکمه اصلی (سبز کله‌غازی) ==================== */
+.btn-luxury-auth {
+  background: linear-gradient(135deg, var(--primary, #0d9488), #0b7a70);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  font-weight: 800;
+  font-size: 16px;
+  width: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+  margin-top: 10px;
+}
+
+.btn-luxury-auth:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(13, 148, 136, 0.3);
+}
+
+.btn-luxury-auth:disabled {
+  background: #d6ccc0;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ==================== فوتر فرم ==================== */
+.footer-text {
+  color: #78716c;
+}
+
+.link-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2b2824;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.link-highlight:hover {
+  color: var(--primary, #0d9488);
+  border-bottom-color: var(--primary, #0d9488);
+}
+
+/* ==================== ریسپانسیو موبایل ==================== */
+@media (max-width: 576px) {
+  .luxury-auth-card {
+    padding: 32px 24px;
+    border-radius: 24px;
+  }
+  
+  .auth-title {
+    font-size: 26px;
+  }
+}

@@ -1,0 +1,425 @@
+/* ==================== استایل‌های پایه ==================== */
+.cart-page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 70vh;
+}
+
+.cart-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.cart-main-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824; /* قهوه‌ای تیره (مشکی نرم) */
+}
+
+.cart-items-count {
+  font-size: 16px;
+  color: #78716c; /* خاکستری گرم */
+  font-weight: 500;
+}
+
+/* ==================== لیوت اصلی (گرید واکنش‌گرا) ==================== */
+.cart-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr; /* در موبایل تک ستونه */
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .cart-grid-layout {
+    grid-template-columns: 2fr 1fr; /* در دسکتاپ دو ستونه (نسبت ۲ به ۱) */
+    gap: 48px;
+  }
+}
+
+/* ==================== کارت‌های محصول ==================== */
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cart-item-card {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e5e0d8; /* حاشیه بسیار ملایم با تم کرم */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.3s ease;
+}
+
+.cart-item-card:hover {
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.06); /* هاله سبز کله‌غازی */
+}
+
+.item-image-wrapper {
+  width: 120px;
+  height: 140px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* برای عکس‌های PNG عالی است */
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.item-name-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-brand {
+  font-size: 13px;
+  color: #a39c93;
+  font-weight: 600;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #2b2824;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+
+.item-name:hover {
+  color: var(--primary, #0d9488);
+}
+
+.item-remove-btn {
+  background: transparent;
+  color: #a39c93;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.item-remove-btn:hover {
+  color: #ef4444; /* قرمز ملایم */
+  background: #fef2f2;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+/* دکمه‌های کپسولی تغییر تعداد */
+.qty-pill-selector {
+  display: flex;
+  align-items: center;
+  background-color: #f5f3ef; /* کرم بسیار روشن */
+  border-radius: 50px;
+  padding: 4px;
+  border: 1px solid #e5e0d8;
+}
+
+.qty-pill-selector button {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b2824;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qty-pill-selector button:hover:not(:disabled) {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.qty-pill-selector button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.qty-number {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #2b2824;
+}
+
+.item-price {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--primary, #0d9488);
+}
+
+.item-price small {
+  font-size: 13px;
+  font-weight: 500;
+  color: #78716c;
+  margin-right: 4px;
+}
+
+/* ==================== خلاصه سفارش ==================== */
+.cart-summary-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+.summary-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+}
+
+.summary-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.summary-label { color: #78716c; }
+.summary-value { color: #2b2824; font-weight: 600; }
+.text-teal .summary-value.bold { color: var(--primary, #0d9488); font-weight: 800; }
+
+.summary-divider {
+  border: none;
+  border-top: 1px dashed #d6ccc0;
+  margin: 24px 0;
+}
+
+.summary-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.total-label {
+  font-size: 16px;
+  font-weight: 800;
+  color: #2b2824;
+}
+
+.total-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2b2824;
+}
+
+.total-value small {
+  font-size: 14px;
+  color: #78716c;
+  font-weight: 500;
+}
+
+.btn-primary-checkout {
+  width: 100%;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 16px rgba(13, 148, 136, 0.2);
+}
+
+.btn-primary-checkout:hover {
+  background-color: #0b7a70;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(13, 148, 136, 0.3);
+}
+
+.summary-note {
+  text-align: center;
+  font-size: 12px;
+  color: #a39c93;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* ==================== حالت خالی ==================== */
+.empty-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-cart-icon {
+  width: 120px;
+  height: 120px;
+  background-color: #f5f3ef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d6ccc0;
+  margin-bottom: 24px;
+}
+
+.empty-cart-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2b2824;
+  margin-bottom: 12px;
+}
+
+.empty-cart-text {
+  color: #78716c;
+  margin-bottom: 32px;
+}
+
+.btn-back-to-shop {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #2b2824;
+  color: #ffffff;
+  padding: 14px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.btn-back-to-shop:hover {
+  background-color: var(--primary, #0d9488);
+}
+/* ==================== ریسپانسیو موبایل و تبلت (جادوی نوار چسبان) ==================== */
+@media (max-width: 992px) {
+  .cart-page-wrapper {
+    /* جا باز کردن در پایین صفحه تا لیست محصولات زیر نوار پرداخت گیر نکند */
+    padding-bottom: 120px; 
+  }
+
+  /* --- تغییر ظاهر کارت محصولات برای موبایل --- */
+  .cart-item-card {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .item-image-wrapper {
+    width: 100%;
+    height: 180px; /* عکس در موبایل بزرگتر و عریض می‌شود */
+  }
+
+  .item-name {
+    font-size: 16px;
+  }
+
+  .item-price {
+    font-size: 18px;
+  }
+
+  /* --- تبدیل خلاصه سفارش به نوار چسبان پایین صفحه (اپلیکیشنی) --- */
+  .cart-summary-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    top: auto; /* غیرفعال کردن حالت استیکی دسکتاپ */
+  }
+
+  .summary-card {
+    border-radius: 24px 24px 0 0; /* فقط گوشه‌های بالا گرد می‌شوند */
+    padding: 16px 24px;
+    background: #ffffff;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08); /* سایه به سمت بالا */
+    border: none;
+    border-top: 1px solid #e5e0d8;
+    margin: 0;
+    
+    /* چیدمان افقی برای موبایل: قیمت در راست، دکمه در چپ */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  /* مخفی کردن ریز جزئیات در موبایل تا نوار پایین خلوت و شیک بماند */
+  .summary-title, 
+  .summary-row, 
+  .summary-divider,
+  .summary-note {
+    display: none;
+  }
+
+  .summary-total-row {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .total-label {
+    font-size: 13px;
+    color: #78716c;
+  }
+
+  .total-value {
+    font-size: 18px;
+  }
+
+  .btn-primary-checkout {
+    width: auto;
+    padding: 14px 28px;
+    margin: 0;
+    font-size: 15px;
+  }
+}
