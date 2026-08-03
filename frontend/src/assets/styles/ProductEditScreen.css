@@ -1,0 +1,220 @@
+/* ==================== هدر اختصاصی ویرایش ==================== */
+.admin-page-subtitle {
+  color: #78716c;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.btn-back-minimal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border: 1px solid #d6ccc0;
+  border-radius: 12px;
+  color: #2b2824;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-back-minimal:hover {
+  background-color: #2b2824;
+  color: #ffffff;
+  border-color: #2b2824;
+}
+
+/* ==================== لیوت گرید (Grid) ==================== */
+.edit-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr; /* ستون عکس کوچکتر، ستون مشخصات بزرگتر */
+  gap: 32px;
+  align-items: start;
+}
+
+.card-section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed #efeae4;
+  padding-bottom: 16px;
+}
+
+/* ==================== بخش تصویر (ستون راست) ==================== */
+.image-preview-area {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #fcfbf9;
+  border: 1px solid #e5e0d8;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+}
+
+.empty-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #a39c93;
+  font-size: 13px;
+}
+
+.upload-btn-wrapper {
+  width: 100%;
+}
+
+.btn-upload-luxury {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  background-color: #f5f3ef;
+  color: #2b2824;
+  border: 1px dashed #a39c93;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-upload-luxury:hover {
+  background-color: #e5e0d8;
+  border-color: #2b2824;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+/* ==================== بخش فرم مشخصات (ستون چپ) ==================== */
+.minimal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: right;
+}
+
+.minimal-input-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5c554e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-label {
+  color: #a39c93;
+}
+
+.minimal-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  background-color: #fcfbf9;
+  font-family: inherit;
+  font-size: 14px;
+  color: #2b2824;
+  transition: all 0.3s ease;
+  resize: vertical;
+}
+
+.minimal-input:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: var(--primary, #0d9488);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.minimal-input::placeholder {
+  color: #c8c0b5;
+}
+
+.ltr-align {
+  direction: ltr;
+  text-align: left;
+}
+
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ==================== دکمه ذخیره ==================== */
+.form-action-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-submit-solid {
+  background-color: #2b2824;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-submit-solid:hover:not(:disabled) {
+  background-color: var(--primary, #0d9488);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.2);
+}
+
+.btn-submit-solid:disabled {
+  background-color: #d6ccc0;
+  cursor: not-allowed;
+}
+
+/* ==================== ریسپانسیو ==================== */
+@media (max-width: 992px) {
+  .edit-grid-layout {
+    grid-template-columns: 1fr; /* در موبایل و تبلت زیر هم قرار می‌گیرند */
+  }
+
+  .edit-sidebar {
+    order: -1; /* تصویر در موبایل می‌آید بالای فرم */
+  }
+
+  .image-preview-area {
+    max-width: 300px;
+    margin: 0 auto 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-row-2col {
+    grid-template-columns: 1fr; /* در موبایل‌های کوچک فرم‌های ۲ ستونه تک ستونه می‌شوند */
+    gap: 16px;
+  }
+
+  .btn-submit-solid {
+    width: 100%; /* دکمه ثبت تمام‌عرض می‌شود */
+    justify-content: center;
+  }
+}

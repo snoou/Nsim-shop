@@ -1,0 +1,175 @@
+/* ==================== لیوت گرید (آواتار و فرم) ==================== */
+.edit-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr; /* نسبت ۱ به ۲.۵ بین سایدبار و فرم اصلی */
+  gap: 32px;
+  align-items: start;
+}
+
+.profile-summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* ==================== آواتار بزرگ ==================== */
+.user-avatar-large {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f5f3ef, #e5e0d8);
+  color: #2b2824;
+  font-size: 36px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border: 4px solid #ffffff;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  font-size: 14px;
+  color: #78716c;
+  font-family: monospace;
+  margin-bottom: 20px;
+}
+
+/* ==================== نشانگر نقش (Badge) ==================== */
+.role-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.role-badge.admin {
+  background-color: rgba(13, 148, 136, 0.1);
+  color: #0f766e;
+}
+
+.role-badge.customer {
+  background-color: #f5f3ef;
+  color: #5c554e;
+}
+
+/* ==================== کارت انتخاب نقش (تغییر دسترسی) ==================== */
+.admin-role-toggle-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e5e0d8;
+  border-radius: 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.admin-role-toggle-card:hover {
+  border-color: #c8c0b5;
+  background-color: #fcfbf9;
+}
+
+/* حالت انتخاب‌شده (وقتی ادمین است) */
+.admin-role-toggle-card.active {
+  border-color: var(--primary, #0d9488);
+  background-color: rgba(13, 148, 136, 0.03);
+}
+
+.role-card-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.role-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #f5f3ef;
+  color: #78716c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.admin-role-toggle-card.active .role-icon-box {
+  background-color: var(--primary, #0d9488);
+  color: #ffffff;
+}
+
+.role-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.role-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #2b2824;
+  margin: 0;
+}
+
+.role-desc {
+  font-size: 13px;
+  color: #78716c;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* دایره چک‌باکس */
+.role-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-circle {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d6ccc0;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.admin-role-toggle-card:hover .empty-circle {
+  border-color: #a39c93;
+}
+
+.text-teal {
+  color: var(--primary, #0d9488);
+}
+
+/* ==================== ریسپانسیو ==================== */
+@media (max-width: 992px) {
+  .edit-grid-layout {
+    grid-template-columns: 1fr; /* در موبایل آواتار و فرم زیر هم قرار می‌گیرند */
+  }
+
+  .edit-sidebar {
+    order: -1; /* آواتار می‌رود بالای فرم */
+  }
+
+  .admin-role-toggle-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .role-checkbox {
+    align-self: flex-end; /* تیک می‌رود پایین سمت چپ */
+  }
+}

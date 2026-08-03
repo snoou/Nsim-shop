@@ -1,118 +1,172 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // 🟢 ۱. ایمپورت برای خواندن استیت لاگین
-import { FiShoppingBag, FiUser, FiMenu, FiX } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { FiShoppingBag, FiUser, FiMenu, FiX, FiChevronDown, FiLogOut, FiSettings, FiGrid } from 'react-icons/fi';
 import SearchBox from './SearchBox';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { logout } from '../slices/authSlice';
 import '../assets/styles/Header.css';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [storeMode, setStoreMode] = useState('fashion'); // حالت‌های ممکن: 'fashion' یا 'supermarket'
+  const [storeMode, setStoreMode] = useState('fashion'); // 'fashion' | 'supermarket'
   
-  // 🟢 ۲. گرفتن اطلاعات کاربر واقعی از Redux Store
   const { userInfo } = useSelector((state) => state.auth);
-  
-  // 🟢 ۳. گرفتن تعداد محصولات واقعی از استیت سبد خرید (Cart)
   const { cartItems } = useSelector((state) => state.cart);
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutApiCall] = useLogoutMutation();
+
   const cartCount = cartItems ? cartItems.reduce((acc, item) => acc + item.qty, 0) : 0;
 
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <header className="main-header">
+    <header className="luxury-header">
       
-      {/* بخش سوئیچر تغییر حالت فروشگاه */}
-      <div className="store-mode-selector">
-        <div className="mode-toggle-container">
-          <button 
-            className={`mode-btn ${storeMode === 'fashion' ? 'active' : ''}`}
-            onClick={() => setStoreMode('fashion')}
-          >
-            👗 مد و پوشاک
-          </button>
-          <button 
-            className={`mode-btn ${storeMode === 'supermarket' ? 'active' : ''}`}
-            onClick={() => setStoreMode('supermarket')}
-          >
-            🍎 سوپرمارکت
-          </button>
+      {/* 1. نوار بالایی (Top Bar) برای تغییر حالت و پیام‌ها */}
+      <div className="top-announcement-bar">
+        <div className="top-bar-container">
+          <span className="announcement-text">ارسال رایگان برای سفارش‌های بالای ۲ میلیون تومان</span>
+          <div className="store-mode-selector">
+            <button 
+              className={`mode-btn ${storeMode === 'fashion' ? 'active' : ''}`}
+              onClick={() => setStoreMode('fashion')}
+            >
+              کالکشن فشن
+            </button>
+            <span className="mode-divider">|</span>
+            <button 
+              className={`mode-btn ${storeMode === 'supermarket' ? 'active' : ''}`}
+              onClick={() => setStoreMode('supermarket')}
+            >
+              سوپرمارکت
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="header-container">
+      {/* 2. بخش اصلی هدر */}
+      <div className="main-header-container">
         
-        {/* ۱. لوگو و دکمه موبایل */}
-        <div className="header-brand">
+        {/* راست: لوگو و دکمه موبایل */}
+        <div className="header-brand-area">
           <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+            {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
           
-          <Link to="/" className="logo-link">
-            <span className="logo-text">نسیم</span>
+          <Link to="/" className="luxury-logo">
+            NASIM.
           </Link>
         </div>
 
-        {/* ۲. نوار جستجوی عریض هوشمند */}
-        <SearchBox/>
+        {/* مرکز: سرچ باکس هوشمند */}
+        <div className="header-search-area">
+          <SearchBox />
+        </div>
 
-        {/* ۳. دکمه‌های کاربری و سبد خرید (کاملاً هوشمند بر اساس لاگین بودن) */}
-        <div className="header-actions">
+        {/* چپ: آیکون‌های کاربری و سبد خرید */}
+        <div className="header-actions-area">
+          
+          {/* منوی ادمین (فقط در صورت ادمین بودن نمایش داده می‌شود) */}
+          {userInfo && userInfo.isAdmin && (
+            <div className="luxury-dropdown">
+              <button className="action-icon-btn admin-badge">
+                مدیریت <FiChevronDown size={14} />
+              </button>
+              <div className="dropdown-content">
+                <Link to="/admin/productlist"><FiGrid /> محصولات</Link>
+                <Link to="/admin/orderlist"><FiShoppingBag /> سفارش‌ها</Link>
+                <Link to="/admin/userlist"><FiUser /> کاربران</Link>
+              </div>
+            </div>
+          )}
+
+          {/* منوی کاربری */}
           {userInfo ? (
-            // 🟢 اگر کاربر وارد شده باشد، با کلیک مستقیماً به /profile می‌رود
-            <Link to="/profile" className="action-btn">
-              <FiUser /> <span>{userInfo.name || 'حساب کاربری'}</span>
-            </Link>
+            <div className="luxury-dropdown">
+              <button className="action-icon-btn">
+                <FiUser size={20} />
+                <span className="d-none-mobile">{userInfo.name.split(' ')[0]}</span>
+                <FiChevronDown size={14} className="d-none-mobile" />
+              </button>
+              <div className="dropdown-content">
+                <Link to="/profile"><FiSettings /> حساب کاربری</Link>
+                <button onClick={logoutHandler} className="text-danger">
+                  <FiLogOut /> خروج
+                </button>
+              </div>
+            </div>
           ) : (
-            // 🔴 اگر کاربر وارد نشده باشد، به صفحه ورود می‌رود
-            <Link to="/login" className="action-btn outline">
-              <FiUser /> <span>ورود | ثبت‌نام</span>
+            <Link to="/login" className="action-icon-btn">
+              <FiUser size={20} />
+              <span className="d-none-mobile">ورود</span>
             </Link>
           )}
 
-          <Link to="/cart" className="cart-btn">
-            <FiShoppingBag />
+          {/* سبد خرید */}
+          <Link to="/cart" className="action-icon-btn cart-btn">
+            <FiShoppingBag size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>
         </div>
       </div>
 
-      {/* نوار دسته‌بندی‌ها (داینامیک بر اساس حالت) */}
-      <nav className="header-nav">
+      {/* 3. نوار دسته‌بندی‌ها */}
+      <nav className="category-nav">
         <div className="nav-container">
           {storeMode === 'fashion' ? (
             <>
-              <Link to="/fashion/new" className="nav-item">✨ جدیدترین‌ها</Link>
+              <Link to="/fashion/new" className="nav-item">جدیدترین‌ها</Link>
               <Link to="/fashion/women" className="nav-item">زنانه</Link>
               <Link to="/fashion/men" className="nav-item">مردانه</Link>
               <Link to="/fashion/accessories" className="nav-item">اکسسوری</Link>
-              <Link to="/fashion/sale" className="nav-item text-accent">٪ حراج فصل</Link>
+              <Link to="/fashion/sale" className="nav-item highlight-red">حراج فصل %</Link>
             </>
           ) : (
             <>
-              <Link to="/supermarket/fresh" className="nav-item">🥬 میوه و سبزیجات</Link>
-              <Link to="/supermarket/dairy" className="nav-item">🥛 لبنیات</Link>
-              <Link to="/supermarket/drinks" className="nav-item">🧃 نوشیدنی‌ها</Link>
-              <Link to="/supermarket/snacks" className="nav-item">🍫 تنقلات</Link>
-              <Link to="/supermarket/sale" className="nav-item text-accent">٪ تخفیف روزانه</Link>
+              <Link to="/supermarket/fresh" className="nav-item">میوه و سبزیجات</Link>
+              <Link to="/supermarket/dairy" className="nav-item">لبنیات</Link>
+              <Link to="/supermarket/drinks" className="nav-item">نوشیدنی‌ها</Link>
+              <Link to="/supermarket/snacks" className="nav-item">تنقلات</Link>
+              <Link to="/supermarket/sale" className="nav-item highlight-red">تخفیف روزانه %</Link>
             </>
           )}
         </div>
       </nav>
 
-      {/* منوی موبایل (داینامیک) */}
-      <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`}>
-         {storeMode === 'fashion' ? (
-            <>
-              <Link to="/fashion/new" className="mobile-item">جدیدترین‌ها</Link>
-              <Link to="/fashion/women" className="mobile-item">زنانه</Link>
-              <Link to="/fashion/sale" className="mobile-item text-accent">حراج فصل</Link>
-            </>
-         ) : (
-            <>
-              <Link to="/supermarket/fresh" className="mobile-item">میوه و سبزیجات</Link>
-              <Link to="/supermarket/dairy" className="mobile-item">لبنیات</Link>
-              <Link to="/supermarket/sale" className="mobile-item text-accent">تخفیف روزانه</Link>
-            </>
-         )}
+      {/* 4. منوی کشویی موبایل */}
+      <div className={`mobile-sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-content">
+          {/* محتوای منوی موبایل... (مشابه نوار دسته‌بندی) */}
+           {storeMode === 'fashion' ? (
+              <>
+                <Link to="/fashion/new" className="mobile-nav-item" onClick={()=>setIsMobileMenuOpen(false)}>جدیدترین‌ها</Link>
+                <Link to="/fashion/women" className="mobile-nav-item" onClick={()=>setIsMobileMenuOpen(false)}>زنانه</Link>
+                <Link to="/fashion/sale" className="mobile-nav-item highlight-red" onClick={()=>setIsMobileMenuOpen(false)}>حراج فصل</Link>
+              </>
+           ) : (
+              <>
+                <Link to="/supermarket/fresh" className="mobile-nav-item" onClick={()=>setIsMobileMenuOpen(false)}>میوه و سبزیجات</Link>
+                <Link to="/supermarket/sale" className="mobile-nav-item highlight-red" onClick={()=>setIsMobileMenuOpen(false)}>تخفیف روزانه</Link>
+              </>
+           )}
+        </div>
       </div>
+      
+      {/* بک‌گراند تاریک برای وقتی که منوی موبایل باز است */}
+      {isMobileMenuOpen && (
+        <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
+      )}
     </header>
   );
 };

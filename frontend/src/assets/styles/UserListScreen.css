@@ -1,0 +1,172 @@
+/* ==================== استایل‌های اختصاصی کاربران ==================== */
+.user-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar-sm {
+  width: 36px;
+  height: 36px;
+  background-color: #f5f3ef;
+  color: #5c554e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.user-avatar-sm.admin-ring {
+  background-color: rgba(13, 148, 136, 0.1);
+  color: #0f766e;
+  border: 2px solid var(--primary, #0d9488);
+}
+
+.user-name-text {
+  font-weight: 800;
+  color: #2b2824;
+  font-size: 15px;
+}
+
+.user-email-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #78716c;
+  text-decoration: none;
+  font-size: 13px;
+  font-family: monospace;
+  transition: color 0.2s;
+}
+
+.user-email-text:hover {
+  color: #2b2824;
+}
+
+/* ==================== نقش‌ها (Badges) ==================== */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.role-badge.admin {
+  background-color: rgba(13, 148, 136, 0.1);
+  color: #0f766e;
+}
+
+.role-badge.customer {
+  background-color: #f5f3ef;
+  color: #5c554e;
+}
+
+/* ==================== دکمه‌های عملیات (جدول و موبایل) ==================== */
+.action-buttons-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: #f5f3ef;
+  color: #2b2824;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-action-icon.edit:hover {
+  background-color: var(--primary, #0d9488);
+  color: #ffffff;
+}
+
+.btn-action-icon.delete:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.btn-action-icon.disabled {
+  background-color: transparent;
+  color: #d6ccc0;
+  cursor: not-allowed;
+}
+
+.btn-action-icon.disabled:hover {
+  transform: none;
+}
+
+/* ==================== کارت‌های موبایل (Mobile View) ==================== */
+.mobile-user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #e5e0d8;
+}
+
+.mobile-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #efeae4;
+}
+
+.btn-mobile-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-mobile-action.edit {
+  background-color: #f5f3ef;
+  color: #2b2824;
+  border: 1px solid #e5e0d8;
+}
+
+.btn-mobile-action.edit:hover {
+  background-color: var(--primary, #0d9488);
+  color: #ffffff;
+  border-color: var(--primary, #0d9488);
+}
+
+.btn-mobile-action.delete {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.btn-mobile-action.delete:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.btn-mobile-action.disabled {
+  background-color: transparent;
+  color: #a39c93;
+  border: 1px dashed #d6ccc0;
+  cursor: not-allowed;
+}

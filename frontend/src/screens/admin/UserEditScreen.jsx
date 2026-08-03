@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FiUser, FiMail, FiShield, FiArrowRight, FiSave, FiCheckCircle } from 'react-icons/fi';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
@@ -9,6 +8,7 @@ import {
   useGetUserDetailsQuery,
   useUpdateUserMutation,
 } from '../../slices/usersApiSlice';
+import '../../assets/styles/UserEditScreen.css';
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
@@ -39,7 +39,7 @@ const UserEditScreen = () => {
     e.preventDefault();
     try {
       await updateUser({ userId, name, email, isAdmin }).unwrap();
-      toast.success('اطلاعات کاربر با موفقیت بروزرسانی شد');
+      toast.success('اطلاعات کاربر با موفقیت به‌روزرسانی شد');
       refetch();
       navigate('/admin/userlist');
     } catch (err) {
@@ -51,16 +51,17 @@ const UserEditScreen = () => {
   const userInitial = name ? name.charAt(0).toUpperCase() : '?';
 
   return (
-    <div className="admin-edit-wrapper">
-      <Container>
+    <div className="admin-dashboard-wrapper">
+      <div className="admin-container">
+        
         {/* هدر صفحه */}
-        <div className="d-flex justify-content-between align-items-center mb-5">
+        <div className="admin-header-flex">
           <div>
-            <h1 className="edit-page-title">ویرایش کاربر</h1>
-            <p className="text-muted small mb-0">مدیریت دسترسی و اطلاعات شخصی</p>
+            <h1 className="admin-page-title">ویرایش کاربر</h1>
+            <p className="admin-page-subtitle">مدیریت اطلاعات هویتی و سطح دسترسی</p>
           </div>
-          <Link to='/admin/userlist' className="btn-back-outline">
-            <FiArrowRight /> بازگشت
+          <Link to='/admin/userlist' className="btn-back-minimal">
+            بازگشت <FiArrowRight size={18} />
           </Link>
         </div>
 
@@ -69,90 +70,99 @@ const UserEditScreen = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>
+          <Message variant="danger">
             {error?.data?.message || error.error}
           </Message>
         ) : (
-          <div className="user-edit-card shadow-sm">
-            <Form onSubmit={submitHandler}>
-              <Row className="g-5 align-items-center">
-                
-                {/* ستون آواتار (سمت راست/بالا) */}
-                <Col md={4} className="text-center border-end-md">
-                  <div className="user-avatar-large mb-3">
+          <form onSubmit={submitHandler} className="edit-user-form">
+            <div className="edit-grid-layout">
+              
+              {/* ستون سمت راست: پروفایل/آواتار کاربر */}
+              <div className="edit-sidebar">
+                <div className="admin-card text-center profile-summary-card">
+                  <div className="user-avatar-large">
                     {userInitial}
                   </div>
-                  <h4 className="fw-bold mb-1">{name || 'کاربر جدید'}</h4>
-                  <p className="text-muted small">{email || 'email@example.com'}</p>
+                  <h3 className="profile-name">{name || 'کاربر جدید'}</h3>
+                  <p className="profile-email">{email || 'email@example.com'}</p>
                   
-                  <div className={`role-badge ${isAdmin ? 'admin' : 'user'} mt-2`}>
+                  <div className={`role-badge ${isAdmin ? 'admin' : 'customer'}`}>
                     {isAdmin ? 'مدیر کل (Admin)' : 'مشتری (Customer)'}
                   </div>
-                </Col>
+                </div>
+              </div>
 
-                {/* ستون فرم (سمت چپ) */}
-                <Col md={8}>
-                  <div className="p-md-3">
-                    <Form.Group className='mb-4' controlId='name'>
-                      <Form.Label className="modern-label"><FiUser className="me-2"/> نام و نام خانوادگی</Form.Label>
-                      <Form.Control
-                        type='name'
-                        placeholder='نام کاربر را وارد کنید'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="modern-input"
-                      ></Form.Control>
-                    </Form.Group>
+              {/* ستون سمت چپ: فرم ویرایش */}
+              <div className="edit-main-content">
+                <div className="admin-card">
+                  <h3 className="card-section-title mb-4">اطلاعات کاربری</h3>
+                  
+                  {/* نام */}
+                  <div className="minimal-input-group mb-4">
+                    <label><FiUser className="icon-label" /> نام و نام خانوادگی</label>
+                    <input
+                      type="text"
+                      placeholder="نام کامل کاربر..."
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="minimal-input"
+                      required
+                    />
+                  </div>
 
-                    <Form.Group className='mb-4' controlId='email'>
-                      <Form.Label className="modern-label"><FiMail className="me-2"/> آدرس ایمیل</Form.Label>
-                      <Form.Control
-                        type='email'
-                        placeholder='example@email.com'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="modern-input"
-                      ></Form.Control>
-                    </Form.Group>
+                  {/* ایمیل */}
+                  <div className="minimal-input-group mb-4">
+                    <label><FiMail className="icon-label" /> آدرس پست الکترونیک</label>
+                    <input
+                      type="email"
+                      placeholder="example@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="minimal-input ltr-align"
+                      required
+                    />
+                  </div>
 
-                    {/* کارت انتخاب نقش (جایگزین چک‌باکس) */}
-                    <Form.Group className='mb-4' controlId='isadmin'>
-                      <Form.Label className="modern-label mb-3"><FiShield className="me-2"/> سطح دسترسی</Form.Label>
-                      
-                      <div 
-                        className={`admin-role-card ${isAdmin ? 'active' : ''}`}
-                        onClick={() => setIsAdmin(!isAdmin)}
-                      >
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="d-flex align-items-center gap-3">
-                             <div className="icon-box">
-                               <FiShield size={24} />
-                             </div>
-                             <div>
-                               <h6 className="mb-0 fw-bold">دسترسی مدیریت</h6>
-                               <small className="text-muted">دسترسی کامل به پنل ادمین، محصولات و سفارشات</small>
-                             </div>
-                          </div>
-                          <div className="check-circle">
-                             {isAdmin && <FiCheckCircle size={20} />}
-                          </div>
+                  {/* کارت تغییر نقش (سطح دسترسی) */}
+                  <div className="minimal-input-group mb-4">
+                    <label><FiShield className="icon-label" /> سطح دسترسی در سیستم</label>
+                    <div 
+                      className={`admin-role-toggle-card ${isAdmin ? 'active' : ''}`}
+                      onClick={() => setIsAdmin(!isAdmin)}
+                    >
+                      <div className="role-card-content">
+                        <div className="role-icon-box">
+                          <FiShield size={24} />
+                        </div>
+                        <div className="role-text-content">
+                          <h6 className="role-title">دسترسی مدیریت (Admin)</h6>
+                          <p className="role-desc">قابلیت دسترسی به پنل ادمین، ویرایش محصولات و مدیریت سفارشات کاربران.</p>
                         </div>
                       </div>
-                    </Form.Group>
-
-                    <div className="d-flex justify-content-end mt-5">
-                      <Button type='submit' className='btn-submit-fashion'>
-                        <FiSave className="ms-2" size={20} />
-                        ذخیره تغییرات
-                      </Button>
+                      <div className="role-checkbox">
+                        {isAdmin ? <FiCheckCircle size={22} className="text-teal" /> : <div className="empty-circle"></div>}
+                      </div>
                     </div>
                   </div>
-                </Col>
-              </Row>
-            </Form>
-          </div>
+
+                  {/* دکمه ذخیره */}
+                  <div className="form-action-footer">
+                    <button 
+                      type="submit" 
+                      className="btn-submit-solid"
+                      disabled={loadingUpdate}
+                    >
+                      <FiSave size={20} />
+                      {loadingUpdate ? 'در حال ثبت...' : 'ذخیره تغییرات'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

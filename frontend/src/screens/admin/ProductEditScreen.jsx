@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import { FiSave, FiArrowRight, FiUploadCloud, FiImage, FiLayers, FiTag, FiDollarSign, FiBox } from 'react-icons/fi';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
@@ -10,6 +9,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
+import '../../assets/styles/ProductEditScreen.css';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -75,16 +75,17 @@ const ProductEditScreen = () => {
   };
 
   return (
-    <div className="admin-edit-wrapper">
-      <Container>
-        {/* هدر صفحه */}
-        <div className="d-flex justify-content-between align-items-center mb-5">
+    <div className="admin-dashboard-wrapper">
+      <div className="admin-container">
+        
+        {/* هدر صفحه ویرایش */}
+        <div className="admin-header-flex">
           <div>
-            <h1 className="edit-page-title">ویرایش محصول</h1>
-            <p className="text-muted small mb-0">اطلاعات محصول را به‌روزرسانی کنید</p>
+            <h1 className="admin-page-title">ویرایش محصول</h1>
+            <p className="admin-page-subtitle">مشخصات محصول را بررسی و به‌روزرسانی کنید</p>
           </div>
-          <Link to='/admin/productlist' className="btn-back-outline">
-            <FiArrowRight /> بازگشت
+          <Link to='/admin/productlist' className="btn-back-minimal">
+            بازگشت <FiArrowRight size={18} />
           </Link>
         </div>
 
@@ -93,162 +94,163 @@ const ProductEditScreen = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>{error.data.message}</Message>
+          <Message variant="danger">{error.data?.message || error.error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Row className="gy-5">
+          <form onSubmit={submitHandler} className="edit-product-form">
+            <div className="edit-grid-layout">
               
-              {/* ستون اول: مدیریت تصویر (سمت چپ در دسکتاپ) */}
-              <Col lg={4}>
-                <div className="image-upload-card">
-                  <h5 className="mb-4 fw-bold">تصویر محصول</h5>
+              {/* ستون راست: مدیریت تصویر */}
+              <div className="edit-sidebar">
+                <div className="admin-card text-center">
+                  <h3 className="card-section-title mb-4">تصویر محصول</h3>
                   
                   {/* پیش‌نمایش تصویر */}
-                  <div className="image-preview-box mb-3">
+                  <div className="image-preview-area">
                     {image ? (
-                      <img src={image} alt="Product Preview" className="img-fluid rounded" />
+                      <img src={image} alt="پیش‌نمایش محصول" className="preview-img" />
                     ) : (
-                      <div className="placeholder-image">
-                        <FiImage size={40} />
-                        <span>هنوز تصویری انتخاب نشده</span>
+                      <div className="empty-image-placeholder">
+                        <FiImage size={48} className="text-muted mb-2" />
+                        <span>تصویری انتخاب نشده</span>
                       </div>
                     )}
                   </div>
 
-                  {/* اینپوت فایل کاستوم */}
-                  <Form.Group controlId='image-file' className="mb-3">
-                    <Form.Label className="upload-btn-label w-100">
-                      {loadingUpload ? 'در حال آپلود...' : (
+                  {/* دکمه آپلود فایل */}
+                  <div className="upload-btn-wrapper">
+                    <label className="btn-upload-luxury">
+                      {loadingUpload ? (
+                        'در حال آپلود...'
+                      ) : (
                         <>
-                          <FiUploadCloud size={20} className="me-2" />
-                          آپلود تصویر جدید
+                          <FiUploadCloud size={20} />
+                          بارگذاری تصویر جدید
                         </>
                       )}
-                      <Form.Control
-                        type='file'
+                      <input
+                        type="file"
                         onChange={uploadFileHandler}
-                        className="d-none" // مخفی کردن اینپوت اصلی زشت
-                      ></Form.Control>
-                    </Form.Label>
-                  </Form.Group>
+                        className="hidden-file-input"
+                      />
+                    </label>
+                  </div>
 
-                  {/* اینپوت متنی لینک عکس (برای چک کردن مسیر) */}
-                  <Form.Group controlId='image'>
-                    <Form.Control
-                      type='text'
-                      placeholder='یا آدرس تصویر را وارد کنید'
+                  {/* فیلد متنی آدرس عکس */}
+                  <div className="minimal-input-group mt-4 text-right">
+                    <label>آدرس تصویر (URL)</label>
+                    <input
+                      type="text"
+                      placeholder="لینک مستقیم تصویر..."
                       value={image}
                       onChange={(e) => setImage(e.target.value)}
-                      className="modern-input small-text"
-                    ></Form.Control>
-                  </Form.Group>
-                </div>
-              </Col>
-
-              {/* ستون دوم: فرم مشخصات */}
-              <Col lg={8}>
-                <div className="details-card">
-                  <h5 className="mb-4 fw-bold">مشخصات عمومی</h5>
-                  
-                  <Row className="g-4">
-                    {/* نام محصول (تمام عرض) */}
-                    <Col xs={12}>
-                      <Form.Group controlId='name'>
-                        <Form.Label className="modern-label">نام محصول</Form.Label>
-                        <Form.Control
-                          type='text'
-                          placeholder='مثلاً: مانتو کتی مدل سارا'
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="modern-input"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-
-                    {/* برند و دسته‌بندی */}
-                    <Col md={6}>
-                      <Form.Group controlId='brand'>
-                        <Form.Label className="modern-label"><FiLayers className="me-1"/> برند</Form.Label>
-                        <Form.Control
-                          type='text'
-                          placeholder='نام برند'
-                          value={brand}
-                          onChange={(e) => setBrand(e.target.value)}
-                          className="modern-input"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group controlId='category'>
-                        <Form.Label className="modern-label"><FiTag className="me-1"/> دسته‌بندی</Form.Label>
-                        <Form.Control
-                          type='text'
-                          placeholder='مثلاً: مانتو، شلوار...'
-                          value={category}
-                          onChange={(e) => setCategory(e.target.value)}
-                          className="modern-input"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-
-                    {/* قیمت و موجودی */}
-                    <Col md={6}>
-                      <Form.Group controlId='price'>
-                        <Form.Label className="modern-label"><FiDollarSign className="me-1"/> قیمت (تومان)</Form.Label>
-                        <Form.Control
-                          type='number'
-                          placeholder='0'
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                          className="modern-input"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col md={6}>
-                      <Form.Group controlId='countInStock'>
-                        <Form.Label className="modern-label"><FiBox className="me-1"/> موجودی انبار</Form.Label>
-                        <Form.Control
-                          type='number'
-                          placeholder='0'
-                          value={countInStock}
-                          onChange={(e) => setCountInStock(e.target.value)}
-                          className="modern-input"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-
-                    {/* توضیحات */}
-                    <Col xs={12}>
-                      <Form.Group controlId='description'>
-                        <Form.Label className="modern-label">توضیحات محصول</Form.Label>
-                        <Form.Control
-                          as='textarea'
-                          rows={5}
-                          placeholder='توضیحات کامل درباره جنس، سایز و ویژگی‌ها...'
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                          className="modern-input textarea-custom"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
-                  <div className="d-flex justify-content-end mt-5">
-                    <Button
-                      type='submit'
-                      className='btn-submit-fashion'
-                      disabled={loadingUpdate || loadingUpload}
-                    >
-                      <FiSave className="ms-2" size={20} />
-                      {loadingUpdate ? 'در حال ذخیره...' : 'ذخیره تغییرات'}
-                    </Button>
+                      className="minimal-input ltr-align text-muted"
+                    />
                   </div>
                 </div>
-              </Col>
-            </Row>
-          </Form>
+              </div>
+
+              {/* ستون چپ: فرم مشخصات */}
+              <div className="edit-main-content">
+                <div className="admin-card">
+                  <h3 className="card-section-title mb-4">اطلاعات پایه</h3>
+                  
+                  {/* نام محصول */}
+                  <div className="minimal-input-group mb-4">
+                    <label>نام کامل محصول</label>
+                    <input
+                      type="text"
+                      placeholder="مثلاً: پیراهن مردانه مدل کلاسیک"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="minimal-input"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-row-2col mb-4">
+                    {/* دسته‌بندی */}
+                    <div className="minimal-input-group">
+                      <label><FiTag className="icon-label" /> دسته‌بندی</label>
+                      <input
+                        type="text"
+                        placeholder="مثلاً: پوشاک مردانه"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        className="minimal-input"
+                        required
+                      />
+                    </div>
+                    {/* برند */}
+                    <div className="minimal-input-group">
+                      <label><FiLayers className="icon-label" /> برند</label>
+                      <input
+                        type="text"
+                        placeholder="نام برند یا تولیدکننده"
+                        value={brand}
+                        onChange={(e) => setBrand(e.target.value)}
+                        className="minimal-input"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-row-2col mb-4">
+                    {/* قیمت */}
+                    <div className="minimal-input-group">
+                      <label><FiDollarSign className="icon-label" /> قیمت فروش (تومان)</label>
+                      <input
+                        type="number"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        className="minimal-input"
+                        required
+                      />
+                    </div>
+                    {/* موجودی */}
+                    <div className="minimal-input-group">
+                      <label><FiBox className="icon-label" /> موجودی انبار (عدد)</label>
+                      <input
+                        type="number"
+                        value={countInStock}
+                        onChange={(e) => setCountInStock(e.target.value)}
+                        className="minimal-input"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* توضیحات */}
+                  <div className="minimal-input-group mb-4">
+                    <label>توضیحات تکمیلی</label>
+                    <textarea
+                      rows="5"
+                      placeholder="ویژگی‌ها، جنس، سایزبندی و جزئیات محصول..."
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      className="minimal-input"
+                      required
+                    ></textarea>
+                  </div>
+
+                  {/* دکمه ثبت */}
+                  <div className="form-action-footer">
+                    <button 
+                      type="submit" 
+                      className="btn-submit-solid"
+                      disabled={loadingUpdate || loadingUpload}
+                    >
+                      <FiSave size={20} />
+                      {loadingUpdate ? 'در حال ذخیره‌سازی...' : 'ذخیره تغییرات محصول'}
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+              
+            </div>
+          </form>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

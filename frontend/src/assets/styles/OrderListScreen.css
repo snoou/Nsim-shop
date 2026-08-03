@@ -1,0 +1,367 @@
+/* ==================== کانتینر اصلی داشبورد ==================== */
+.admin-dashboard-wrapper {
+  background-color: #f9f9f7;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==================== هدر داشبورد ==================== */
+.admin-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-page-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #2b2824;
+  margin: 0;
+}
+
+.admin-count-badge {
+  background-color: #ffffff;
+  border: 1px solid #e5e0d8;
+  color: #78716c;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+/* ==================== کارت اصلی (باکس سفید) ==================== */
+.admin-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e5e0d8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+}
+
+/* ==================== جدول سفارشات (دسکتاپ) ==================== */
+.desktop-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.luxury-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.luxury-admin-table th {
+  text-align: right;
+  font-size: 13px;
+  color: #a39c93;
+  font-weight: 600;
+  padding: 0 16px 16px;
+  border-bottom: 2px solid #efeae4;
+  white-space: nowrap;
+}
+
+.luxury-admin-table td {
+  padding: 20px 16px;
+  border-bottom: 1px solid #f5f3ef;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #5c554e;
+}
+
+.luxury-admin-table tbody tr:hover {
+  background-color: #fcfbf9;
+}
+
+/* استایل سلول‌های خاص */
+.id-cell {
+  font-family: monospace;
+  color: #a39c93 !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.user-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar-sm {
+  width: 32px;
+  height: 32px;
+  background-color: #f5f3ef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #78716c;
+}
+
+.user-name-text {
+  font-weight: 700;
+  color: #2b2824;
+}
+
+.date-cell {
+  font-size: 13px;
+  color: #78716c;
+}
+
+.price-cell {
+  font-weight: 800;
+  color: #2b2824;
+}
+
+.price-cell span {
+  font-size: 11px;
+  font-weight: 500;
+  color: #a39c93;
+}
+
+/* برچسب‌های وضعیت */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge.success { background-color: rgba(16, 185, 129, 0.1); color: #059669; }
+.status-badge.danger { background-color: rgba(239, 68, 68, 0.1); color: #dc2626; }
+.status-badge.warning { background-color: rgba(249, 115, 22, 0.1); color: #ea580c; }
+
+/* دکمه عملیات (چشم) */
+.action-cell {
+  text-align: left;
+}
+
+.btn-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: #f5f3ef;
+  color: #2b2824;
+  transition: all 0.2s;
+}
+
+.btn-action-icon:hover {
+  background-color: var(--primary, #0d9488);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ==================== کارت‌های سفارش (موبایل) ==================== */
+.mobile-cards-wrapper {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-mobile-card {
+  border: 1px solid #e5e0d8;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #fcfbf9;
+}
+
+.mobile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #e5e0d8;
+}
+
+.mobile-id {
+  font-family: monospace;
+  color: #78716c;
+  font-weight: 600;
+}
+
+.mobile-date {
+  font-size: 13px;
+  color: #a39c93;
+}
+
+.mobile-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.row-label { color: #78716c; }
+.row-value { color: #2b2824; }
+
+.text-teal { color: var(--primary, #0d9488); }
+.text-success { color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.text-danger { color: #dc2626; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.text-warning { color: #ea580c; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+.fw-bold { font-weight: 700; }
+
+.btn-mobile-view {
+  display: block;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #2b2824;
+  color: #2b2824;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  margin-top: 16px;
+  transition: all 0.3s;
+}
+
+.btn-mobile-view:hover {
+  background-color: #2b2824;
+  color: #ffffff;
+}
+
+
+
+/* ==================== نوار فیلتر و جستجو ==================== */
+.admin-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #fcfbf9;
+  border: 1px solid #e5e0d8;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1; /* گرفتن تمام فضای خالی باقیمانده */
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a39c93;
+}
+
+.filter-search-input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  color: #2b2824;
+  transition: all 0.3s ease;
+}
+
+.filter-search-input:focus {
+  outline: none;
+  border-color: var(--primary, #0d9488);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.filter-search-input::placeholder {
+  color: #c8c0b5;
+}
+
+.filter-selects-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.select-with-icon {
+  position: relative;
+}
+
+.select-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a39c93;
+  pointer-events: none; /* تا مزاحم کلیک روی سلکت نشود */
+}
+
+.filter-select {
+  padding: 12px 16px 12px 36px;
+  padding-right: 40px; /* فضای سمت راست برای آیکون */
+  border: 1px solid #e5e0d8;
+  border-radius: 12px;
+  background-color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  color: #5c554e;
+  cursor: pointer;
+  appearance: none; /* حذف فلش پیش‌فرض مرورگر */
+  min-width: 160px;
+  transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary, #0d9488);
+}
+
+/* ==================== ریسپانسیو نوار فیلتر ==================== */
+@media (max-width: 768px) {
+  .admin-filter-bar {
+    flex-direction: column; /* در موبایل همه زیر هم می‌افتند */
+    align-items: stretch;
+  }
+  
+  .search-input-wrapper {
+    max-width: 100%;
+  }
+
+  .filter-selects-wrapper {
+    flex-direction: column;
+  }
+  
+  .filter-select {
+    width: 100%;
+  }
+}
+
+
+
+
+
+/* ==================== ریسپانسیو ==================== */
+@media (max-width: 992px) {
+  .admin-card {
+    padding: 16px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .desktop-table-wrapper {
+    display: none; /* مخفی کردن جدول در موبایل */
+  }
+
+  .mobile-cards-wrapper {
+    display: flex; /* نمایش کارت‌ها در موبایل */
+  }
+}
