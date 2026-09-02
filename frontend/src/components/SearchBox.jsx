@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
-import '../assets/styles/SearchBox.css'; // اتصال به فایل استایل
+import '../assets/styles/SearchBox.css';
 
 const SearchBox = () => {
   const navigate = useNavigate();
@@ -25,12 +25,11 @@ const SearchBox = () => {
         name="q"
         onChange={(e) => setKeyword(e.target.value)}
         value={keyword}
-        placeholder="جستجوی لباس، اکسسوری، خواروبار..."
+        placeholder="جستجوی لباس، اکسسوری، ..."
         className="luxury-search-input"
         autoComplete="off"
       />
       
-      {/* دکمه جستجو که به صورت یک آیکون داخل کادر قرار گرفته است */}
       <button type="submit" className="luxury-search-btn" aria-label="جستجو">
         <FiSearch size={20} />
       </button>

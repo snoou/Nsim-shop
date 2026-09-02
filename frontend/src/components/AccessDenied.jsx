@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiLock, FiArrowRight } from 'react-icons/fi';
-import '../assets/styles/AccessDenied.css'; // اتصال به استایل اختصاصی
+import '../assets/styles/AccessDenied.css';
 
 const AccessDenied = () => {
   return (
     <div className="access-denied-container">
       <div className="access-denied-card">
         
-        {/* آیکون قفل در یک دایره لوکس */}
         <div className="denied-icon-wrapper">
           <FiLock size={36} />
         </div>

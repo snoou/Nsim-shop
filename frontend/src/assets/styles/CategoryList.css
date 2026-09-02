@@ -1,0 +1,171 @@
+.luxury-category-section {
+  margin: 40px auto 60px;
+  padding: 0 20px;
+  max-width: 1300px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px; /* کمی فاصله بیشتر با کارت‌ها */
+}
+
+.section-title {
+  font-size: 24px; /* عنوان بخش رو هم کمی بزرگ‌تر کردم */
+  font-weight: 800;
+  color: #2b2824;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.title-underline {
+  width: 60px;
+  height: 3px;
+  background-color: #2b2824;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* ======================================= */
+/* چیدمان فلکس برای وسط‌چین کردن کامل کارت‌ها */
+/* ======================================= */
+.category-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* این خط تمام کارت‌ها را دقیقاً وسط می‌چیند */
+  gap: 25px; /* فاصله بین کارت‌ها بیشتر شد */
+}
+
+/* استایل اصلی هر کارت (بزرگ‌تر شده) */
+.luxury-category-card {
+  width: 240px; /* عرض کارت بزرگ‌تر شد */
+  background-color: var(--primary);
+  border: 1px solid #efeae4;
+  border-radius: 24px; /* انحنای بیشتر برای زیبایی */
+  padding: 40px 20px; /* فضای داخلی (پدینگ) بیشتر شد */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* افکت هاور */
+.luxury-category-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  border-color: #2b2824;
+}
+
+/* دایره دور آیکون (بزرگ‌تر شد) */
+.card-icon-wrapper {
+  background-color: var(--accent);
+  color: #ffffff;
+  width: 76px; /* بزرگ‌تر شد */
+  height: 76px; /* بزرگ‌تر شد */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+/* بزرگ‌تر شدن خود آیکون داخلی (نیاز به تنظیم در React ندارد، از اینجا کنترل می‌شود) */
+.card-icon-wrapper svg {
+  width: 32px;
+  height: 32px;
+}
+
+.luxury-category-card:hover .card-icon-wrapper {
+  background-color: #2b2824;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 18px; /* فونت دسته‌بندی بزرگ‌تر شد */
+  font-weight: 700;
+  color: #fffffe;
+  margin: 0 0 14px 0;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+/* متن و فلش "مشاهده" */
+.card-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px; /* فونت کمی بزرگ‌تر */
+  font-weight: 700;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.luxury-category-card:hover .card-action {
+  opacity: 1;
+  transform: translateY(0);
+  color: #ffffff;
+}
+
+/* ======================================= */
+/* استایل حالت Active (دسته‌بندی انتخاب شده) */
+/* ======================================= */
+.luxury-category-card.active {
+  background-color: var(--primary);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(250, 154, 28, 0.2);
+}
+
+.luxury-category-card.active .card-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.luxury-category-card.active .card-title {
+  color: #ffffff;
+}
+
+.luxury-category-card.active .card-action {
+  opacity: 1;
+  transform: translateY(0);
+  color: #ffffff;
+}
+
+/* ======================================= */
+/* ریسپانسیو برای موبایل */
+/* ======================================= */
+@media (max-width: 768px) {
+  .luxury-category-card {
+    width: 45%; /* در موبایل دو تا کارت در هر ردیف قرار می‌گیرد */
+    padding: 25px 15px;
+  }
+  
+  .card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .card-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .card-title {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-category-card {
+    width: 100%; /* در گوشی‌های خیلی کوچک یک کارت در هر ردیف */
+    max-width: 300px;
+  }
+}

@@ -1,189 +1,91 @@
-.luxury-slider-wrapper {
+/* کانتینر اصلی: گرفتن تمام عرض صفحه برای سایت‌های راست‌چین و چپ‌چین */
+.full-width-slider-wrapper {
   position: relative;
-  width: 100%;
-  height: 480px; /* ارتفاع مناسب برای نمایش کامل آواتار */
-  /* رنگ پس‌زمینه کرم گرم دقیقاً مشابه عکس تو */
-  background: linear-gradient(135deg, #efeae4 0%, #e8dfd5 100%);
-  border-radius: 16px;
+  width: 100vw;
+  /* این فرمول جادویی باعث می‌شود اسلایدر دقیقا وسط بیفتد و به هر دو طرف صفحه بچسبد */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   overflow: hidden;
-  margin: 40px 0;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  display: flex;
 }
 
-/* --- پترن هندسی (مرکز) --- */
-.geometric-pattern-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 450px;
-  height: 450px;
-  /* ایجاد شکل هندسی اسلامی/ستاره‌ای با CSS برای پس‌زمینه */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='%23d6ccc0' stroke-width='1.5'/%3E%3Crect x='15' y='15' width='70' height='70' fill='none' stroke='%23d6ccc0' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+/* استفاده از Grid برای روی هم قرار دادن عکس‌ها بدون به هم ریختن ارتفاع */
+.slides-container {
+  display: grid;
+  width: 100%;
+}
+
+.full-width-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  z-index: 0;
+  width: 100%;
+}
+
+.full-width-slide.active {
+  opacity: 1;
   z-index: 1;
 }
 
-/* --- آواتار ثابت (راست) --- */
-.avatar-right-container {
-  position: absolute;
-  right: 5%;
-  bottom: 0;
-  height: 95%; /* قد آواتار تا پایین کادر برسد */
-  z-index: 10;
-  pointer-events: none;
-}
-
-.avatar-image {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  /* سایه ملایم برای عمق دادن به کاراکتر */
-  filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1));
-}
-
-/* --- نگهدارنده اسلایدها --- */
-.slides-container {
-  position: relative;
+.poster-link {
+  display: block;
   width: 100%;
-  height: 100%;
-  z-index: 5;
+  cursor: pointer;
 }
 
-.luxury-slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.8s ease-in-out;
-}
-.luxury-slide.active {
-  opacity: 1;
-  visibility: visible;
+/* 
+  تنظیمات اصلی عکس:
+  عرض دقیقاً 100 درصد تا به دو لبه مانیتور بچسبد.
+  ارتفاع اتوماتیک تا عکس اصلا نصف یا بریده نشود.
+*/
+.full-width-poster-image {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* --- متن و دکمه (سمت چپ) --- */
-.slide-text-left {
-  position: absolute;
-  left: 8%; /* فاصله از سمت چپ */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 35%; /* عرض بخش متنی */
-  text-align: right;
-  z-index: 15;
-}
-
-.slide-title {
-  font-size: 34px;
-  font-weight: 900;
-  color: #2b2824; /* رنگ قهوه‌ای/مشکی تیره برای خوانایی روی کرم */
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
-.slide-subtitle {
-  font-size: 18px;
-  color: #5c554e;
-  margin-bottom: 24px;
-}
-
-.slide-btn-teal {
-  display: inline-block;
-  background-color: var(--primary); /* همان رنگ سبز کله‌غازی هدر */
-  color: white;
-  padding: 10px 28px;
-  border-radius: 8px; /* گوشه‌های کمی گرد مشابه عکس */
-  font-size: 15px;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-.slide-btn-teal:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(13, 148, 136, 0.3);
-}
-
-/* --- عکس محصول (مرکز) --- */
-.slide-product-center {
-  position: absolute;
-  left: 48%; /* کمی متمایل به چپ تا با آواتار تداخل نداشته باشد */
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 350px;
-  height: 350px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 12;
-}
-
-.product-image-blend {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  /* این ویژگی جادویی عکس‌های با پس‌زمینه سفید را شفاف می‌کند */
-  mix-blend-mode: multiply; 
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-}
-
-/* --- فلش‌های ناوبری --- */
+/* ----------------------------------
+   استایل فلش‌های ناوبری روی عکس
+----------------------------------- */
 .nav-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: rgba(0, 0, 0, 0.3); /* رنگ مشکی ملایم برای دیده شدن روی عکس‌های روشن */
+  color: #fff;
   border: none;
-  color: white; /* رنگ سفید مثل عکس */
-  opacity: 0.7;
   cursor: pointer;
-  z-index: 20;
-  transition: opacity 0.3s, transform 0.3s;
-  /* سایه به فلش‌ها تا روی بک‌گراند روشن دیده شوند */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  z-index: 10;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .nav-arrow:hover {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
+  background: rgba(0, 0, 0, 0.7);
 }
 
-.arrow-left { left: 16px; }
-.arrow-right { right: 16px; }
+.arrow-left {
+  left: 30px;
+}
 
-/* --- ریسپانسیو (موبایل) --- */
-@media (max-width: 992px) {
-  .luxury-slider-wrapper {
-    height: auto;
-    min-height: 450px;
+.arrow-right {
+  right: 30px;
+}
+
+/* در موبایل فلش‌ها کوچکتر می‌شوند تا جلوی عکس را نگیرند */
+@media (max-width: 768px) {
+  .arrow-left {
+    left: 10px;
   }
-  .avatar-right-container {
-    display: none; /* در موبایل آواتار را برمیداریم تا شلوغ نشود */
+  .arrow-right {
+    right: 10px;
   }
-  .geometric-pattern-bg {
-    width: 300px;
-    height: 300px;
-  }
-  .slide-text-left {
-    position: relative;
-    left: 0;
-    top: 0;
-    transform: none;
-    width: 100%;
-    text-align: center;
-    padding: 24px;
-    margin-top: 250px; /* جا باز کردن برای عکس */
-  }
-  .slide-product-center {
-    top: 150px;
-    left: 50%;
-    width: 250px;
-    height: 250px;
-  }
-  .nav-arrow {
-    top: 150px; /* فلش‌ها را بالا کنار عکس می‌بریم */
+  .nav-arrow svg {
+    width: 24px;
+    height: 24px;
   }
 }

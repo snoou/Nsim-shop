@@ -1,0 +1,360 @@
+/* ================= کانتینر اصلی ================= */
+.shop-page-wrapper {
+  background-color: #F8F9FA; /* رنگ پس‌زمینه استاندارد فروشگاهی */
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.shop-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* ================= بنر جذاب دسته‌بندی ================= */
+.shop-banner {
+    
+  max-width: 1250px;
+  margin: 30px auto;
+  background: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 20px;
+  padding: 30px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(154, 121, 166, 0.2);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  margin-top: 90px;
+}
+
+.banner-title {
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.banner-desc {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.banner-img-box {
+  width: 150px;
+  height: 150px;
+  background: white;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* ================= ساختار فروشگاه (سایدبار و اصلی) ================= */
+.shop-layout {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* ================= سایدبار فیلترها ================= */
+.shop-sidebar {
+  flex: 0 0 280px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  border: 1px solid #eee;
+}
+
+.filter-widget {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.filter-widget:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.widget-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* لیست دسته‌بندی‌ها */
+.filter-category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-cat-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.filter-cat-link:hover, .filter-cat-link.active {
+  background-color: #FAF5FF;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* فیلتر قیمت (Inputs) */
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  outline: none;
+  font-family: inherit;
+}
+
+.price-input:focus {
+  border-color: var(--primary);
+}
+
+.price-divider {
+  color: #888;
+}
+
+/* دکمه Toggle (فقط تخفیف دارها) */
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.slider.round {
+  width: 44px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  position: relative;
+  transition: 0.3s;
+  margin-left: 10px;
+}
+
+.slider.round:before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: var(--primary);
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.toggle-text {
+  font-weight: 700;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+}
+
+.btn-clear-filters {
+  width: 100%;
+  background: none;
+  border: 1px dashed var(--danger);
+  color: var(--danger);
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ================= بخش اصلی محصولات ================= */
+.shop-main-content {
+  flex: 1;
+}
+
+.shop-toolbar {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  color: #666;
+}
+
+.empty-products-msg {
+  text-align: center;
+  padding: 50px;
+  background: white;
+  border-radius: 12px;
+  color: var(--danger);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ================= ریسپانسیو (موبایل و تبلت) ================= */
+.btn-mobile-filter {
+  display: none;
+}
+.sidebar-header-mobile {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .shop-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+    margin: 15px;
+    margin-top: 90px;
+  }
+  
+  .banner-img-box {
+    margin-top: 20px;
+  }
+
+  .shop-layout {
+    flex-direction: column;
+  }
+
+  /* دکمه فیلتر در موبایل */
+  .btn-mobile-filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+
+  /* سایدبار کشویی در موبایل */
+  .shop-sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    border-radius: 0;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+  }
+
+  .shop-sidebar.active {
+    right: 0;
+  }
+
+  .sidebar-header-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+  }
+
+  .btn-close-filter {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+}
+
+
+/* ================= گرید محصولات ================= */
+.luxury-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* در دسکتاپ 4 ستونه */
+  gap: 20px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.grid-item {
+  display: flex;
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .luxury-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-product-grid {
+    grid-template-columns: 1fr; /* در گوشی‌های کوچک تک‌ستونه */
+  }
+}

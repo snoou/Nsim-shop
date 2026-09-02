@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-// در حالت تست (Sandbox) این مقادیر ثابت هستند
 const ZARINPAL_URL = 'https://sandbox.zarinpal.com/pg/v4/payment';
-const MERCHANT_ID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; // کد مرچنت مخصوص تست
+const MERCHANT_ID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
 
-// تابع درخواست پرداخت (کاربر را به درگاه می‌فرستد)
 export const requestPayment = async (amount, callbackUrl, description, email, mobile) => {
   try {
     const response = await axios.post(`${ZARINPAL_URL}/request.json`, {
@@ -34,7 +32,6 @@ export const requestPayment = async (amount, callbackUrl, description, email, mo
   }
 };
 
-// تابع تایید پرداخت (وقتی کاربر از بانک برمی‌گردد)
 export const verifyPayment = async (amount, authority) => {
   try {
     const response = await axios.post(`${ZARINPAL_URL}/verify.json`, {

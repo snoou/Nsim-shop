@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 import { useProfileMutation } from '../slices/usersApiSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import { setCredentials } from '../slices/authSlice';
-import '../assets/styles/ProfileScreen.css'; // اتصال به فایل استایل
+import '../assets/styles/ProfileScreen.css'; 
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -56,7 +56,6 @@ const ProfileScreen = () => {
     <div className="luxury-profile-wrapper">
       <div className="profile-container">
         
-        {/* هدر پروفایل */}
         <div className="profile-welcome-header">
           <h2 className="welcome-title">سلام، {userInfo.name} 👋</h2>
           <p className="welcome-subtitle">به پنل کاربری اختصاصی خود خوش آمدید.</p>
@@ -64,7 +63,6 @@ const ProfileScreen = () => {
 
         <div className="profile-layout-grid">
           
-          {/* --- ستون راست: تنظیمات حساب --- */}
           <div className="profile-sidebar">
             <div className="dashboard-card">
               <div className="card-header-title">
@@ -136,7 +134,6 @@ const ProfileScreen = () => {
             </div>
           </div>
 
-          {/* --- ستون چپ: تاریخچه سفارشات --- */}
           <div className="profile-main-content">
             <div className="dashboard-card">
               <div className="card-header-title space-between">
@@ -157,7 +154,6 @@ const ProfileScreen = () => {
                     <Message>شما هنوز سفارشی ثبت نکرده‌اید.</Message>
                   ) : (
                     <>
-                      {/* جدول برای دسکتاپ */}
                       <div className="desktop-table-container">
                         <table className="luxury-order-table">
                           <thead>
@@ -201,7 +197,6 @@ const ProfileScreen = () => {
                         </table>
                       </div>
 
-                      {/* کارت‌ها برای موبایل */}
                       <div className="mobile-orders-list">
                         {orders.map((order) => (
                           <div key={order._id} className="mobile-order-card">

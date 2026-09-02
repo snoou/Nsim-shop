@@ -1,12 +1,11 @@
 import React from 'react';
 import logoFor from './../assets/logoFor.png';
-import '../assets/styles/FormContainer.css'; // اتصال به استایل اختصاصی
+import '../assets/styles/FormContainer.css';
 
 const FormContainer = ({ children, title = "خوش آمدید", subtitle = "به دنیای مد و زیبایی بپیوندید" }) => {
   return (
     <div className="luxury-auth-wrapper">
       
-      {/* بخش چپ: تصویر فشن و برندینگ (در موبایل مخفی می‌شود) */}
       <div className="auth-image-section">
         <img 
           src={logoFor}
@@ -21,7 +20,6 @@ const FormContainer = ({ children, title = "خوش آمدید", subtitle = "به
         </div>
       </div>
 
-      {/* بخش راست: کادر فرم (لاگین / ثبت‌نام) */}
       <div className="auth-form-section">
         <div className="auth-card">
           <div className="auth-header">
@@ -29,7 +27,6 @@ const FormContainer = ({ children, title = "خوش آمدید", subtitle = "به
             <span className="auth-subtitle">{subtitle}</span>
           </div>
           
-          {/* فرم‌های لاگین یا ثبت‌نام که به صورت فرزند (Children) پاس داده می‌شوند */}
           <div className="auth-form-body">
             {children}
           </div>

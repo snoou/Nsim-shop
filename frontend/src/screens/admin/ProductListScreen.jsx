@@ -22,33 +22,27 @@ const ProductListScreen = () => {
   const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
   const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
-  // --- استیت‌های مربوط به فیلتر و جستجو ---
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
 
-  // استخراج دسته‌بندی‌های یکتا برای منوی کشویی فیلتر
   const uniqueCategories = useMemo(() => {
     if (!data?.products) return [];
     return [...new Set(data.products.map(product => product.category))];
   }, [data]);
 
-  // --- منطق فیلتر و مرتب‌سازی (نمایش جدیدترین‌ها در ابتدا) ---
   const displayedProducts = useMemo(() => {
     if (!data?.products) return [];
     
     let filtered = data.products.filter((product) => {
-      // جستجو در نام و برند
       const matchSearch = 
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.brand.toLowerCase().includes(searchTerm.toLowerCase());
       
-      // فیلتر دسته‌بندی
       const matchCategory = categoryFilter === 'all' || product.category === categoryFilter;
       
       return matchSearch && matchCategory;
     });
 
-    // مرتب‌سازی: جدیدترین‌ها در ابتدا (بر اساس شناسه MongoDB که حاوی تایم‌استمپ است)
     return filtered.sort((a, b) => b._id.localeCompare(a._id));
   }, [data, searchTerm, categoryFilter]);
 
@@ -71,7 +65,6 @@ const ProductListScreen = () => {
         await createProduct();
         refetch();
         toast.success('محصول جدید ایجاد شد، لطفاً آن را ویرایش کنید');
-        // به صورت خودکار به اول لیست می‌آید چون مرتب‌سازی نزولی است
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -103,7 +96,6 @@ const ProductListScreen = () => {
         ) : (
           <div className="admin-card">
             
-            {/* --- نوار فیلتر و جستجو --- */}
             <div className="admin-filter-bar">
               <div className="search-input-wrapper">
                 <FiSearch className="search-icon" />
@@ -201,7 +193,6 @@ const ProductListScreen = () => {
                   </table>
                 </div>
 
-                {/* نمای کارتی برای موبایل */}
                 <div className="mobile-cards-wrapper">
                   {displayedProducts.map((product) => (
                     <div key={product._id} className="admin-mobile-card">
@@ -253,7 +244,6 @@ const ProductListScreen = () => {
               </>
             )}
 
-            {/* بخش صفحه‌بندی (Pagination) */}
             <div className="pagination-wrapper">
               <Paginate pages={data.pages} page={data.page} isAdmin={true} />
             </div>

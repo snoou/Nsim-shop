@@ -1,0 +1,135 @@
+/* ==================================
+   بخش اصلی دسته‌بندی‌های مدرن
+================================== */
+.modern-categories-section {
+  width: 100%;
+  padding: 20px 0 50px 0;
+}
+
+/* ==================================
+   هدر و عنوان بخش
+================================== */
+.modern-categories-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.modern-categories-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+/* یک خط تزئینی کوچک زیر عنوان به رنگ بنفش */
+.modern-categories-line {
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 10px;
+}
+
+/* ==================================
+   گرید (شبکه) کارت‌های دسته‌بندی
+================================== */
+.modern-categories-grid {
+  display: grid;
+  /* در مانیتورهای بزرگ هر کارت حداقل 160 پیکسل عرض دارد */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+/* ==================================
+   کارتِ هر دسته‌بندی
+================================== */
+.modern-category-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.modern-category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(154, 121, 166, 0.15); /* سایه بنفش ملایم در هاور */
+  border-color: var(--accent);
+}
+
+/* باکس عکس */
+.modern-category-img-box {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* مربع نگه داشتن باکس عکس */
+  overflow: hidden;
+  background-color: var(--bg-main);
+}
+
+/* خود عکس */
+.modern-category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease; /* انیمیشن نرم برای زوم */
+}
+
+/* زوم شدن عکس هنگام هاور روی کارت */
+.modern-category-card:hover .modern-category-img {
+  transform: scale(1.08);
+}
+
+/* بخش نام دسته‌بندی (پایین کارت) */
+.modern-category-info {
+  padding: 16px 10px;
+  text-align: center;
+  background-color: var(--bg-card);
+}
+
+.modern-category-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  transition: color 0.3s ease;
+}
+
+/* تغییر رنگ متن در هاور */
+.modern-category-card:hover .modern-category-name {
+  color: var(--primary);
+}
+
+/* ==================================
+   ریسپانسیو (موبایل و تبلت)
+================================== */
+@media (max-width: 768px) {
+  .modern-categories-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 16px;
+  }
+  
+  .modern-categories-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-categories-grid {
+    /* در گوشی‌های خیلی کوچک دو ستونه می‌شود */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .modern-category-info {
+    padding: 12px 8px;
+  }
+  
+  .modern-category-name {
+    font-size: 13px;
+  }
+}

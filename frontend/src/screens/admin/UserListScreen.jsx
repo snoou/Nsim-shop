@@ -11,21 +11,17 @@ const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
   const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
-  // --- استیت‌های مربوط به فیلتر و جستجو ---
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all'); // all, admin, customer
 
-  // --- منطق فیلتر کردن ---
   const filteredUsers = useMemo(() => {
     if (!users) return [];
     
     return users.filter((user) => {
-      // جستجو در نام و ایمیل
       const matchSearch = 
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase());
       
-      // فیلتر نقش
       const matchRole = 
         roleFilter === 'all' || 
         (roleFilter === 'admin' && user.isAdmin) || 
@@ -51,7 +47,6 @@ const UserListScreen = () => {
     <div className="admin-dashboard-wrapper">
       <div className="admin-container">
         
-        {/* هدر صفحه */}
         <div className="admin-header-flex">
           <div>
             <h1 className="admin-page-title">لیست کاربران</h1>
@@ -73,7 +68,6 @@ const UserListScreen = () => {
         ) : (
           <div className="admin-card">
             
-            {/* --- نوار فیلتر و جستجو --- */}
             <div className="admin-filter-bar">
               <div className="search-input-wrapper">
                 <FiSearch className="search-icon" />
@@ -106,7 +100,6 @@ const UserListScreen = () => {
               <Message>هیچ کاربری با این مشخصات یافت نشد.</Message>
             ) : (
               <>
-                {/* --- نمای جدول برای دسکتاپ --- */}
                 <div className="desktop-table-wrapper">
                   <table className="luxury-admin-table">
                     <thead>
@@ -159,7 +152,6 @@ const UserListScreen = () => {
                                 <FiEdit3 size={18} />
                               </Link>
                               
-                              {/* جلوگیری از حذف ادمین‌ها */}
                               {!user.isAdmin ? (
                                 <button 
                                   className="btn-action-icon delete" 
@@ -181,7 +173,6 @@ const UserListScreen = () => {
                   </table>
                 </div>
 
-                {/* --- نمای کارتی برای موبایل --- */}
                 <div className="mobile-cards-wrapper">
                   {filteredUsers.map((user) => (
                     <div key={user._id} className="admin-mobile-card">

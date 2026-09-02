@@ -30,7 +30,6 @@ const PaymentScreen = () => {
   return (
     <div className="luxury-payment-wrapper">
       
-      {/* نوار مراحل خرید */}
       <CheckoutSteps step1 step2 step3 />
 
       <div className="payment-card-container">
@@ -44,7 +43,6 @@ const PaymentScreen = () => {
         <form onSubmit={submitHandler} className="payment-form">
           <div className="payment-options-grid">
             
-            {/* گزینه پرداخت زرین‌پال */}
             <label 
               className={`luxury-payment-option ${paymentMethod === 'ZarinPal' ? 'active' : ''}`}
             >
@@ -67,11 +65,9 @@ const PaymentScreen = () => {
                 </div>
               </div>
               
-              {/* دکمه رادیویی سفارشی */}
               <div className="custom-radio-indicator"></div>
             </label>
 
-            {/* در صورت نیاز به درگاه دوم، می‌توانید کدهای label بالا را اینجا کپی کنید */}
 
           </div>
 

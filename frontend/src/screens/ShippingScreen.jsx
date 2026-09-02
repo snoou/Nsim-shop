@@ -10,7 +10,6 @@ const ShippingScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
-  // اضافه شدن فیلد نام گیرنده و شماره تلفن
   const [fullName, setFullName] = useState(shippingAddress.fullName || '');
   const [phone, setPhone] = useState(shippingAddress.phone || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
@@ -22,7 +21,6 @@ const ShippingScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // ذخیره اطلاعات کامل شامل نام و تلفن در Redux
     dispatch(saveShippingAddress({ fullName, phone, address, city, postalCode }));
     navigate('/payment');
   };
@@ -41,7 +39,6 @@ const ShippingScreen = () => {
 
           <form onSubmit={submitHandler} className="clean-shipping-form">
             
-            {/* نام و نام خانوادگی گیرنده */}
             <div className="form-group-minimal">
               <label>نام و نام خانوادگی تحویل‌گیرنده</label>
               <input
@@ -67,7 +64,6 @@ const ShippingScreen = () => {
               />
             </div>
 
-            {/* آدرس کامل پستی */}
             <div className="form-group-minimal">
               <label>آدرس کامل پستی</label>
               <textarea
@@ -80,7 +76,6 @@ const ShippingScreen = () => {
               ></textarea>
             </div>
 
-            {/* شهر و کد پستی (دوتایی) */}
             <div className="form-row-minimal">
               <div className="form-group-minimal w-50">
                 <label>شهر</label>

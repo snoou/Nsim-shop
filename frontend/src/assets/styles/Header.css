@@ -1,21 +1,47 @@
 /* ==================== ساختار کلی هدر ==================== */
 .luxury-header {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  direction: rtl;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+/* ---------- حالت شیشه‌ای (روی هیرو ویدیویی) ---------- */
+.luxury-header.is-glass {
+  background-color: rgba(20, 18, 16, 0.15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: none;
+}
+
+/* ---------- حالت رنگی (بعد از اسکرول از هیرو) ---------- */
+.luxury-header.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid #e5e0d8;
-  font-family: 'Vazirmatn', sans-serif;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 /* ==================== نوار بالایی (Top Bar) ==================== */
 .top-announcement-bar {
-  background-color: #2b2824; /* رنگ تیره و لوکس */
   color: #f5f3ef;
   font-size: 12px;
-  padding: 6px 0;
+  padding: 8px 0;
+  transition: opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
+}
+
+.is-glass .top-announcement-bar {
+  background-color: transparent;
+}
+
+.is-scrolled .top-announcement-bar {
+  background-color: #2b2824;
 }
 
 .top-bar-container {
@@ -23,43 +49,19 @@
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
-
-.announcement-text {
-  letter-spacing: 0.5px;
-}
-
-.store-mode-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mode-btn {
-  background: none;
-  border: none;
-  color: #a39c93;
-  cursor: pointer;
-  font-size: 12px;
-  font-family: inherit;
-  transition: color 0.3s;
-}
-
-.mode-btn:hover { color: #ffffff; }
-.mode-btn.active { color: #ffffff; font-weight: 700; }
-.mode-divider { color: #5c554e; }
 
 /* ==================== بخش اصلی هدر ==================== */
 .main-header-container {
   max-width: 1300px;
   margin: 0 auto;
   padding: 16px 20px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 40px;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 /* لوگو */
@@ -67,6 +69,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .mobile-toggle {
@@ -74,55 +77,67 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #2b2824;
+  padding: 4px;
+  color: #ffffff;
+  transition: color 0.4s ease;
 }
+
+.is-scrolled .mobile-toggle { color: #2b2824; }
 
 .luxury-logo {
   font-size: 28px;
   font-weight: 900;
-  color: #2b2824;
+  color: #ffffff;
   text-decoration: none;
   letter-spacing: 2px;
+  transition: color 0.4s ease;
 }
+
+.is-scrolled .luxury-logo { color: #2b2824; }
 
 /* جستجو */
 .header-search-area {
-  width: 100%;
+  flex-grow: 1;
   max-width: 600px;
-  margin: 0 auto;
 }
 
-/* آیکون‌ها و منوها (چپ) */
+/* آیکون‌ها */
 .header-actions-area {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  flex-shrink: 0;
 }
 
 .action-icon-btn {
   background: none;
   border: none;
-  color: #2b2824;
+  color: #ffffff;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  font-family: inherit;
-  transition: color 0.2s;
+  transition: color 0.4s ease;
 }
 
-.action-icon-btn:hover {
-  color: var(--primary, #0d9488);
-}
+.is-scrolled .action-icon-btn { color: #2b2824; }
+
+.action-icon-btn:hover { color: #0d9488; }
 
 .admin-badge {
-  background-color: #f5f3ef;
-  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
   border-radius: 20px;
-  color: #78716c;
+  color: #ffffff;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.is-scrolled .admin-badge {
+  background-color: #f5f3ef;
+  color: #5c554e;
 }
 
 /* سبد خرید */
@@ -132,21 +147,22 @@
 
 .cart-badge {
   position: absolute;
-  top: -8px;
+  top: -6px;
   right: -8px;
-  background-color: var(--primary, #0d9488);
+  background-color: #0d9488;
   color: white;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 5px rgba(13, 148, 136, 0.4);
 }
 
-/* ==================== منوی کشویی (Dropdown) ==================== */
+/* ==================== منوی کشویی ==================== */
 .luxury-dropdown {
   position: relative;
 }
@@ -156,15 +172,15 @@
   top: 150%;
   left: 0;
   background-color: #ffffff;
-  min-width: 180px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e5e0d8;
-  border-radius: 16px;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #efeae4;
+  border-radius: 12px;
   padding: 8px 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
 }
@@ -175,7 +191,7 @@
   transform: translateY(0);
 }
 
-.dropdown-content a, 
+.dropdown-content a,
 .dropdown-content button {
   padding: 12px 20px;
   text-decoration: none;
@@ -184,30 +200,33 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   background: none;
   border: none;
   width: 100%;
   text-align: right;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 
-.dropdown-content a:hover, 
+.dropdown-content a:hover,
 .dropdown-content button:hover {
   background-color: #f9f9f7;
   color: #2b2824;
 }
 
-.dropdown-content .text-danger {
-  color: #dc2626;
-}
-.dropdown-content .text-danger:hover {
-  background-color: #fef2f2;
-}
+.dropdown-content .text-danger { color: #dc2626; }
+.dropdown-content .text-danger:hover { background-color: #fef2f2; }
+
+.d-show-mobile-only { display: none !important; }
 
 /* ==================== نوار دسته‌بندی‌ها ==================== */
 .category-nav {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  transition: border-color 0.4s ease;
+}
+
+.is-scrolled .category-nav {
   border-top: 1px solid #f0ece6;
 }
 
@@ -221,16 +240,19 @@
 }
 
 .nav-item {
-  color: #5c554e;
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
-  padding: 16px 0;
+  padding: 18px 0;
   position: relative;
-  transition: color 0.3s;
+  transition: color 0.4s ease;
 }
 
-.nav-item:hover { color: #2b2824; }
+.is-scrolled .nav-item { color: #5c554e; }
+
+.nav-item:hover { color: #ffffff; }
+.is-scrolled .nav-item:hover { color: #2b2824; }
 
 .nav-item::after {
   content: '';
@@ -239,65 +261,110 @@
   right: 0;
   width: 0%;
   height: 2px;
-  background-color: #2b2824;
-  transition: width 0.3s ease;
+  background-color: #ffffff;
+  transition: width 0.3s ease, background-color 0.4s ease;
 }
+
+.is-scrolled .nav-item::after { background-color: #2b2824; }
 
 .nav-item:hover::after { width: 100%; }
 
-.highlight-red { color: #dc2626; }
-.highlight-red::after { background-color: #dc2626; }
+.highlight-red { color: #f87171; }
+.is-scrolled .highlight-red { color: #dc2626; }
+.highlight-red::after { background-color: #f87171; }
+.is-scrolled .highlight-red::after { background-color: #dc2626; }
 
-/* ==================== ریسپانسیو موبایل ==================== */
+/* ==================== ریسپانسیو موبایل و تبلت ==================== */
 @media (max-width: 992px) {
-  .top-announcement-bar { display: none; } /* مخفی کردن نوار بالا در موبایل */
-  
+  .top-announcement-bar { display: none; }
+  .category-nav { display: none; }
+
   .main-header-container {
-    grid-template-columns: 1fr auto;
+    flex-wrap: wrap;
+    padding: 12px 16px;
     gap: 16px;
-    padding: 12px 20px;
+  }
+
+  .header-brand-area { order: 1; }
+  .header-actions-area {
+    order: 2;
+    gap: 16px;
   }
 
   .header-search-area {
-    grid-column: 1 / -1; /* جستجو می‌رود خط پایین و کل عرض را می‌گیرد */
     order: 3;
+    width: 100%;
+    max-width: 100%;
   }
 
-  .category-nav { display: none; }
-  
   .mobile-toggle { display: block; }
-  
-  .d-none-mobile { display: none; }
+  .d-none-mobile { display: none !important; }
+  .d-show-mobile-only { display: flex !important; }
 }
 
 /* ==================== منوی کشویی موبایل (Sidebar) ==================== */
 .mobile-sidebar {
   position: fixed;
   top: 0;
-  right: -300px;
-  width: 280px;
+  right: -320px;
+  width: 300px;
+  max-width: 85vw;
   height: 100vh;
   background-color: #ffffff;
   z-index: 1001;
-  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-  transition: right 0.4s ease;
-  padding: 24px;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+  transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   flex-direction: column;
 }
 
-.mobile-sidebar.open {
-  right: 0;
+.mobile-sidebar.open { right: 0; }
+
+.mobile-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #efeae4;
+}
+
+.luxury-logo-small {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #2b2824;
+}
+
+.close-mobile-btn {
+  background: none;
+  border: none;
+  color: #5c554e;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-content {
+  padding: 12px 24px;
+  overflow-y: auto;
 }
 
 .mobile-nav-item {
   display: block;
   padding: 16px 0;
-  border-bottom: 1px solid #efeae4;
+  border-bottom: 1px solid #f5f3ef;
   color: #2b2824;
   text-decoration: none;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
+  transition: padding-right 0.2s;
+}
+
+.mobile-nav-item:hover {
+  padding-right: 8px;
+  color: #0d9488;
 }
 
 .mobile-overlay {
@@ -306,7 +373,205 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   z-index: 1000;
+  opacity: 1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+
+
+
+/* ==================== ساختار کلی هدر ==================== */
+.luxury-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+  direction: rtl;
+  transition: background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease, padding 0.5s ease;
+}
+
+/* ---------- حالت شیشه‌ای (روی انیمیشن هیرو) ---------- */
+.luxury-header.is-glass {
+  background-color: transparent;
+  backdrop-filter: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  padding: 10px 0; /* کمی بزرگتر روی هیرو برای حس لوکس بودن */
+}
+
+/* ---------- حالت رنگی (بعد از اتمام اسکرول هیرو) ---------- */
+.luxury-header.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e5e0d8;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 0; /* جمع و جور شدن بعد از اسکرول */
+}
+
+/* ==================== بخش اصلی هدر ==================== */
+.main-header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* لوگو */
+.header-brand-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1; /* برای وسط چین شدن دقیق منو */
+}
+
+.luxury-logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 2px;
+  transition: color 0.4s ease;
+}
+.is-scrolled .luxury-logo { color: #2b2824; }
+
+/* مرکز: نوار دسته‌بندی‌ها در هدر */
+.header-center-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex: 2; /* فضای بیشتر برای منوی وسط */
+}
+
+.nav-item {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.4s ease;
+  padding: 5px 0;
+}
+
+.is-scrolled .nav-item { color: #5c554e; }
+.nav-item:hover { color: #ffffff; }
+.is-scrolled .nav-item:hover { color: #2b2824; }
+
+/* افکت خط زیر لینک‌ها */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.3s ease, background-color 0.4s ease;
+}
+.is-scrolled .nav-item::after { background-color: #2b2824; }
+.nav-item:hover::after { width: 100%; }
+
+.highlight-red { color: #ff8a8a; }
+.is-scrolled .highlight-red { color: #dc2626; }
+
+/* آیکون‌ها و بخش چپ */
+.header-actions-area {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  flex: 1;
+}
+
+.action-icon-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.4s ease;
+}
+.is-scrolled .action-icon-btn { color: #2b2824; }
+.action-icon-btn:hover { color: #0d9488; }
+
+/* محو کردن سرچ‌باکس در حالت شیشه‌ای برای خلوت ماندن */
+.header-search-wrapper {
+  transition: opacity 0.4s ease;
+}
+.is-glass .header-search-wrapper {
+  opacity: 0.6;
+}
+.is-glass .header-search-wrapper:hover {
+  opacity: 1;
+}
+
+/* سبد خرید */
+.cart-btn { position: relative; }
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #0d9488;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #ffffff;
+  transition: color 0.4s ease;
+}
+.is-scrolled .mobile-toggle { color: #2b2824; }
+
+@media (max-width: 992px) {
+  .main-header-container {
+    padding: 12px 20px;
+  }
+  .header-brand-area { flex: auto; }
+  .header-actions-area { flex: auto; }
+  
+  .mobile-toggle { display: block; }
+  .d-none-mobile { display: none !important; }
+}
+
+/* عنوان بخش‌های دراپ‌داون */
+.dropdown-section-title {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 700;
+  padding: 8px 18px 4px 18px;
+  letter-spacing: 0.5px;
+}
+
+/* خط جداکننده درون منوی کشویی */
+.dropdown-divider {
+  height: 1px;
+  background-color: #f3f4f6;
+  margin: 6px 0;
 }

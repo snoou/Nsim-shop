@@ -47,14 +47,12 @@ const UserEditScreen = () => {
     }
   };
 
-  // گرفتن حرف اول اسم برای آواتار
   const userInitial = name ? name.charAt(0).toUpperCase() : '?';
 
   return (
     <div className="admin-dashboard-wrapper">
       <div className="admin-container">
         
-        {/* هدر صفحه */}
         <div className="admin-header-flex">
           <div>
             <h1 className="admin-page-title">ویرایش کاربر</h1>
@@ -77,7 +75,6 @@ const UserEditScreen = () => {
           <form onSubmit={submitHandler} className="edit-user-form">
             <div className="edit-grid-layout">
               
-              {/* ستون سمت راست: پروفایل/آواتار کاربر */}
               <div className="edit-sidebar">
                 <div className="admin-card text-center profile-summary-card">
                   <div className="user-avatar-large">
@@ -92,12 +89,10 @@ const UserEditScreen = () => {
                 </div>
               </div>
 
-              {/* ستون سمت چپ: فرم ویرایش */}
               <div className="edit-main-content">
                 <div className="admin-card">
                   <h3 className="card-section-title mb-4">اطلاعات کاربری</h3>
                   
-                  {/* نام */}
                   <div className="minimal-input-group mb-4">
                     <label><FiUser className="icon-label" /> نام و نام خانوادگی</label>
                     <input
@@ -110,7 +105,6 @@ const UserEditScreen = () => {
                     />
                   </div>
 
-                  {/* ایمیل */}
                   <div className="minimal-input-group mb-4">
                     <label><FiMail className="icon-label" /> آدرس پست الکترونیک</label>
                     <input
@@ -123,7 +117,6 @@ const UserEditScreen = () => {
                     />
                   </div>
 
-                  {/* کارت تغییر نقش (سطح دسترسی) */}
                   <div className="minimal-input-group mb-4">
                     <label><FiShield className="icon-label" /> سطح دسترسی در سیستم</label>
                     <div 
@@ -145,7 +138,6 @@ const UserEditScreen = () => {
                     </div>
                   </div>
 
-                  {/* دکمه ذخیره */}
                   <div className="form-action-footer">
                     <button 
                       type="submit" 

@@ -2,27 +2,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
 
 :root {
-  /* --- رنگ‌های اصلی --- */
-  --primary: #0D9488;       /* سبز کله‌غازی - رنگ برند */
-  --primary-hover: #0F766E;
-  
+  /* --- رنگ‌های اصلی برند --- */
+  --primary: #9A79A6;
+  /* بنفش اصلی کاراکتر */
+  --primary-hover: #765084;
+  /* بنفش تیره برای Hover */
+
   /* --- رنگ‌های فروش و تخفیف --- */
-  --accent: #F97316;        /* نارنجی برای سبد خرید و تخفیف */
-  --accent-hover: #EA580C;
-  --danger: #EF4444;        /* قرمز برای ارورها */
-  
+  --accent: #C084D4;
+  /* بنفش روشن / CTA */
+  --accent-hover: #A65BBE;
+  --danger: #EF4444;
+  /* قرمز برای خطاها */
+
   /* --- رنگ‌های پس‌زمینه و متن --- */
-  --bg-main: #F9FAFB;       /* پس‌زمینه کل سایت (خاکستری خیلی روشن) */
-  --bg-card: #FFFFFF;       /* پس‌زمینه کارت‌ها و هدر */
-  --text-dark: #111827;     /* رنگ متن اصلی */
-  --text-muted: #6B7280;    /* رنگ متن‌های کم‌اهمیت‌تر */
-  --border-light: #E5E7EB;  /* رنگ خطوط */
-  
+  --bg-main: #FAF8FB;
+  /* سفید مایل به بنفش */
+  --bg-card: #FFFFFF;
+  /* سفید کارت‌ها و هدر */
+  --text-dark: #211827;
+  /* مشکی با ته‌رنگ بنفش */
+  --text-muted: #756B78;
+  /* متن کم‌اهمیت */
+  --border-light: #E8E0EB;
+  /* خطوط و Border */
+
   /* --- تنظیمات سایه و انحنا --- */
   --radius-md: 8px;
   --radius-lg: 12px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+
+  --shadow-sm: 0 1px 3px rgba(118, 80, 132, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(118, 80, 132, 0.12);
 }
 
 * {
@@ -35,9 +45,14 @@ body {
   font-family: 'Vazirmatn', system-ui, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-dark);
-  direction: rtl; /* راست‌چین کردن کل سایت */
+  direction: rtl;
+  /* راست‌چین کردن کل سایت */
 }
 
 a {
   text-decoration: none;
+}
+
+body {
+  overflow-x: hidden;
 }

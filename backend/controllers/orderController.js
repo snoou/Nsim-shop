@@ -180,7 +180,6 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
-// مهم: تمام توابع باید اینجا اکسپورت شوند
 export {
   addOrderItems,
   getMyOrders,

@@ -8,7 +8,6 @@ import { Spinner } from 'react-bootstrap';
 import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 
-// 🟢 توجه: ما از همان استایل‌های صفحه لاگین استفاده می‌کنیم تا طراحی کاملاً یکپارچه بماند
 import '../assets/styles/LoginScreen.css'; 
 
 const RegisterScreen = () => {
@@ -74,7 +73,6 @@ const RegisterScreen = () => {
             />
           </div>
 
-          {/* ایمیل */}
           <div className="luxury-input-group">
             <FiMail className="input-icon" size={20} />
             <input
@@ -87,7 +85,6 @@ const RegisterScreen = () => {
             />
           </div>
 
-          {/* رمز عبور */}
           <div className="luxury-input-group">
             <FiLock className="input-icon" size={20} />
             <input
@@ -100,7 +97,6 @@ const RegisterScreen = () => {
             />
           </div>
 
-          {/* تکرار رمز عبور */}
           <div className="luxury-input-group">
             <FiCheckCircle className="input-icon" size={20} />
             <input

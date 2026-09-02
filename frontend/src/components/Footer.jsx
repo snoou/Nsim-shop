@@ -38,7 +38,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ستون دوم: خدمات مشتریان */}
           <div className="footer-col">
             <h4 className="footer-title">راهنمای مشتریان</h4>
             <ul className="footer-links">
@@ -50,13 +49,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ستون سوم: تماس با ما */}
           <div className="footer-col">
             <h4 className="footer-title">ارتباط با ما</h4>
             <ul className="contact-info">
               <li>
                 <FiMapPin className="contact-icon" />
-                <span>تهران، پاکدشت، خیابان بیست متری</span>
+                <span>تهران</span>
               </li>
               <li>
                 <FiPhone className="contact-icon" />
@@ -72,7 +70,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ستون چهارم: نمادهای اعتماد */}
           <div className="footer-col trust-col">
             <h4 className="footer-title">خرید امن</h4>
             <div className="trust-badges">
@@ -91,7 +88,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* بخش کپی‌رایت پایین */}
       <div className="footer-bottom">
         <div className="footer-bottom-container">
           <p className="copyright">

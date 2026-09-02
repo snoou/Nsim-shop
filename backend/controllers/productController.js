@@ -5,9 +5,10 @@ import Product from '../models/productModel.js';
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = process.env.PAGINATION_LIMIT;
+  const pageSize = process.env.PAGINATION_LIMIT || 8; 
   const page = Number(req.query.pageNumber) || 1;
-
+console.log("Category received in backend:", req.query.category);
+  // فیلتر جستجوی کلمه کلیدی
   const keyword = req.query.keyword
     ? {
         name: {
@@ -17,30 +18,45 @@ const getProducts = asyncHandler(async (req, res) => {
       }
     : {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  const category = req.query.category
+    ? { category: req.query.category }
+    : {};
+
+  const filter = { ...keyword, ...category };
+
+  const count = await Product.countDocuments(filter);
+  const products = await Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
+// @desc    Get all product categories
+// @route   GET /api/products/categories
+// @access  Public
+const getCategories = asyncHandler(async (req, res) => {
+  const categories = await Product.find().distinct('category');
+  res.json(categories);
+});
+
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  Public
 const getProductById = asyncHandler(async (req, res) => {
-  // NOTE: checking for valid ObjectId to prevent CastError moved to separate
-  // middleware. See README for more info.
-
   const product = await Product.findById(req.params.id);
   if (product) {
     return res.json(product);
   } else {
-    // NOTE: this will run if a valid ObjectId but no product was found
-    // i.e. product may be null
     res.status(404);
     throw new Error('Product not found');
   }
+});
+
+
+const getFeaturedProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({ isFeatured: true });
+  res.json(products);
 });
 
 // @desc    Create a product
@@ -57,6 +73,7 @@ const createProduct = asyncHandler(async (req, res) => {
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',
+    isFeatured: false, // فیلد جدید
   });
 
   const createdProduct = await product.save();
@@ -67,7 +84,7 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
+  const { name, price, description, image, brand, category, countInStock ,isFeatured } =
     req.body;
 
   const product = await Product.findById(req.params.id);
@@ -80,6 +97,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
+    product.isFeatured = isFeatured; 
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
@@ -162,4 +180,6 @@ export {
   deleteProduct,
   createProductReview,
   getTopProducts,
+  getCategories,
+  getFeaturedProducts,
 };

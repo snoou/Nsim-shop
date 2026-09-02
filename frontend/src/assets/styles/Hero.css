@@ -1,0 +1,204 @@
+/* ==================== Hero Section ==================== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 220vh;
+}
+
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #17131b;
+}
+
+/* ==================== Canvas & Overlay ==================== */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: brightness(0.95) contrast(1.05) saturate(0.9) sepia(0.02);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* 
+   گرادیانت از راست به چپ تاریک می‌شود تا متن سمت راست کاملاً خوانا باشد 
+  */
+  background: linear-gradient(
+    to left,
+    rgba(20, 15, 25, 0.75) 0%,  /* سمت راست تاریک‌تر */
+    rgba(20, 15, 25, 0.3) 50%,  /* وسط نیمه شفاف */
+    rgba(20, 15, 25, 0.05) 100% /* سمت چپ شفاف */
+  );
+  backdrop-filter: blur(1px); /* یک تارشدگی بسیار ملایم برای جذابیت بیشتر */
+}
+
+/* ==================== Typography & Content ==================== */
+.hero-content {
+  position: absolute;
+  z-index: 2;
+  right: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #FFFFFF; /* تغییر به سفید برای خوانایی کامل */
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* سایه نرم پشت متن برای وضوح بیشتر */
+}
+
+.hero-eyebrow {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 16px;
+  letter-spacing: 2px; /* برای فونت فارسی فاصله حروف کمتر زیباتر است */
+  font-weight: 600;
+  color: var(--primary); /* استفاده از رنگ برند برای ابروی تیتر */
+  text-shadow: none;
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: clamp(50px, 7vw, 120px);
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.hero-content h1 span {
+  font-weight: 300;
+  display: block; /* برای اینکه همیشه در خط جدید و مرتب باشد */
+  margin-top: 10px;
+}
+
+.hero-content p {
+  margin-top: 35px;
+  font-size: 18px;
+  line-height: 1.8;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+/* ==================== Button ==================== */
+.shop-button {
+  margin-top: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 32px;
+  border: none; /* حذف حاشیه اضافی */
+  border-radius: 100px;
+  background: var(--primary); /* رنگ کله‌غازی برند شما */
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); /* سایه همرنگ دکمه */
+}
+
+.shop-button span {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+.shop-button:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5);
+  transform: translateY(-2px);
+}
+
+.shop-button:hover span {
+  transform: translateX(-8px); /* حرکت فلش به سمت چپ در زمان هاور */
+}
+
+/* ==================== Scroll Indicator ==================== */
+.scroll-indicator {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #FFFFFF;
+  font-size: 11px;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 45px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* انیمیشن برای خط اسکرول پایین صفحه */
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #FFFFFF;
+  animation: scrollDown 2s infinite ease-in-out;
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* ==================== Mobile Responsiveness ==================== */
+@media (max-width: 768px) {
+  .hero { height: 180vh; }
+  
+  /* گرادیانت برای موبایل باید از پایین به بالا باشد چون متن وسط می‌آید */
+  .hero-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(20, 15, 25, 0.8) 0%,
+      rgba(20, 15, 25, 0.4) 50%,
+      rgba(20, 15, 25, 0.1) 100%
+    );
+  }
+
+  .hero-content {
+    left: 5%;
+    right: 5%;
+    top: 60%; /* کمی پایین‌تر در موبایل برای زیبایی بیشتر */
+    text-align: center; /* راست‌چین کردن را در موبایل برمیداریم */
+  }
+
+  .hero-content h1 {
+    font-size: 12vw;
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+    margin-top: 20px;
+  }
+
+  .shop-button {
+    margin-top: 30px;
+    margin-inline: auto; /* وسط‌چین کردن دکمه در موبایل */
+  }
+}

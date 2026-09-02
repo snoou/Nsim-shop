@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/styles/Loader.css'; // اتصال به فایل استایل
+import '../assets/styles/Loader.css'; 
 
 const Loader = () => {
   return (

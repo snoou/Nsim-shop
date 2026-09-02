@@ -8,7 +8,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
-import '../assets/styles/PlaceOrderScreen.css'; // اتصال به فایل استایل اختصاصی
+import '../assets/styles/PlaceOrderScreen.css'; 
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -46,7 +46,6 @@ const PlaceOrderScreen = () => {
     <div className="luxury-placeorder-wrapper">
       <div className="placeorder-container">
         
-        {/* نوار مراحل خرید */}
         <CheckoutSteps step1 step2 step3 step4 />
 
         <div className="placeorder-header">
@@ -56,10 +55,8 @@ const PlaceOrderScreen = () => {
 
         <div className="placeorder-grid-layout">
           
-          {/* --- ستون اصلی (راست) --- */}
           <div className="placeorder-main-column">
             
-            {/* کارت اطلاعات ارسال و پرداخت */}
             <div className="luxury-order-card">
               <h2 className="card-section-title">
                 <FiMapPin className="section-icon" /> اطلاعات ارسال و پرداخت
@@ -85,7 +82,6 @@ const PlaceOrderScreen = () => {
               </div>
             </div>
 
-            {/* کارت اقلام سفارش */}
             <div className="luxury-order-card">
               <h2 className="card-section-title">
                 <FiPackage className="section-icon" /> اقلام سفارش ({cart.cartItems.length} کالا)
@@ -120,7 +116,6 @@ const PlaceOrderScreen = () => {
             </div>
           </div>
 
-          {/* --- ستون کناری (فاکتور) --- */}
           <div className="placeorder-sidebar">
             <div className="invoice-card">
               <h3 className="invoice-title">خلاصه سفارش</h3>

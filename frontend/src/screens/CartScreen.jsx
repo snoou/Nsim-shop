@@ -27,7 +27,6 @@ const CartScreen = () => {
   const totalPrice = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
-  // --- رندر حالت سبد خالی ---
   if (cartItems.length === 0) {
     return (
       <div className="empty-cart-container">
@@ -44,7 +43,6 @@ const CartScreen = () => {
     );
   }
 
-  // --- رندر سبد خرید پر ---
   return (
     <div className="cart-page-wrapper">
       <div className="cart-header">
@@ -54,17 +52,14 @@ const CartScreen = () => {
 
       <div className="cart-grid-layout">
         
-        {/* ستون راست: لیست محصولات */}
         <div className="cart-items-list">
           {cartItems.map((item) => (
             <div key={item._id} className="cart-item-card">
               
-              {/* عکس محصول */}
               <div className="item-image-wrapper">
                 <img src={item.image} alt={item.name} className="item-image" />
               </div>
 
-              {/* اطلاعات محصول */}
               <div className="item-details">
                 <div className="item-header">
                   <div className="item-name-brand">
@@ -83,7 +78,6 @@ const CartScreen = () => {
                 </div>
 
                 <div className="item-footer">
-                  {/* انتخابگر تعداد شیک و کپسولی */}
                   <div className="qty-pill-selector">
                     <button 
                       disabled={item.qty >= item.countInStock}
@@ -100,7 +94,6 @@ const CartScreen = () => {
                     </button>
                   </div>
 
-                  {/* قیمت */}
                   <div className="item-price">
                     {(item.price * item.qty).toLocaleString()} 
                     <small>تومان</small>
@@ -112,7 +105,6 @@ const CartScreen = () => {
           ))}
         </div>
 
-        {/* ستون چپ: خلاصه سفارش */}
         <div className="cart-summary-sidebar">
           <div className="summary-card">
             <h3 className="summary-title">خلاصه سفارش</h3>

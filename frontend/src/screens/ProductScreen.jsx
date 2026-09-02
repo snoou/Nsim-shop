@@ -21,14 +21,12 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   
-  // استیت برای مدیریت عکسی که در حال نمایش است
   const [activeImage, setActiveImage] = useState('');
 
   const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId);
   const { userInfo } = useSelector((state) => state.auth);
   const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
 
-  // تنظیم اولین عکس به عنوان عکس پیش‌فرض هنگام لود شدن محصول
   useEffect(() => {
     if (product) {
       setActiveImage(product.image);
@@ -73,7 +71,6 @@ const ProductScreen = () => {
 
       <div className="editorial-container">
         
-        {/* دکمه بازگشت مینیمال */}
         <div className="back-nav">
           <Link to="/" className="btn-minimal-back">
             <FiArrowRight size={20} /> بازگشت به ویترین
@@ -82,13 +79,11 @@ const ProductScreen = () => {
 
         <div className="product-split-layout">
           
-          {/* --- ستون راست: گالری تصاویر ادیتوریال --- */}
           <div className="gallery-section">
             <div className="main-image-display">
               <img src={activeImage} alt={product.name} />
             </div>
             
-            {/* نمایش لیست تصاویر کوچک در صورتی که بیشتر از یک عکس باشد */}
             {productImages.length > 1 && (
               <div className="thumbnail-track">
                 {productImages.map((img, index) => (
@@ -104,7 +99,6 @@ const ProductScreen = () => {
             )}
           </div>
 
-          {/* --- ستون چپ: اطلاعات و خرید --- */}
           <div className="details-section">
             
             <div className="product-header-block">
@@ -129,7 +123,6 @@ const ProductScreen = () => {
 
             <p className="description-text">{product.description}</p>
 
-            {/* کنترلرهای خرید */}
             <div className="purchase-action-container">
               {product.countInStock > 0 ? (
                 <div className="action-row">
@@ -150,10 +143,8 @@ const ProductScreen = () => {
               )}
             </div>
 
-            {/* خط جداکننده محو */}
             <div className="soft-divider"></div>
 
-            {/* بخش نظرات */}
             <div className="product-reviews-block">
               <h3 className="block-title">نظرات خریداران</h3>
               
@@ -174,7 +165,6 @@ const ProductScreen = () => {
                 ))}
               </div>
               
-              {/* فرم ثبت نظر */}
               <div className="review-form-box">
                 <h4 className="form-title">ثبت دیدگاه جدید</h4>
                 {loadingProductReview && <Loader />}

@@ -29,7 +29,6 @@ const OrderScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  // بررسی وضعیت بازگشت از درگاه بانک
   useEffect(() => {
     const sp = new URLSearchParams(search);
     const status = sp.get('status');
@@ -42,7 +41,6 @@ const OrderScreen = () => {
     }
   }, [search, refetch]);
 
-  // تابع اتصال به درگاه زرین‌پال
   const paymentHandler = async () => {
     try {
       setLoadingPay(true);
@@ -95,10 +93,8 @@ const OrderScreen = () => {
 
         <div className="order-grid-layout">
           
-          {/* --- ستون اصلی (راست) --- */}
           <div className="order-main-column">
             
-            {/* ۱. اطلاعات تحویل */}
             <div className="luxury-order-card">
               <h2 className="card-section-title">
                 <FiMapPin className="section-icon" /> اطلاعات تحویل
@@ -127,7 +123,6 @@ const OrderScreen = () => {
               </div>
             </div>
 
-            {/* ۲. روش پرداخت */}
             <div className="luxury-order-card">
               <h2 className="card-section-title">
                 <FiCreditCard className="section-icon" /> روش پرداخت
@@ -145,7 +140,6 @@ const OrderScreen = () => {
               </div>
             </div>
 
-            {/* ۳. اقلام سفارش */}
             <div className="luxury-order-card">
               <h2 className="card-section-title">
                 <FiPackage className="section-icon" /> اقلام خریداری شده
@@ -178,7 +172,6 @@ const OrderScreen = () => {
             </div>
           </div>
 
-          {/* --- ستون کناری / فاکتور (چپ) --- */}
           <div className="order-sidebar">
             <div className="invoice-card">
               <h3 className="invoice-title">فاکتور نهایی</h3>
@@ -205,7 +198,6 @@ const OrderScreen = () => {
                 </div>
               </div>
 
-              {/* دکمه پرداخت زرین‌پال */}
               {!order.isPaid && (
                 <div className="payment-action-box">
                   {loadingPay && <Loader />}
@@ -222,7 +214,6 @@ const OrderScreen = () => {
                 </div>
               )}
 
-              {/* دکمه تغییر وضعیت برای ادمین */}
               {loadingDeliver && <Loader />}
               {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <button

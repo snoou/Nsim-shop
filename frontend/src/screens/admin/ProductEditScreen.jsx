@@ -4,6 +4,7 @@ import { FiSave, FiArrowRight, FiUploadCloud, FiImage, FiLayers, FiTag, FiDollar
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
+import { useFetchCategoriesQuery } from '../../slices/categoryApiSlice';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
@@ -21,7 +22,8 @@ const ProductEditScreen = () => {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
-
+  const [isFeatured, setIsFeatured] = useState(false);
+  const { data: categories, isLoading: loadingCategories } = useFetchCategoriesQuery();
   const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId);
 
   const [updateProduct, { isLoading: loadingUpdate }] = useUpdateProductMutation();
@@ -38,6 +40,7 @@ const ProductEditScreen = () => {
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setIsFeatured(product.isFeatured || false);
     }
   }, [product]);
 
@@ -53,6 +56,7 @@ const ProductEditScreen = () => {
         category,
         description,
         countInStock,
+        isFeatured
       }).unwrap();
       toast.success('محصول با موفقیت ویرایش شد');
       refetch();
@@ -77,8 +81,7 @@ const ProductEditScreen = () => {
   return (
     <div className="admin-dashboard-wrapper">
       <div className="admin-container">
-        
-        {/* هدر صفحه ویرایش */}
+
         <div className="admin-header-flex">
           <div>
             <h1 className="admin-page-title">ویرایش محصول</h1>
@@ -90,7 +93,7 @@ const ProductEditScreen = () => {
         </div>
 
         {loadingUpdate && <Loader />}
-        
+
         {isLoading ? (
           <Loader />
         ) : error ? (
@@ -98,13 +101,11 @@ const ProductEditScreen = () => {
         ) : (
           <form onSubmit={submitHandler} className="edit-product-form">
             <div className="edit-grid-layout">
-              
-              {/* ستون راست: مدیریت تصویر */}
+
               <div className="edit-sidebar">
                 <div className="admin-card text-center">
                   <h3 className="card-section-title mb-4">تصویر محصول</h3>
-                  
-                  {/* پیش‌نمایش تصویر */}
+
                   <div className="image-preview-area">
                     {image ? (
                       <img src={image} alt="پیش‌نمایش محصول" className="preview-img" />
@@ -116,7 +117,6 @@ const ProductEditScreen = () => {
                     )}
                   </div>
 
-                  {/* دکمه آپلود فایل */}
                   <div className="upload-btn-wrapper">
                     <label className="btn-upload-luxury">
                       {loadingUpload ? (
@@ -135,7 +135,6 @@ const ProductEditScreen = () => {
                     </label>
                   </div>
 
-                  {/* فیلد متنی آدرس عکس */}
                   <div className="minimal-input-group mt-4 text-right">
                     <label>آدرس تصویر (URL)</label>
                     <input
@@ -149,12 +148,10 @@ const ProductEditScreen = () => {
                 </div>
               </div>
 
-              {/* ستون چپ: فرم مشخصات */}
               <div className="edit-main-content">
                 <div className="admin-card">
                   <h3 className="card-section-title mb-4">اطلاعات پایه</h3>
-                  
-                  {/* نام محصول */}
+
                   <div className="minimal-input-group mb-4">
                     <label>نام کامل محصول</label>
                     <input
@@ -168,17 +165,26 @@ const ProductEditScreen = () => {
                   </div>
 
                   <div className="form-row-2col mb-4">
-                    {/* دسته‌بندی */}
-                    <div className="minimal-input-group">
-                      <label><FiTag className="icon-label" /> دسته‌بندی</label>
-                      <input
-                        type="text"
-                        placeholder="مثلاً: پوشاک مردانه"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        className="minimal-input"
-                        required
-                      />
+                    <div className="form-group">
+                      <label htmlFor="category" className="form-label">دسته‌بندی</label>
+
+                      {loadingCategories ? (
+                        <p>در حال بارگذاری دسته‌بندی‌ها...</p>
+                      ) : (
+                        <select
+                          id="category"
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                          className="form-control"
+                        >
+                          <option value="">یک دسته‌بندی انتخاب کنید...</option>
+                          {categories?.map((c) => (
+                            <option key={c._id} value={c.slug}>
+                              {c.name}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </div>
                     {/* برند */}
                     <div className="minimal-input-group">
@@ -232,10 +238,44 @@ const ProductEditScreen = () => {
                     ></textarea>
                   </div>
 
+                  {/* ---------------------------------------------------- */}
+                  {/* چک‌باکس محصول ویژه (با طراحی اختصاصی متناسب با فرم شما) */}
+                  {/* ---------------------------------------------------- */}
+                  <div className="minimal-input-group mb-4" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    backgroundColor: 'var(--bg-main, #f9fafb)',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border-light, #e5e7eb)'
+                  }}>
+                    <input
+                      type="checkbox"
+                      id="isFeatured"
+                      checked={isFeatured}
+                      onChange={(e) => setIsFeatured(e.target.checked)}
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        accentColor: 'var(--primary, #0D9488)' // رنگ سبز کله‌غازی شما
+                      }}
+                    />
+                    <label htmlFor="isFeatured" style={{
+                      margin: 0,
+                      cursor: 'pointer',
+                      fontWeight: '600',
+                      color: 'var(--text-dark, #111827)'
+                    }}>
+                      نمایش این محصول در ویترین صفحه اصلی (محصولات ویژه)
+                    </label>
+                  </div>
+
                   {/* دکمه ثبت */}
                   <div className="form-action-footer">
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       className="btn-submit-solid"
                       disabled={loadingUpdate || loadingUpload}
                     >
@@ -246,8 +286,9 @@ const ProductEditScreen = () => {
 
                 </div>
               </div>
-              
+
             </div>
+
           </form>
         )}
       </div>

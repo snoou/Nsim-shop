@@ -53,7 +53,6 @@ const LoginScreen = () => {
 
         <form onSubmit={submitHandler} className="luxury-auth-form">
           
-          {/* فیلد ایمیل */}
           <div className="luxury-input-group">
             <FiMail className="input-icon" size={20} />
             <input
@@ -66,7 +65,6 @@ const LoginScreen = () => {
             />
           </div>
 
-          {/* فیلد رمز عبور */}
           <div className="luxury-input-group">
             <FiLock className="input-icon" size={20} />
             <input

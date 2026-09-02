@@ -9,12 +9,10 @@ import '../../assets/styles/OrderListScreen.css';
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
 
-  // استیت‌های مربوط به فیلتر و جستجو
   const [searchTerm, setSearchTerm] = useState('');
-  const [paymentFilter, setPaymentFilter] = useState('all'); // all, paid, unpaid
-  const [deliveryFilter, setDeliveryFilter] = useState('all'); // all, delivered, pending
+  const [paymentFilter, setPaymentFilter] = useState('all'); 
+  const [deliveryFilter, setDeliveryFilter] = useState('all');
 
-  // تابع کمکی برای تبدیل تاریخ میلادی به شمسی
   const toPersianDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('fa-IR', {
       year: 'numeric',
@@ -23,20 +21,16 @@ const OrderListScreen = () => {
     });
   };
 
-  // منطق فیلتر کردن سفارشات
   const filteredOrders = orders?.filter((order) => {
-    // ۱. فیلتر جستجوی متنی (شماره سفارش یا نام کاربر)
     const searchMatch = 
       order._id.toLowerCase().includes(searchTerm.toLowerCase()) || 
       (order.user && order.user.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    // ۲. فیلتر وضعیت پرداخت
     const paymentMatch = 
       paymentFilter === 'all' || 
       (paymentFilter === 'paid' && order.isPaid) || 
       (paymentFilter === 'unpaid' && !order.isPaid);
 
-    // ۳. فیلتر وضعیت ارسال
     const deliveryMatch = 
       deliveryFilter === 'all' || 
       (deliveryFilter === 'delivered' && order.isDelivered) || 
@@ -65,7 +59,6 @@ const OrderListScreen = () => {
         ) : (
           <div className="admin-card">
             
-            {/* نوار فیلتر و جستجو */}
             <div className="admin-filter-bar">
               <div className="search-input-wrapper">
                 <FiSearch className="search-icon" />
@@ -186,7 +179,6 @@ const OrderListScreen = () => {
                   </table>
                 </div>
 
-                {/* نمای کارتی برای موبایل */}
                 <div className="mobile-cards-wrapper">
                   {filteredOrders.map((order) => (
                     <div key={order._id} className="admin-mobile-card">

@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { FiHeart, FiPlus } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import Rating from './Rating';
 import { addToCart } from '../slices/cartSlice';
 import '../assets/styles/ProductCard.css';
 
@@ -12,7 +11,6 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
 
-  // افزودن به سبد خرید
   const addToCartHandler = (e) => {
     e.preventDefault(); 
     e.stopPropagation(); 
@@ -24,12 +22,11 @@ const ProductCard = ({ product }) => {
         position: "bottom-center",
         autoClose: 2000,
         hideProgressBar: true,
-        theme: "colored", // استفاده از تم رنگی به جای دارک
+        theme: "colored", 
       });
     }
   };
 
-  // لایک کردن محصول
   const likeHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -45,7 +42,6 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="product-card">
-      {/* بخش بالایی: عکس و نشان‌ها */}
       <div className="card-image-wrapper">
         <Link to={`/product/${product._id}`}>
           <img 
@@ -56,23 +52,18 @@ const ProductCard = ({ product }) => {
           />
         </Link>
         
-        {/* دکمه علاقه‌مندی */}
         <button className="like-btn" onClick={likeHandler} aria-label="افزودن به علاقه‌مندی">
           {isLiked ? <FaHeart color="#EF4444" size={18} /> : <FiHeart size={18} />}
         </button>
 
-        {/* نشانگر اتمام موجودی */}
         {product.countInStock === 0 && (
           <span className="stock-badge out-of-stock">ناموجود</span>
         )}
       </div>
 
-      {/* بخش پایینی: اطلاعات و قیمت */}
       <div className="card-info">
         <div className="card-meta">
           <span className="card-brand">{product.brand || 'نسیم'}</span>
-          {/* اگر نیاز بود امتیازها را نمایش دهی، کامنت خط زیر را بردار */}
-          {/* <Rating value={product.rating} text={null} /> */}
         </div>
 
         <Link to={`/product/${product._id}`} className="card-title-link">
